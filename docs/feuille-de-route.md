@@ -14,12 +14,8 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 | 5 | Partie créée en solo (tutoriel), envoyée sur le serveur, FRM configuré | ✅ |
 | 6 | Tailscale, Docker, stack Grafana publiée en HTTPS sur le réseau privé | ✅ |
 | 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat) | 🟡 reste les commandes |
-| 8 | Sauvegardes et surveillance | 🟡 archives locales faites, le reste à faire |
+| 8 | Sauvegardes et surveillance | 🟡 archives locales faites et testées, reste la copie hors serveur et les alertes |
 | 9 | Repo git publié, le VPS se met à jour par `git pull`, fichiers du serveur identiques à `ops/` | ✅ |
-
-## Prochaine étape
-
-- [ ] Brancher `#dev` sur le repo : webhook Discord « GitHub » dans `#dev`, puis sur GitHub, Settings, Webhooks, Add webhook, avec l'URL du webhook suivie de `/github`, en `application/json`, événement *push*.
 
 ## Bot Discord
 
@@ -37,7 +33,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 ## Sauvegardes et surveillance
 
 - [x] Archives locales toutes les 6 h, gardées 14 jours.
-- [ ] **Tester une restauration** une fois, pour être sûr que la procédure marche.
+- [x] Restauration testée en octobre 2026 : la dernière archive s'ouvre en solo avec l'usine et les mods ([procédure](exploitation.md#tester-une-archive-sans-toucher-au-serveur)).
 - [ ] **Copie hors du serveur** (protège contre la perte du VPS). Option retenue : un cloud **perso** (OneDrive, Google Drive…) avec `rclone`, l'archive du jour envoyée chaque jour, 30 jours gardés. Autre option : une tâche planifiée Windows qui récupère l'archive sur le PC par Tailscale, avec une clé SSH dédiée limitée à la lecture des archives (mais il faut le PC allumé). Compte cloud à choisir.
 - [ ] **Alertes Discord du serveur** : serveur arrêté, FRM cassé, disque presque plein, RAM saturée.
 
@@ -49,7 +45,8 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## Sécurité et entretien
 
-- [ ] **Limiter la taille des logs système** : le serveur de jeu est très bavard (journald).
+- [x] Logs limités : systemd à 2 Go, Docker à 3 × 10 Mo par conteneur (`ops/journald/`, `ops/docker/`).
+- [x] `#dev` branché sur le repo GitHub (webhook, événement *push*).
 - [ ] **Signaler le bug FRM** (rechargement de la partie dans le même processus) sur le [GitHub de FRM](https://github.com/porisius/FicsitRemoteMonitoring/issues), avec les lignes de logs « Websocket Thread is already running ».
 
 ## À vérifier en jeu
