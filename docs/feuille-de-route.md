@@ -15,22 +15,10 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 | 6 | Tailscale, Docker, stack Grafana publiée en HTTPS sur le réseau privé | ✅ |
 | 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat) | 🟡 reste les commandes |
 | 8 | Sauvegardes et surveillance | 🟡 archives locales faites, le reste à faire |
-| 9 | Repo git publié, le VPS se met à jour par `git pull` | ⏳ **en cours** |
+| 9 | Repo git publié, le VPS se met à jour par `git pull`, fichiers du serveur identiques à `ops/` | ✅ |
 
-## Prochaine étape : le repo
+## Prochaine étape
 
-- [ ] Avant le premier push : vérifier qu'aucun secret ne traîne (jetons, URL de webhooks, IP, nom du tailnet), dans les fichiers comme dans l'historique git. `keys/` et les `.env` restent ignorés.
-- [ ] Créer le repo `lulusia` sur GitHub et y pousser ce dossier (commits et push faits à la main).
-- [ ] Passer le VPS sur git. Le bot tourne aujourd'hui depuis une copie faite par `scp` dans `~/lulusia` :
-  ```bash
-  mv ~/lulusia ~/lulusia.old
-  git clone https://github.com/<compte>/lulusia.git ~/lulusia
-  cp ~/lulusia.old/bot/.env ~/lulusia/bot/.env
-  cd ~/lulusia/bot && sudo docker compose up -d --build && sudo docker compose logs --tail 20
-  # une fois vérifié : rm -rf ~/lulusia.old
-  ```
-  En attendant, mettre à jour le bot avec `scp`, depuis PowerShell dans le dossier `bot` du PC : `scp -r package.json package-lock.json tsconfig.json Dockerfile .dockerignore docker-compose.yml src ficsit:~/lulusia/bot/`, puis sur le serveur : `cd ~/lulusia/bot && sudo docker compose up -d --build`.
-- [ ] Vérifier que les fichiers installés sur le serveur sont identiques à ceux de [`ops/`](../ops/) (`bash ~/lulusia/ops/check.sh`). Un écart attendu : `satisfactory-full-restart.service` passe à `try-restart` pour ne plus relancer un serveur arrêté à la main. Il faut l'installer (README d'`ops/`).
 - [ ] Brancher `#dev` sur le repo : webhook Discord « GitHub » dans `#dev`, puis sur GitHub, Settings, Webhooks, Add webhook, avec l'URL du webhook suivie de `/github`, en `application/json`, événement *push*.
 
 ## Bot Discord
