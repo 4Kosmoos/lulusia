@@ -1,0 +1,9 @@
+[Unit]
+Description=Redémarrage complet quotidien, 10 min après celui du jeu (04:00 UTC)
+
+[Timer]
+OnCalendar=*-*-* 04:10:00 UTC
+Persistent=false
+
+[Install]
+WantedBy=timers.target

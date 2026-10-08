@@ -1,0 +1,14 @@
+# Secrets, clés et notes privées : jamais dans le repo
+keys/
+docs/prive/
+.env
+.env.*
+!.env.example
+
+# Dépendances
+node_modules/
+
+# Divers
+*.log
+.DS_Store
+Thumbs.db

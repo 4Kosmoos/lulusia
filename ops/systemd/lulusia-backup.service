@@ -1,0 +1,8 @@
+[Unit]
+Description=Sauvegarde des parties Lulusia
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lulusia-backup
+Nice=10
+IOSchedulingClass=idle

@@ -1,0 +1,17 @@
+[Unit]
+Description=Satisfactory Dedicated Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=steam
+Group=steam
+WorkingDirectory=/home/steam/SatisfactoryDedicatedServer
+ExecStart=/home/steam/SatisfactoryDedicatedServer/FactoryServer.sh -log -unattended -Port=7777 -ReliablePort=8888
+Restart=always
+RestartSec=10
+TimeoutStopSec=60
+
+[Install]
+WantedBy=multi-user.target

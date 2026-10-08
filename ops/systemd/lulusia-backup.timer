@@ -1,0 +1,10 @@
+[Unit]
+Description=Sauvegarde des parties Lulusia toutes les 6 heures
+
+[Timer]
+OnCalendar=*-*-* 00/6:15:00
+Persistent=true
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

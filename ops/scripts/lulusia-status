@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Vue d'ensemble du serveur Lulusia. Usage : lulusia-status
+[ "$EUID" -ne 0 ] && exec sudo "$0" "$@"
+
+ok()    { printf '  \033[32m✔\033[0m %s\n' "$*"; }
+ko()    { printf '  \033[31m✘\033[0m %s\n' "$*"; }
+title() { printf '\n\033[1m%s\033[0m\n' "$*"; }
+
+title "Serveur de jeu"
+if systemctl is-active --quiet satisfactory; then
+  ok "satisfactory actif depuis $(systemctl show satisfactory -p ActiveEnterTimestamp --value)"
+else
+  ko "satisfactory : $(systemctl is-active satisfactory)"
+fi
+session=$(curl -s -m 5 localhost:8080/getSessionInfo)
+if printf '%s' "$session" | grep -q '"SessionName"'; then
+  ok "FRM répond : $(printf '%s' "$session" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("%s, jour %s, %s" % (d["SessionName"], d["PassedDays"], "en pause" if d["IsPaused"] else "en cours"))')"
+else
+  ko "FRM ne répond pas correctement : ${session:-(aucune réponse)}"
+fi
+
+title "Tâches planifiées"
+systemctl list-timers satisfactory-full-restart.timer lulusia-backup.timer --no-pager | head -n 3 | sed 's/^/  /'
+
+title "Conteneurs Docker (Grafana et bot)"
+docker ps -a --format '{{.Names}}\t{{.Status}}' | sort | sed 's/^/  /'
+
+title "Accès privé (Tailscale)"
+tailscale status --peers=false 2>/dev/null | sed 's/^/  /'
+tailscale serve status 2>/dev/null | sed 's/^/  /'
+
+title "Sauvegardes"
+last=$(ls -1t /var/backups/lulusia/lulusia-*.tar.gz 2>/dev/null | head -n 1)
+if [ -n "$last" ]; then
+  ok "$(ls -1 /var/backups/lulusia/lulusia-*.tar.gz | wc -l) archive(s), la plus récente : $(basename "$last") ($(du -h "$last" | cut -f1))"
+else
+  ko "aucune archive dans /var/backups/lulusia"
+fi
+
+title "Ressources"
+free -h | awk 'NR==2 { printf "  RAM : %s utilisés sur %s (%s disponibles)\n", $3, $2, $7 }'
+df -h / | awk 'NR==2 { printf "  Disque : %s utilisés sur %s (%s)\n", $3, $2, $5 }'
+
+title "Où sont les choses"
+cat <<'MAP'
+  Jeu et mods ....... /home/steam/SatisfactoryDedicatedServer   (privé : sudo -u steam ls …)
+  Parties ........... /home/steam/.config/Epic/FactoryGame/Saved/SaveGames/server
+  Profil des mods ... /home/steam/.local/share/ficsit
+  Stack Grafana ..... /home/ubuntu/satisfactory-monitoring
+  Bot Discord ....... /home/ubuntu/lulusia/bot
+  Sauvegardes ....... /var/backups/lulusia                       (root : sudo ls …)
+  Scripts ........... /usr/local/bin/lulusia-backup, /usr/local/bin/lulusia-status
+  Services systemd .. /etc/systemd/system/satisfactory.service
+                      /etc/systemd/system/satisfactory-full-restart.{service,timer}
+                      /etc/systemd/system/lulusia-backup.{service,timer}
+MAP

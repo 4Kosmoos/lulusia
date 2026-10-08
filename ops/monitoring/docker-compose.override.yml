@@ -1,0 +1,22 @@
+# Lulusia : rien n'est publié sur Internet (Docker contourne ufw).
+# Seul Grafana écoute, sur 127.0.0.1, exposé ensuite via Tailscale.
+services:
+  frmcompanion:
+    ports: !reset []
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  frmcache:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  alertmanager-config:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  prometheus:
+    ports: !reset []
+  alertmanager:
+    ports: !reset []
+  grafana:
+    ports: !override
+      - "127.0.0.1:3000:3000"
+    environment:
+      - GF_SERVER_ROOT_URL=${GRAFANA_ROOT_URL}

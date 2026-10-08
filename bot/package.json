@@ -1,0 +1,22 @@
+{
+  "name": "lulusia-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bot Discord du serveur Satisfactory Lulusia (données via Ficsit Remote Monitoring)",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file=.env --disable-warning=ExperimentalWarning src/index.ts",
+    "dev": "node --env-file=.env --disable-warning=ExperimentalWarning --watch src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "discord.js": "^14.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  }
+}

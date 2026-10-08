@@ -1,0 +1,17 @@
+# Bot Lulusia en production sur le VPS.
+# Le .env (jamais commité) est créé directement sur le serveur.
+name: lulusia-bot
+services:
+  bot:
+    build: .
+    image: lulusia-bot
+    restart: unless-stopped
+    env_file: .env
+    # FRM écoute sur la machine hôte (port 8080, autorisé par ufw pour les réseaux Docker).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

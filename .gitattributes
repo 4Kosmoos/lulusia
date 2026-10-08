@@ -1,0 +1,8 @@
+# Fins de ligne : LF dans le repo, obligatoire pour les scripts exécutés sur le serveur Linux
+* text=auto
+*.sh text eol=lf
+ops/scripts/* text eol=lf
+ops/systemd/* text eol=lf
+ops/ssh/* text eol=lf
+*.jpg binary
+*.png binary

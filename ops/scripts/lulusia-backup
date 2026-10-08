@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Sauvegarde des parties Lulusia (lancée par lulusia-backup.timer).
+# Archive les sauvegardes du jeu et les petites configs dans /var/backups/lulusia.
+set -euo pipefail
+
+DEST=/var/backups/lulusia
+KEEP_DAYS=14
+SAVES=home/steam/.config/Epic/FactoryGame/Saved/SaveGames
+
+# Chemins relatifs à / ; ceux qui n'existent pas sont ignorés.
+PATHS=(
+  "$SAVES"
+  home/steam/SatisfactoryDedicatedServer/FactoryGame/Saved/Config/LinuxServer
+  home/steam/.local/share/ficsit/profiles.json
+  home/steam/.local/share/ficsit/installations.json
+  home/ubuntu/satisfactory-monitoring/.env
+  home/ubuntu/satisfactory-monitoring/docker-compose.override.yml
+)
+
+mkdir -p "$DEST"
+chmod 700 "$DEST"
+
+# Rien de nouveau depuis la dernière archive (partie en pause) : on ne fait rien.
+LAST=$(ls -1t "$DEST"/lulusia-*.tar.gz 2>/dev/null | head -n 1 || true)
+if [ -n "$LAST" ] && [ -z "$(find "/$SAVES" -type f -newer "$LAST" -print -quit)" ]; then
+  echo "Rien de modifié depuis $(basename "$LAST"), pas de nouvelle archive."
+  exit 0
+fi
+
+EXISTING=()
+for p in "${PATHS[@]}"; do
+  if [ -e "/$p" ]; then EXISTING+=("$p"); else echo "Absent, ignoré : /$p"; fi
+done
+
+ARCHIVE="$DEST/lulusia-$(date +%Y-%m-%d_%H%M).tar.gz"
+set +e
+tar -czf "$ARCHIVE" -C / "${EXISTING[@]}"
+rc=$?
+set -e
+# Code 1 = un fichier a changé pendant la copie : l'archive reste utilisable.
+if [ "$rc" -gt 1 ]; then
+  rm -f "$ARCHIVE"
+  echo "ERREUR : tar a échoué (code $rc)" >&2
+  exit 1
+fi
+tar -tzf "$ARCHIVE" > /dev/null
+
+find "$DEST" -name 'lulusia-*.tar.gz' -mtime +"$KEEP_DAYS" -delete
+echo "OK : $(basename "$ARCHIVE") ($(du -h "$ARCHIVE" | cut -f1)), $(ls -1 "$DEST"/lulusia-*.tar.gz | wc -l) archive(s) conservée(s)"

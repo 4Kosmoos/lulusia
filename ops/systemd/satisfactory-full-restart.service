@@ -1,0 +1,7 @@
+[Unit]
+Description=Redémarrage complet du serveur Satisfactory (contourne le bug FRM)
+
+[Service]
+Type=oneshot
+# try-restart : ne relance pas un serveur arrêté volontairement à la main.
+ExecStart=/usr/bin/systemctl try-restart satisfactory.service
