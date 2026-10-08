@@ -25,6 +25,8 @@ for unit in systemd/*; do
   check "$unit" "/etc/systemd/system/$(basename "$unit")"
 done
 check ssh/00-hardening.conf /etc/ssh/sshd_config.d/00-hardening.conf
+check journald/lulusia.conf /etc/systemd/journald.conf.d/lulusia.conf
+check docker/daemon.json /etc/docker/daemon.json
 check monitoring/docker-compose.override.yml /home/ubuntu/satisfactory-monitoring/docker-compose.override.yml
 
 exit "$status"

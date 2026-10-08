@@ -10,6 +10,8 @@ Les fichiers installés à la main sur le serveur, versionnés ici pour ne pas l
 | `systemd/satisfactory-full-restart.service` et `.timer` | `/etc/systemd/system/` | Redémarrage complet à 04:10 UTC (contournement du bug FRM), seulement si le serveur tourne |
 | `systemd/lulusia-backup.service` et `.timer` | `/etc/systemd/system/` | Sauvegarde à 00:15, 06:15, 12:15 et 18:15 UTC |
 | `ssh/00-hardening.conf` | `/etc/ssh/sshd_config.d/` | SSH : clé uniquement, pas de root |
+| `journald/lulusia.conf` | `/etc/systemd/journald.conf.d/` | Logs systemd limités à 2 Go |
+| `docker/daemon.json` | `/etc/docker/` | Logs des conteneurs Docker limités à 3 × 10 Mo par conteneur |
 | `monitoring/docker-compose.override.yml` | `/home/ubuntu/satisfactory-monitoring/` | Notre adaptation de la stack Grafana (rien de publié sur Internet) |
 | `monitoring/.env.example` | modèle du `.env` de la stack | Le vrai `.env` n'existe que sur le serveur |
 
@@ -39,6 +41,17 @@ systemctl list-timers --no-pager | grep -E 'lulusia|satisfactory'
 # Stack Grafana
 cp monitoring/docker-compose.override.yml ~/satisfactory-monitoring/
 (cd ~/satisfactory-monitoring && sudo docker compose up -d)
+
+# Logs systemd
+sudo install -d /etc/systemd/journald.conf.d
+sudo install -m 644 journald/lulusia.conf /etc/systemd/journald.conf.d/
+sudo systemctl restart systemd-journald
+
+# Logs Docker (redémarre Docker et tous les conteneurs : quelques secondes de coupure pour Grafana et le bot)
+sudo install -m 644 docker/daemon.json /etc/docker/
+sudo systemctl restart docker
+(cd ~/satisfactory-monitoring && sudo docker compose up -d --force-recreate)
+(cd ~/lulusia/bot && sudo docker compose up -d --force-recreate)
 
 # SSH : garder une session ouverte pendant l'opération, au cas où
 sudo install -m 644 ssh/00-hardening.conf /etc/ssh/sshd_config.d/
