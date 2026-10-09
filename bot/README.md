@@ -5,7 +5,7 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 ## Fonctionnalités
 
 - [x] `#statut` : un message mis à jour toutes les minutes (joueurs connectés, partie, énergie, batteries, fusibles).
-- [x] Pont entre le chat du jeu et `#general` : les messages des joueurs et les messages système du jeu arrivent sur Discord (sauf les arrivées et départs de joueurs, déjà dans `#alertes`), et ceux de `#general` arrivent dans le jeu sous le nom « [Discord] pseudo ».
+- [x] Pont entre le chat du jeu et `#general` : les messages des joueurs et les messages système du jeu arrivent sur Discord (sauf les arrivées et départs de joueurs : FRM les renvoie cassés, et `/joueurs` suffit), et ceux de `#general` arrivent dans le jeu sous le nom « [Discord] pseudo ».
 - [x] Commandes slash, utilisables dans tous les salons, avec suggestions pendant la saisie :
 
   | Commande | Réponse |
@@ -17,18 +17,20 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 
 - [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs` et `!aide`, tapées dans Satisfactory ou dans `#general`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#general`.
 - [x] Une commande slash lancée dans `#general` est aussi recopiée dans le chat du jeu.
+- [x] Surveillance dans `#alertes` : serveur de jeu ou FRM qui ne répond plus depuis 5 min, RAM ou disque à 90 % ou plus. Un message quand le problème commence, un quand il cesse.
 - [ ] Alertes perso (ex. « fer bas »).
 
 ## Organisation du code
 
 | Fichier | Rôle |
 |---|---|
-| `src/index.ts` | Démarrage : connexion à Discord, `#statut`, pont du chat, commandes |
+| `src/index.ts` | Démarrage : connexion à Discord, `#statut`, pont du chat, commandes, surveillance |
 | `src/config.ts` | Lecture et vérification du `.env` |
 | `src/frm.ts` | Client typé de l'API FRM (lecture, et écriture avec le jeton) |
 | `src/status.ts` | Message de `#statut` |
 | `src/chat.ts` | Pont avec le chat du jeu, et commandes `!` |
 | `src/game-chat.ts` | Écriture dans le chat du jeu : expéditeurs, texte sans emoji, file d'attente |
+| `src/monitor.ts` | Surveillance du serveur, de la RAM et du disque |
 | `src/power.ts`, `src/format.ts` | Mise en forme commune (électricité, nombres, durées) |
 | `src/commands/` | Une commande par fichier, qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (cache, autocomplétion) et `places.ts` (lieux nommés et positions) |
 

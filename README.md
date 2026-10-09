@@ -6,7 +6,7 @@ Un serveur **Satisfactory 1.2 moddé** (Satisfactory Plus et une vingtaine de mo
 
 - **dashboards Grafana** : production, énergie, trains, drones, stockages… ;
 - **bot Discord** en TypeScript : état du serveur en direct, pont avec le chat du jeu, commandes pour interroger l'usine (stocks, énergie, joueurs) et poser des marqueurs en jeu ;
-- **alertes Discord** : fusible grillé, batteries, trains, recherches, joueurs connectés ;
+- **alertes Discord** : fusible grillé, batteries, trains, recherches, serveur qui ne répond plus, RAM ou disque presque pleins ;
 - **sauvegardes automatiques** et entretien du serveur.
 
 Toutes les données de l'usine viennent du mod [Ficsit Remote Monitoring](https://docs.ficsit.app/ficsitremotemonitoring/latest/) (FRM), qui expose une API JSON depuis le jeu.

@@ -14,7 +14,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 | 5 | Partie créée en solo (tutoriel), envoyée sur le serveur, FRM configuré | ✅ |
 | 6 | Tailscale, Docker, stack Grafana publiée en HTTPS sur le réseau privé | ✅ |
 | 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat, commandes) | ✅ |
-| 8 | Sauvegardes et surveillance | 🟡 archives locales faites et testées, reste la copie hors serveur et les alertes |
+| 8 | Sauvegardes et surveillance | 🟡 archives locales testées, surveillance en place, reste la copie hors serveur |
 | 9 | Repo git publié, le VPS se met à jour par `git pull`, fichiers du serveur identiques à `ops/` | ✅ |
 
 ## Bot Discord
@@ -23,7 +23,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Commandes depuis le chat du jeu** : `!stock`, `!energie`, `!joueurs`, `!aide`, avec réponse dans le jeu et dans `#general`.
 - [ ] **Piloter l'usine** avec les endpoints d'écriture de FRM : `setSwitches` pour les interrupteurs, `setEnabled` pour activer ou couper des bâtiments.
 - [ ] **Alertes perso** dans `#alertes`, par exemple « fer bas » : seuils sur les stocks ou la production.
-- [ ] **Surveillance de FRM** : prévenir sur Discord quand FRM ne répond plus. Éventuellement, redémarrer le serveur tout seul si personne n'est connecté.
+- [ ] **Redémarrer le serveur tout seul** quand FRM est en panne et que personne n'est connecté. Le bot tourne dans Docker sans accès à systemd : il faudrait un petit script côté serveur (timer systemd) qui fait la vérification et le redémarrage.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
 - [ ] Idée : déploiement automatique du bot à chaque push (GitHub Actions, connexion au VPS par Tailscale).
 
@@ -32,7 +32,8 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] Archives locales toutes les 6 h, gardées 14 jours.
 - [x] Restauration testée en octobre 2026 : la dernière archive s'ouvre en solo avec l'usine et les mods ([procédure](exploitation.md#tester-une-archive-sans-toucher-au-serveur)).
 - [ ] **Copie hors du serveur** (protège contre la perte du VPS). Option retenue : un cloud **perso** (OneDrive, Google Drive…) avec `rclone`, l'archive du jour envoyée chaque jour, 30 jours gardés. Autre option : une tâche planifiée Windows qui récupère l'archive sur le PC par Tailscale, avec une clé SSH dédiée limitée à la lecture des archives (mais il faut le PC allumé). Compte cloud à choisir.
-- [ ] **Alertes Discord du serveur** : serveur arrêté, FRM cassé, disque presque plein, RAM saturée.
+- [x] **Alertes Discord du serveur** par le bot dans `#alertes` : serveur de jeu ou FRM qui ne répond plus, RAM et disque presque pleins ([détail](exploitation.md#bot-discord)).
+- [ ] **Surveillance externe** (UptimeRobot, Healthchecks.io…) pour être prévenu si le VPS entier ou le bot tombe : le bot ne peut pas signaler sa propre panne.
 
 ## Grafana
 

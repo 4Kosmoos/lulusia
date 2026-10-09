@@ -4,6 +4,7 @@ import { Client, Events, GatewayIntentBits } from "discord.js";
 import { startChatBridge } from "./chat.ts";
 import { handleInteraction, registerCommands } from "./commands/index.ts";
 import { config } from "./config.ts";
+import { startMonitoring } from "./monitor.ts";
 import { updateStatus } from "./status.ts";
 
 const client = new Client({
@@ -46,6 +47,12 @@ client.once(Events.ClientReady, async (readyClient) => {
     await registerCommands(readyClient);
   } catch (error) {
     console.error("Enregistrement des commandes impossible :", error);
+  }
+
+  try {
+    await startMonitoring(readyClient);
+  } catch (error) {
+    console.error("Surveillance impossible à démarrer :", error);
   }
 });
 

@@ -30,4 +30,6 @@ export const config = {
   /** Salon du pont avec le chat du jeu. Sans lui, le pont est désactivé. */
   chatChannelId: optional("CHAT_CHANNEL_ID"),
   chatPollMs: seconds("CHAT_POLL_SECONDS", 3, 1),
+  /** Salon des alertes de surveillance (serveur, RAM, disque). Sans lui, la surveillance est désactivée. */
+  alertChannelId: optional("ALERT_CHANNEL_ID"),
 };
