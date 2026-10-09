@@ -128,6 +128,15 @@ async function request<T>(endpoint: string, init: RequestInit = {}): Promise<T> 
   return body as T;
 }
 
+/**
+ * JSON en ASCII pur. FRM lit le corps des requêtes octet par octet (comme du Latin-1), ce qui casse
+ * l'UTF-8 : « é » arrive dans le jeu sous la forme « Ã© ». Les caractères non ASCII partent donc en
+ * séquences \uXXXX, que le lecteur JSON du jeu décode correctement.
+ */
+function asciiJson(payload: object): string {
+  return JSON.stringify(payload).replace(/[\u0080-\uffff]/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}`);
+}
+
 /** Endpoints d'écriture : demandent le jeton FRM et renvoient un résultat par objet envoyé. */
 async function write(endpoint: string, payload: object): Promise<WriteResult[]> {
   if (!config.frmToken) {
@@ -139,7 +148,7 @@ async function write(endpoint: string, payload: object): Promise<WriteResult[]> 
       "Content-Type": "application/json",
       "X-FRM-Authorization": config.frmToken,
     },
-    body: JSON.stringify(payload),
+    body: asciiJson(payload),
   });
   const list = Array.isArray(results) ? results : [];
   const error = list.map(errorMessage).find((message) => message !== undefined);

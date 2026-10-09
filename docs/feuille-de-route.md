@@ -44,7 +44,9 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 - [x] Logs limités : systemd à 2 Go, Docker à 3 × 10 Mo par conteneur (`ops/journald/`, `ops/docker/`).
 - [x] `#dev` branché sur le repo GitHub (webhook, événement *push*).
-- [ ] **Signaler le bug FRM** (rechargement de la partie dans le même processus) sur le [GitHub de FRM](https://github.com/porisius/FicsitRemoteMonitoring/issues), avec les lignes de logs « Websocket Thread is already running ».
+- [ ] **Signaler les bugs FRM** sur le [GitHub de FRM](https://github.com/porisius/FicsitRemoteMonitoring/issues) :
+  - rechargement de la partie dans le même processus, avec les lignes de logs « Websocket Thread is already running » ;
+  - corps des requêtes POST lu en Latin-1 au lieu d'UTF-8 (`FString(PostData.c_str())`) : les accents arrivent cassés dans le chat du jeu. Contourné dans le bot en envoyant les caractères non ASCII en `\uXXXX`.
 
 ## À vérifier en jeu
 
