@@ -45,9 +45,9 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 - [x] Logs limités : systemd à 2 Go, Docker à 3 × 10 Mo par conteneur (`ops/journald/`, `ops/docker/`).
 - [x] `#dev` branché sur le repo GitHub (webhook, événement *push*).
-- [ ] **Signaler les bugs FRM** sur le [GitHub de FRM](https://github.com/porisius/FicsitRemoteMonitoring/issues) :
-  - rechargement de la partie dans le même processus, avec les lignes de logs « Websocket Thread is already running » ;
-  - corps des requêtes POST lu en Latin-1 au lieu d'UTF-8 (`FString(PostData.c_str())`) : les accents arrivent cassés dans le chat du jeu. Contourné dans le bot en envoyant les caractères non ASCII en `\uXXXX`.
+- [x] **Bugs FRM signalés** (octobre 2026), avec la cause dans le code et une correction proposée :
+  - [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) : serveur web inutilisable après un rechargement de la partie dans le même processus (contourné par le redémarrage complet de 04:10) ;
+  - [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) : corps des requêtes POST lu en Latin-1 au lieu d'UTF-8, accents cassés dans le chat du jeu (contourné dans le bot avec des `\uXXXX`).
 
 ## À vérifier en jeu
 
@@ -59,7 +59,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [ ] **RAM** : passer au VPS-4 au-delà de 80 % d'utilisation régulière (procédure dans [Architecture](architecture.md#passer-au-vps-4)).
 - [ ] **Processeur** : OVH ne communique pas le modèle exact.
 - [ ] **Effet de la stack Grafana** sur les performances du jeu : certains endpoints FRM passent par le thread principal du jeu.
-- [ ] **Correctif du bug FRM** dans une nouvelle version : on pourra alors retirer le redémarrage complet de 04:10.
+- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `bot/src/frm.ts`.
 - [ ] **Nouvelle version de ficsit-cli** où `profile mod add` fonctionne : on pourra alors abandonner le script Python.
 - [ ] **SMM gère les clés SSH** (issue #304) : on pourra alors gérer les mods du serveur depuis SMM.
 - [ ] **Sortie de FicsIt-Networks** pour la 1.2 (« Works » en 1.2, avec une version serveur Linux).
