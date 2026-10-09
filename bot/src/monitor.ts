@@ -2,8 +2,8 @@
 // et quand la RAM ou le disque du VPS saturent. Un message quand le problème commence, un quand il cesse.
 //
 // Le conteneur du bot voit la RAM de la machine (/proc/meminfo) et le disque qui porte Docker,
-// c'est-à-dire le disque principal du VPS. Si le VPS ou le bot lui-même tombe, aucune alerte ne part :
-// le message de #statut cesse alors d'être mis à jour.
+// c'est-à-dire le disque principal du VPS. Si le VPS ou le bot lui-même tombe, c'est le signal de vie
+// (heartbeat.ts, Healthchecks.io) qui prévient.
 
 import { readFile, statfs } from "node:fs/promises";
 import { ChannelType, type Client } from "discord.js";

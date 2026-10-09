@@ -141,7 +141,7 @@ Serveur Discord « Lulusia », pour les deux joueurs.
 |---|---|---|
 | `#statut` | Un message du bot mis à jour toutes les minutes : joueurs, partie, électricité, batteries | ✅ |
 | `#general` | Pont avec le chat du jeu, dans les deux sens. Les commandes `!stock`, `!energie`, `!joueurs` y marchent comme en jeu, et les commandes slash lancées ici sont recopiées dans le jeu | ✅ |
-| `#alertes` | Webhook FRM : fusible, batteries (50, 25, 10 %), recherches, jalons, trains. Surveillance du bot : serveur qui ne répond plus, RAM, disque. Plus tard, les alertes perso du bot | ✅ |
+| `#alertes` | Webhook FRM : fusible, batteries (50, 25, 10 %), recherches, jalons, trains. Surveillance du bot : serveur qui ne répond plus, RAM, disque. Healthchecks.io : VPS ou bot en panne. Plus tard, les alertes perso du bot | ✅ |
 | `#dev` | Commits GitHub (webhook Discord avec `/github` ajouté à la fin de l'URL) | ✅ |
 
 - **Bot** : application Discord « Lulusia » **privée** (lien d'installation : Aucun), ajoutée au serveur avec le minimum de permissions : voir les salons, envoyer des messages, intégrer des liens, voir les anciens messages, ajouter des réactions. L'intent privilégié *Message Content* est activé (lecture de `#general`). Le bot enregistre ses commandes slash (`/stock`, `/energie`, `/joueurs`, `/ping`) sur le serveur à chaque démarrage (la portée `applications.commands` est incluse avec la portée `bot`). Elles marchent dans tous les salons : à deux joueurs, pas besoin d'un salon dédié.

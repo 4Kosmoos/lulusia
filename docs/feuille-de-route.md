@@ -14,7 +14,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 | 5 | Partie créée en solo (tutoriel), envoyée sur le serveur, FRM configuré | ✅ |
 | 6 | Tailscale, Docker, stack Grafana publiée en HTTPS sur le réseau privé | ✅ |
 | 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat, commandes) | ✅ |
-| 8 | Sauvegardes et surveillance | 🟡 archives locales testées, surveillance en place, reste la copie hors serveur |
+| 8 | Sauvegardes et surveillance | ✅ |
 | 9 | Repo git publié, le VPS se met à jour par `git pull`, fichiers du serveur identiques à `ops/` | ✅ |
 
 ## Bot Discord
@@ -31,9 +31,9 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 - [x] Archives locales toutes les 6 h, gardées 14 jours.
 - [x] Restauration testée en octobre 2026 : la dernière archive s'ouvre en solo avec l'usine et les mods ([procédure](exploitation.md#tester-une-archive-sans-toucher-au-serveur)).
-- [ ] **Copie hors du serveur** (protège contre la perte du VPS). Option retenue : un cloud **perso** (OneDrive, Google Drive…) avec `rclone`, l'archive du jour envoyée chaque jour, 30 jours gardés. Autre option : une tâche planifiée Windows qui récupère l'archive sur le PC par Tailscale, avec une clé SSH dédiée limitée à la lecture des archives (mais il faut le PC allumé). Compte cloud à choisir.
+- Décidé : **pas de copie automatique hors du serveur** pour l'instant. Les archives locales couvrent les erreurs et les sauvegardes corrompues, la sauvegarde quotidienne d'OVH couvre une panne du VPS. Pour le risque restant (perdre les deux ensemble), [copie manuelle sur le PC](exploitation.md#copier-une-archive-sur-le-pc) de temps en temps. Options si on change d'avis : une tâche planifiée Windows qui récupère l'archive par Tailscale avec une clé SSH en lecture seule (PC allumé nécessaire), ou `rclone` chiffré vers un compte cloud dédié au projet.
 - [x] **Alertes Discord du serveur** par le bot dans `#alertes` : serveur de jeu ou FRM qui ne répond plus, RAM et disque presque pleins ([détail](exploitation.md#bot-discord)).
-- [ ] **Surveillance externe** (UptimeRobot, Healthchecks.io…) pour être prévenu si le VPS entier ou le bot tombe : le bot ne peut pas signaler sa propre panne.
+- [x] **Surveillance externe** : signal de vie du bot vers Healthchecks.io chaque minute, alerte dans `#alertes` s'il cesse (VPS ou bot en panne).
 
 ## Grafana
 

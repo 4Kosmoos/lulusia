@@ -18,6 +18,7 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 - [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs` et `!aide`, tapées dans Satisfactory ou dans `#general`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#general`.
 - [x] Une commande slash lancée dans `#general` est aussi recopiée dans le chat du jeu.
 - [x] Surveillance dans `#alertes` : serveur de jeu ou FRM qui ne répond plus depuis 5 min, RAM ou disque à 90 % ou plus. Un message quand le problème commence, un quand il cesse.
+- [x] Signal de vie vers Healthchecks.io chaque minute : si le VPS ou le bot tombe, Healthchecks.io prévient dans `#alertes`.
 - [ ] Alertes perso (ex. « fer bas »).
 
 ## Organisation du code
@@ -31,6 +32,7 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 | `src/chat.ts` | Pont avec le chat du jeu, et commandes `!` |
 | `src/game-chat.ts` | Écriture dans le chat du jeu : expéditeurs, texte sans emoji, file d'attente |
 | `src/monitor.ts` | Surveillance du serveur, de la RAM et du disque |
+| `src/heartbeat.ts` | Signal de vie pour Healthchecks.io |
 | `src/power.ts`, `src/format.ts` | Mise en forme commune (électricité, nombres, durées) |
 | `src/commands/` | Une commande par fichier, qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (cache, autocomplétion) et `places.ts` (lieux nommés et positions) |
 

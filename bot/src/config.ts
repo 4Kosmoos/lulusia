@@ -32,4 +32,6 @@ export const config = {
   chatPollMs: seconds("CHAT_POLL_SECONDS", 3, 1),
   /** Salon des alertes de surveillance (serveur, RAM, disque). Sans lui, la surveillance est désactivée. */
   alertChannelId: optional("ALERT_CHANNEL_ID"),
+  /** URL de ping Healthchecks.io (signal de vie). Secrète : elle permet d'envoyer de faux signaux. */
+  healthcheckUrl: optional("HEALTHCHECK_URL"),
 };

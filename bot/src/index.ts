@@ -4,6 +4,7 @@ import { Client, Events, GatewayIntentBits } from "discord.js";
 import { startChatBridge } from "./chat.ts";
 import { handleInteraction, registerCommands } from "./commands/index.ts";
 import { config } from "./config.ts";
+import { startHeartbeat } from "./heartbeat.ts";
 import { startMonitoring } from "./monitor.ts";
 import { updateStatus } from "./status.ts";
 
@@ -54,6 +55,8 @@ client.once(Events.ClientReady, async (readyClient) => {
   } catch (error) {
     console.error("Surveillance impossible à démarrer :", error);
   }
+
+  startHeartbeat();
 });
 
 for (const signal of ["SIGINT", "SIGTERM"] as const) {
