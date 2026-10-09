@@ -147,8 +147,16 @@ async function write(endpoint: string, payload: object): Promise<WriteResult[]> 
   return list;
 }
 
-async function sendChatMessage(sender: string, message: string): Promise<void> {
-  const [result] = await write("sendChatMessage", { sender, message });
+/** Couleur du nom de l'expéditeur, composantes de 0 à 1. */
+export interface ChatColor {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+async function sendChatMessage(sender: string, message: string, color?: ChatColor): Promise<void> {
+  const [result] = await write("sendChatMessage", color ? { sender, message, color } : { sender, message });
   if (!result?.IsSent) throw new FrmError("sendChatMessage : message refusé par FRM");
 }
 

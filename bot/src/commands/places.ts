@@ -66,13 +66,20 @@ function distanceText(meters: number): string {
   return meters < 1000 ? `${Math.round(meters / 10) * 10} m` : `${formatNumber(meters / 1000)} km`;
 }
 
+/** « à Gare Fer », « au HUB », « de Gare Fer », « du HUB » (avec l'icône du lieu si `icons`). */
+function withPreposition(place: Place, preposition: "à" | "de", icons: boolean): string {
+  const label = icons ? placeLabel(place) : place.name;
+  if (place.kind === "hub") return `${preposition === "à" ? "au" : "du"} ${label}`;
+  return `${preposition} ${label}`;
+}
+
 /** « à 350 m au nord-est de 🚉 Gare Fer », d'après le lieu nommé le plus proche. */
-export function whereIs(location: Location, places: Place[]): string {
+export function whereIs(location: Location, places: Place[], icons = true): string {
   if (places.length === 0) return "position inconnue (aucun lieu nommé)";
   const nearest = places.reduce((best, place) =>
     groundDistance(location, place.location) < groundDistance(location, best.location) ? place : best,
   );
   const meters = groundDistance(nearest.location, location);
-  if (meters < 50) return `à ${placeLabel(nearest)}`;
-  return `à ${distanceText(meters)} ${direction(nearest.location, location)} de ${placeLabel(nearest)}`;
+  if (meters < 50) return withPreposition(nearest, "à", icons);
+  return `à ${distanceText(meters)} ${direction(nearest.location, location)} ${withPreposition(nearest, "de", icons)}`;
 }

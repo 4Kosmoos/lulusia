@@ -2,8 +2,8 @@
 // et l'annonce dans le chat du jeu pour que les joueurs sachent d'où il vient.
 
 import { SlashCommandBuilder, escapeMarkdown } from "discord.js";
-import { gameSenderName } from "../chat.ts";
 import { FrmError, frm } from "../frm.ts";
+import { discordSender, forGame } from "../game-chat.ts";
 import { cachedNamedPlaces, cachedPlayers, loadNamedPlaces, placeCandidates, placeLabel, playerPlaces } from "./places.ts";
 import { forAutocomplete, resolve, suggestions, type Command } from "./shared.ts";
 
@@ -24,10 +24,9 @@ export const ping: Command = {
     )
     .toJSON(),
 
-  async execute(interaction) {
-    await interaction.deferReply();
-    const typed = interaction.options.getString("lieu", true);
-    const note = interaction.options.getString("message")?.replace(/\s+/g, " ").trim();
+  async run({ options, author }) {
+    const typed = options.lieu ?? "";
+    const note = options.message?.replace(/\s+/g, " ").trim();
 
     const [named, players] = await Promise.all([loadNamedPlaces(), frm.players()]);
     const places = [...named, ...playerPlaces(players)];
@@ -37,34 +36,36 @@ export const ping: Command = {
         ambiguous.length > 0
           ? `plusieurs lieux correspondent : ${ambiguous.map((n) => `**${escapeMarkdown(n)}**`).join(", ")}.`
           : "aucun HUB, gare, marqueur de carte ou joueur connecté de ce nom.";
-      await interaction.editReply(
-        `❓ « ${escapeMarkdown(typed)} » : ${reason}\nChoisis le lieu dans la liste proposée pendant la saisie.`,
-      );
-      return;
+      return {
+        discord: `❓ « ${escapeMarkdown(typed)} » : ${reason}\nChoisis le lieu dans la liste proposée pendant la saisie.`,
+        game: [],
+      };
     }
 
     try {
       await frm.createPing(found.location);
     } catch (error) {
       if (error instanceof FrmError && error.message.includes("No player connected")) {
-        await interaction.editReply("😴 Personne n'est connecté au jeu : le marqueur ne serait vu par personne.");
-        return;
+        return { discord: "😴 Personne n'est connecté au jeu : le marqueur ne serait vu par personne.", game: [] };
       }
       throw error;
     }
 
-    const author = interaction.inCachedGuild() ? interaction.member.displayName : interaction.user.displayName;
+    // L'annonce dans le chat du jeu fait partie de la commande : pas de recopie en plus (game vide).
     const announce = note ? `Marqueur sur ${found.name} : ${note}` : `Marqueur posé sur ${found.name}`;
     let chatWarning = "";
     try {
-      await frm.sendChatMessage(gameSenderName(author), announce);
+      await frm.sendChatMessage(discordSender(author), forGame(announce));
     } catch (error) {
       console.warn("/ping : annonce dans le chat impossible :", error instanceof Error ? error.message : error);
       chatWarning = "\n⚠️ L'annonce dans le chat du jeu n'a pas pu être envoyée.";
     }
 
     const noteText = note ? ` : « ${escapeMarkdown(note)} »` : "";
-    await interaction.editReply(`📍 Marqueur posé en jeu sur ${escapeMarkdown(placeLabel(found))}${noteText}${chatWarning}`);
+    return {
+      discord: `📍 Marqueur posé en jeu sur ${escapeMarkdown(placeLabel(found))}${noteText}${chatWarning}`,
+      game: [],
+    };
   },
 
   async autocomplete(interaction) {

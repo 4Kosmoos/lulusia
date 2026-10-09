@@ -1,26 +1,24 @@
 // Pont entre le chat du jeu et le salon #chat-jeu.
 //  - Jeu -> Discord : lecture de getChatMessages toutes les quelques secondes
-//    (messages des joueurs et messages système : connexions, déconnexions…).
+//    (messages des joueurs et messages système, sauf les connexions et déconnexions,
+//    déjà annoncées dans #alertes par FRM).
 //  - Discord -> jeu : envoi par sendChatMessage (demande FRM_TOKEN).
+//  - Commandes « !stock », « !energie »… tapées d'un côté ou de l'autre : réponse dans le jeu et dans #chat-jeu.
 
 import { ChannelType, Events, escapeMarkdown, type Client, type Message, type TextChannel } from "discord.js";
+import { discordPayload, runGameCommand } from "./commands/index.ts";
 import { config } from "./config.ts";
 import { frm, type ChatMessage } from "./frm.ts";
+import { MAX_GAME_MESSAGE_LENGTH, discordSender, isFromBot } from "./game-chat.ts";
 
-/** Préfixe des messages venant de Discord : il sert aussi à ne pas les renvoyer vers Discord. */
-const DISCORD_PREFIX = "[Discord] ";
-const MAX_SENDER_LENGTH = 32; // limite de FRM
-const MAX_GAME_MESSAGE_LENGTH = 250;
 const MAX_REMEMBERED = 1000;
+
+/** « <PlayerName/> has joined the game! » : déjà annoncé dans #alertes, et FRM ne remplace pas le nom. */
+const JOIN_LEAVE = /has (joined|left) the game|a (rejoint|quitté) la partie/i;
 
 const seen = new Set<string>();
 let baselineDone = false;
 let frmDown = false;
-
-/** Nom affiché dans le chat du jeu pour un message venu de Discord (pont du chat, /ping). */
-export function gameSenderName(discordName: string): string {
-  return `${DISCORD_PREFIX}${discordName}`.slice(0, MAX_SENDER_LENGTH);
-}
 
 const keyOf = (m: ChatMessage) => `${m.ServerTimeStamp}|${m.Sender}|${m.Message}`;
 
@@ -37,11 +35,15 @@ function formatGameMessage(m: ChatMessage): string | undefined {
   const text = m.Message.trim();
   if (!text) return undefined;
   if (m.Type === "Player") {
-    // Les messages venus de Discord reviennent dans le chat du jeu : on ne les renvoie pas.
-    if (m.Sender.startsWith(DISCORD_PREFIX)) return undefined;
+    if (isFromBot(m.Sender)) return undefined;
     return `🎮 **${escapeMarkdown(m.Sender)}** : ${escapeMarkdown(text)}`;
   }
-  if (m.Type === "System") return `⚙️ *${escapeMarkdown(text)}*`;
+  if (m.Type === "System") {
+    if (JOIN_LEAVE.test(text)) return undefined;
+    // Le jeu remplace lui-même cette balise par le nom du joueur concerné : FRM la renvoie telle quelle.
+    const resolved = text.replaceAll("<PlayerName/>", m.Sender || "un pionnier");
+    return `⚙️ *${escapeMarkdown(resolved)}*`;
+  }
   return undefined; // messages d'ADA : ignorés
 }
 
@@ -71,6 +73,17 @@ async function pollGameChat(channel: TextChannel): Promise<void> {
   for (const m of fresh) {
     const content = formatGameMessage(m);
     if (content) await channel.send({ content, allowedMentions: { parse: [] } });
+    if (m.Type === "Player" && !isFromBot(m.Sender)) await answerCommand(channel, m.Message.trim(), m.Sender);
+  }
+}
+
+/** Si le message est une commande (« !stock iron plate »), répond dans le jeu et dans #chat-jeu. */
+async function answerCommand(channel: TextChannel, text: string, author: string): Promise<void> {
+  try {
+    const result = await runGameCommand(text, author);
+    if (result) await channel.send({ ...discordPayload(result.discord), allowedMentions: { parse: [] } });
+  } catch (error) {
+    console.warn(`Commande « ${text} » : réponse impossible :`, error instanceof Error ? error.message : error);
   }
 }
 
@@ -85,10 +98,10 @@ async function forwardToGame(message: Message): Promise<void> {
   if (!text) return;
   if (text.length > MAX_GAME_MESSAGE_LENGTH) text = `${text.slice(0, MAX_GAME_MESSAGE_LENGTH - 1)}…`;
 
-  const sender = gameSenderName(message.member?.displayName ?? message.author.displayName);
+  const author = message.member?.displayName ?? message.author.displayName;
 
   try {
-    await frm.sendChatMessage(sender, text);
+    await frm.sendChatMessage(discordSender(author), text);
     await message.react("✅").catch(() => undefined); // facultatif : demande la permission « Ajouter des réactions »
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
@@ -96,7 +109,9 @@ async function forwardToGame(message: Message): Promise<void> {
     await message
       .reply({ content: `⚠️ Message non transmis au jeu : ${reason}`, allowedMentions: { repliedUser: false } })
       .catch(() => undefined);
+    return;
   }
+  if (message.channel.type === ChannelType.GuildText) await answerCommand(message.channel, text, author);
 }
 
 export async function startChatBridge(client: Client<true>): Promise<void> {

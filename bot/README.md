@@ -5,8 +5,8 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 ## Fonctionnalités
 
 - [x] `#statut` : un message mis à jour toutes les minutes (joueurs connectés, partie, énergie, batteries, fusibles).
-- [x] Pont entre le chat du jeu et `#chat-jeu` : les messages des joueurs et les messages système du jeu arrivent sur Discord, et ceux de `#chat-jeu` arrivent dans le jeu sous le nom « [Discord] pseudo ».
-- [x] Commandes slash, avec suggestions pendant la saisie :
+- [x] Pont entre le chat du jeu et `#chat-jeu` : les messages des joueurs et les messages système du jeu arrivent sur Discord (sauf les arrivées et départs de joueurs, déjà dans `#alertes`), et ceux de `#chat-jeu` arrivent dans le jeu sous le nom « [Discord] pseudo ».
+- [x] Commandes slash, utilisables dans tous les salons, avec suggestions pendant la saisie :
 
   | Commande | Réponse |
   |---|---|
@@ -15,6 +15,8 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
   | `/joueurs` | Joueurs connectés : santé, vitesse, et position par rapport au lieu nommé le plus proche (« à 420 m au nord-est de 🚉 Gare Fer ») |
   | `/ping <lieu> [message]` | Marqueur en jeu sur le HUB, une gare, un marqueur de carte ou un joueur, annoncé dans le chat du jeu |
 
+- [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs` et `!aide`, tapées dans Satisfactory ou dans `#chat-jeu`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#chat-jeu`.
+- [x] Une commande slash lancée dans `#chat-jeu` est aussi recopiée dans le chat du jeu.
 - [ ] Alertes perso (ex. « fer bas »).
 
 ## Organisation du code
@@ -25,13 +27,14 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 | `src/config.ts` | Lecture et vérification du `.env` |
 | `src/frm.ts` | Client typé de l'API FRM (lecture, et écriture avec le jeton) |
 | `src/status.ts` | Message de `#statut` |
-| `src/chat.ts` | Pont avec le chat du jeu |
+| `src/chat.ts` | Pont avec le chat du jeu, et commandes `!` |
+| `src/game-chat.ts` | Écriture dans le chat du jeu : expéditeurs, texte sans emoji, file d'attente |
 | `src/power.ts`, `src/format.ts` | Mise en forme commune (électricité, nombres, durées) |
-| `src/commands/` | Une commande par fichier, plus `index.ts` (enregistrement et aiguillage), `shared.ts` (cache, autocomplétion) et `places.ts` (lieux nommés et positions) |
+| `src/commands/` | Une commande par fichier, qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (cache, autocomplétion) et `places.ts` (lieux nommés et positions) |
 
-Les commandes sont enregistrées sur le serveur Discord du salon `#statut` à chaque démarrage. Pour les limiter au salon `#commandes` : Paramètres du serveur > Intégrations > Lulusia.
+Les commandes slash sont enregistrées sur le serveur Discord du salon `#statut` à chaque démarrage. Les commandes `!` passent par le pont du chat : elles demandent `CHAT_CHANNEL_ID` et `FRM_TOKEN`.
 
-Les noms des objets sont ceux renvoyés par le serveur de jeu, dans sa langue.
+Les noms des objets sont ceux renvoyés par le serveur de jeu, dans sa langue (en anglais : `!stock iron plate`).
 
 ## Lancer en local
 

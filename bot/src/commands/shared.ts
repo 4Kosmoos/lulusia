@@ -4,15 +4,34 @@ import { setTimeout as delay } from "node:timers/promises";
 import type {
   ApplicationCommandOptionChoiceData,
   AutocompleteInteraction,
-  ChatInputCommandInteraction,
+  EmbedBuilder,
   RESTPostAPIChatInputApplicationCommandsJSONBody,
 } from "discord.js";
 import { normalize } from "../format.ts";
 
+export interface CommandInput {
+  /** Valeur de chaque option texte, par nom. */
+  options: Record<string, string | undefined>;
+  /** Pseudo de la personne qui lance la commande, sur Discord ou dans le jeu. */
+  author: string;
+}
+
+export interface CommandResult {
+  /** Réponse sur Discord. */
+  discord: string | EmbedBuilder;
+  /** La même réponse pour le chat du jeu : une ligne par message, sans Markdown (les emoji sont retirés à l'envoi). */
+  game: string[];
+}
+
 export interface Command {
   /** Définition envoyée à Discord (nom, description, options). */
   data: RESTPostAPIChatInputApplicationCommandsJSONBody;
-  execute(interaction: ChatInputCommandInteraction): Promise<void>;
+  /**
+   * Utilisation dans le chat du jeu (« !stock <objet> »), ou undefined si la commande n'y est pas proposée.
+   * Le texte tapé après le nom de la commande va dans la première option.
+   */
+  gameUsage?: string;
+  run(input: CommandInput): Promise<CommandResult>;
   /** Suggestions pendant la saisie d'une option. Discord exige une réponse en moins de 3 s. */
   autocomplete?(interaction: AutocompleteInteraction): Promise<void>;
 }
