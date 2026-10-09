@@ -13,18 +13,14 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 | 4 | Mods : SMM sur les deux PC, ficsit-cli sur le serveur (22 mods) | ✅ |
 | 5 | Partie créée en solo (tutoriel), envoyée sur le serveur, FRM configuré | ✅ |
 | 6 | Tailscale, Docker, stack Grafana publiée en HTTPS sur le réseau privé | ✅ |
-| 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat) | 🟡 reste les commandes |
+| 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat, commandes) | ✅ |
 | 8 | Sauvegardes et surveillance | 🟡 archives locales faites et testées, reste la copie hors serveur et les alertes |
 | 9 | Repo git publié, le VPS se met à jour par `git pull`, fichiers du serveur identiques à `ops/` | ✅ |
 
 ## Bot Discord
 
-- [ ] **Commandes** dans `#commandes` :
-  - `/stock <objet>` : quantité d'un objet dans les stockages ;
-  - `/energie` : détail par réseau électrique ;
-  - `/joueurs` : qui est connecté, où, avec quelle santé ;
-  - `/ping` : poser un marqueur sur la carte du jeu (`createPing`).
-  - Plus tard : piloter l'usine avec les endpoints d'écriture de FRM (`setSwitches` pour les interrupteurs, `setEnabled` pour activer ou couper des bâtiments).
+- [x] **Commandes** dans `#commandes` : `/stock`, `/energie`, `/joueurs`, `/ping` (détail dans le [README du bot](../bot/README.md)).
+- [ ] **Piloter l'usine** avec les endpoints d'écriture de FRM : `setSwitches` pour les interrupteurs, `setEnabled` pour activer ou couper des bâtiments.
 - [ ] **Alertes perso** dans `#alertes`, par exemple « fer bas » : seuils sur les stocks ou la production.
 - [ ] **Surveillance de FRM** : prévenir sur Discord quand FRM ne répond plus. Éventuellement, redémarrer le serveur tout seul si personne n'est connecté.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.

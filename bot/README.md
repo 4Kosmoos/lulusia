@@ -5,9 +5,33 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 ## Fonctionnalités
 
 - [x] `#statut` : un message mis à jour toutes les minutes (joueurs connectés, partie, énergie, batteries, fusibles).
-- [x] Pont entre le chat du jeu et `#chat-jeu` : les messages des joueurs arrivent sur Discord, et ceux de `#chat-jeu` arrivent dans le jeu sous le nom « [Discord] pseudo ».
-- [ ] Commandes (`/stock`, `/energie`, `/joueurs`, `/ping`…).
+- [x] Pont entre le chat du jeu et `#chat-jeu` : les messages des joueurs et les messages système du jeu arrivent sur Discord, et ceux de `#chat-jeu` arrivent dans le jeu sous le nom « [Discord] pseudo ».
+- [x] Commandes slash, avec suggestions pendant la saisie :
+
+  | Commande | Réponse |
+  |---|---|
+  | `/stock <objet>` | Quantité dans les conteneurs et le dépôt dimensionnel, production et consommation par minute, bilan, et temps avant épuisement si le bilan est négatif |
+  | `/energie` | Chaque réseau électrique : consommation actuelle et max, capacité, marge, batteries, fusibles |
+  | `/joueurs` | Joueurs connectés : santé, vitesse, et position par rapport au lieu nommé le plus proche (« à 420 m au nord-est de 🚉 Gare Fer ») |
+  | `/ping <lieu> [message]` | Marqueur en jeu sur le HUB, une gare, un marqueur de carte ou un joueur, annoncé dans le chat du jeu |
+
 - [ ] Alertes perso (ex. « fer bas »).
+
+## Organisation du code
+
+| Fichier | Rôle |
+|---|---|
+| `src/index.ts` | Démarrage : connexion à Discord, `#statut`, pont du chat, commandes |
+| `src/config.ts` | Lecture et vérification du `.env` |
+| `src/frm.ts` | Client typé de l'API FRM (lecture, et écriture avec le jeton) |
+| `src/status.ts` | Message de `#statut` |
+| `src/chat.ts` | Pont avec le chat du jeu |
+| `src/power.ts`, `src/format.ts` | Mise en forme commune (électricité, nombres, durées) |
+| `src/commands/` | Une commande par fichier, plus `index.ts` (enregistrement et aiguillage), `shared.ts` (cache, autocomplétion) et `places.ts` (lieux nommés et positions) |
+
+Les commandes sont enregistrées sur le serveur Discord du salon `#statut` à chaque démarrage. Pour les limiter au salon `#commandes` : Paramètres du serveur > Intégrations > Lulusia.
+
+Les noms des objets sont ceux renvoyés par le serveur de jeu, dans sa langue.
 
 ## Lancer en local
 

@@ -1,5 +1,6 @@
 // Pont entre le chat du jeu et le salon #chat-jeu.
-//  - Jeu -> Discord : lecture de getChatMessages toutes les quelques secondes.
+//  - Jeu -> Discord : lecture de getChatMessages toutes les quelques secondes
+//    (messages des joueurs et messages système : connexions, déconnexions…).
 //  - Discord -> jeu : envoi par sendChatMessage (demande FRM_TOKEN).
 
 import { ChannelType, Events, escapeMarkdown, type Client, type Message, type TextChannel } from "discord.js";
@@ -16,6 +17,11 @@ const seen = new Set<string>();
 let baselineDone = false;
 let frmDown = false;
 
+/** Nom affiché dans le chat du jeu pour un message venu de Discord (pont du chat, /ping). */
+export function gameSenderName(discordName: string): string {
+  return `${DISCORD_PREFIX}${discordName}`.slice(0, MAX_SENDER_LENGTH);
+}
+
 const keyOf = (m: ChatMessage) => `${m.ServerTimeStamp}|${m.Sender}|${m.Message}`;
 
 function remember(key: string): void {
@@ -24,6 +30,19 @@ function remember(key: string): void {
     const oldest = seen.values().next().value;
     if (oldest !== undefined) seen.delete(oldest);
   }
+}
+
+/** Texte à poster sur Discord, ou undefined pour ignorer le message. */
+function formatGameMessage(m: ChatMessage): string | undefined {
+  const text = m.Message.trim();
+  if (!text) return undefined;
+  if (m.Type === "Player") {
+    // Les messages venus de Discord reviennent dans le chat du jeu : on ne les renvoie pas.
+    if (m.Sender.startsWith(DISCORD_PREFIX)) return undefined;
+    return `🎮 **${escapeMarkdown(m.Sender)}** : ${escapeMarkdown(text)}`;
+  }
+  if (m.Type === "System") return `⚙️ *${escapeMarkdown(text)}*`;
+  return undefined; // messages d'ADA : ignorés
 }
 
 async function pollGameChat(channel: TextChannel): Promise<void> {
@@ -50,11 +69,8 @@ async function pollGameChat(channel: TextChannel): Promise<void> {
   }
 
   for (const m of fresh) {
-    if (m.Type !== "Player" || m.Sender.startsWith(DISCORD_PREFIX) || m.Message.trim() === "") continue;
-    await channel.send({
-      content: `🎮 **${escapeMarkdown(m.Sender)}** : ${escapeMarkdown(m.Message)}`,
-      allowedMentions: { parse: [] },
-    });
+    const content = formatGameMessage(m);
+    if (content) await channel.send({ content, allowedMentions: { parse: [] } });
   }
 }
 
@@ -69,8 +85,7 @@ async function forwardToGame(message: Message): Promise<void> {
   if (!text) return;
   if (text.length > MAX_GAME_MESSAGE_LENGTH) text = `${text.slice(0, MAX_GAME_MESSAGE_LENGTH - 1)}…`;
 
-  const author = message.member?.displayName ?? message.author.displayName;
-  const sender = `${DISCORD_PREFIX}${author}`.slice(0, MAX_SENDER_LENGTH);
+  const sender = gameSenderName(message.member?.displayName ?? message.author.displayName);
 
   try {
     await frm.sendChatMessage(sender, text);

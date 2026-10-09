@@ -3,6 +3,7 @@
 import { ChannelType, EmbedBuilder, type Client, type Message } from "discord.js";
 import { config } from "./config.ts";
 import { frm, type Player, type PowerCircuit, type SessionInfo } from "./frm.ts";
+import { batteryText, powerLines } from "./power.ts";
 
 const COLORS = {
   running: 0x2ecc71,
@@ -10,9 +11,6 @@ const COLORS = {
   problem: 0xe67e22,
   down: 0xe74c3c,
 };
-
-const number = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 });
-const mw = (value: number) => `${number.format(value)} MW`;
 
 let statusMessage: Message | undefined;
 let lastSuccess: Date | undefined;
@@ -30,44 +28,10 @@ function playersField(players: Player[]): string {
 
 function powerField(circuits: PowerCircuit[]): string {
   if (circuits.length === 0) return "Aucun réseau électrique";
-  // Comme le panneau électrique du jeu : la production réelle suit la consommation.
-  // (Le champ PowerProduction de FRM ne compte que la production de base, souvent 0 avec Refined Power.)
-  const sum = (key: "PowerConsumed" | "PowerCapacity" | "PowerMaxConsumed") =>
-    circuits.reduce((total, c) => total + c[key], 0);
-  const consumed = sum("PowerConsumed");
-  const capacity = sum("PowerCapacity");
-  const maxConsumed = sum("PowerMaxConsumed");
-  const usage = capacity > 0 ? ` (${number.format((consumed / capacity) * 100)} % de la capacité)` : "";
-  const lines = [
-    `Consommation : **${mw(consumed)}**${usage}`,
-    `Capacité : ${mw(capacity)}`,
-    `Consommation max possible : ${mw(maxConsumed)}`,
-  ];
-  const margin = capacity - maxConsumed;
-  if (margin < 0) {
-    lines.push(`🔴 Si tout tourne à fond, il manque **${mw(-margin)}** : risque de fusible grillé.`);
-  } else if (capacity > 0 && margin < capacity * 0.05) {
-    lines.push(`⚠️ Marge faible : ${mw(margin)} entre la consommation max et la capacité.`);
-  }
+  const lines = powerLines(circuits);
   const tripped = circuits.filter((c) => c.FuseTriggered).length;
   if (tripped > 0) lines.push(`⚠️ **Fusible grillé** sur ${tripped} réseau${tripped > 1 ? "x" : ""} !`);
   return lines.join("\n");
-}
-
-function batteryField(circuits: PowerCircuit[]): string {
-  const withBatteries = circuits.filter((c) => c.BatteryCapacity > 0);
-  if (withBatteries.length === 0) return "Aucune";
-  const capacity = withBatteries.reduce((total, c) => total + c.BatteryCapacity, 0);
-  const percent = withBatteries.reduce((total, c) => total + c.BatteryPercent * c.BatteryCapacity, 0) / capacity;
-  const differential = withBatteries.reduce((total, c) => total + c.BatteryDifferential, 0);
-  let trend = "stables";
-  if (differential < -0.01) {
-    const main = withBatteries.reduce((a, b) => (b.BatteryCapacity > a.BatteryCapacity ? b : a));
-    trend = `se vident (vides dans ${main.BatteryTimeEmpty})`;
-  } else if (differential > 0.01) {
-    trend = "se rechargent";
-  }
-  return `${number.format(percent)} %, ${trend}`;
 }
 
 function sessionField(session: SessionInfo): string {
@@ -104,8 +68,8 @@ async function buildEmbed(): Promise<EmbedBuilder> {
       .addFields(
         { name: `👷 Joueurs (${online})`, value: playersField(players), inline: true },
         { name: "📅 Partie", value: sessionField(session), inline: true },
-        { name: "⚡ Énergie", value: powerField(power) },
-        { name: "🔋 Batteries", value: batteryField(power) },
+        { name: "⚡ Consommation électrique", value: powerField(power) },
+        { name: "🔋 Batteries", value: batteryText(power) ?? "Aucune" },
       );
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);

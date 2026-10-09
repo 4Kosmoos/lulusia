@@ -142,8 +142,8 @@ Serveur Discord « Lulusia », pour les deux joueurs.
 | `#statut` | Un message du bot mis à jour toutes les minutes : joueurs, partie, électricité, batteries | ✅ |
 | `#chat-jeu` | Pont avec le chat du jeu, dans les deux sens | ✅ |
 | `#alertes` | Webhook FRM : fusible, batteries (50, 25, 10 %), joueurs connectés, recherches, jalons, trains. Plus tard, les alertes perso du bot | ✅ |
-| `#commandes` | Commandes du bot pour interroger et piloter l'usine | à faire |
-| `#dev` | Commits GitHub (webhook Discord avec `/github` ajouté à la fin de l'URL) | à brancher |
+| `#commandes` | Commandes du bot : `/stock`, `/energie`, `/joueurs`, `/ping` | ✅ |
+| `#dev` | Commits GitHub (webhook Discord avec `/github` ajouté à la fin de l'URL) | ✅ |
 
-- **Bot** : application Discord « Lulusia » **privée** (lien d'installation : Aucun), ajoutée au serveur avec le minimum de permissions : voir les salons, envoyer des messages, intégrer des liens, voir les anciens messages, ajouter des réactions. L'intent privilégié *Message Content* est activé (lecture de `#chat-jeu`).
+- **Bot** : application Discord « Lulusia » **privée** (lien d'installation : Aucun), ajoutée au serveur avec le minimum de permissions : voir les salons, envoyer des messages, intégrer des liens, voir les anciens messages, ajouter des réactions. L'intent privilégié *Message Content* est activé (lecture de `#chat-jeu`). Le bot enregistre ses commandes slash sur le serveur à chaque démarrage (la portée `applications.commands` est incluse avec la portée `bot`). Elles sont limitées au salon `#commandes` dans Paramètres du serveur > Intégrations.
 - **Webhooks** : leurs URL sont des secrets (quiconque les a peut écrire dans le salon). Si une URL fuite, supprimer le webhook et en recréer un.

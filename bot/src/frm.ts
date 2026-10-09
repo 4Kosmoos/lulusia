@@ -3,6 +3,13 @@
 
 import { config } from "./config.ts";
 
+/** Position dans le monde du jeu, en centimètres (x vers l'est, y vers le sud, z vers le haut). */
+export interface Location {
+  x: number;
+  y: number;
+  z: number;
+}
+
 export interface SessionInfo {
   SessionName: string;
   IsPaused: boolean;
@@ -20,6 +27,9 @@ export interface Player {
   Online: boolean;
   Dead: boolean;
   PlayerHP: number;
+  /** km/h */
+  Speed: number;
+  location: Location;
 }
 
 export interface PowerCircuit {
@@ -46,9 +56,41 @@ export interface ChatMessage {
   Message: string;
 }
 
-interface SendChatResult {
+/** Quantité d'un objet. Les fluides sont en m³. */
+export interface ItemAmount {
+  Name: string;
+  ClassName: string;
+  Amount: number;
+}
+
+/** Rythmes par minute d'un objet, toutes machines, extracteurs et générateurs confondus. */
+export interface ProductionStat {
+  Name: string;
+  ClassName: string;
+  CurrentProd: number;
+  MaxProd: number;
+  CurrentConsumed: number;
+  MaxConsumed: number;
+  Type: "Solid" | "Liquid" | "Gas" | "Invalid" | "Unknown";
+}
+
+/** Marqueur posé sur la carte par un joueur. */
+export interface MapMarker {
+  ID: string;
+  Name: string;
+  Category: string;
+  location: Location;
+}
+
+/** Bâtiment nommé (gare, HUB…). */
+export interface Building {
+  ID: string;
+  Name: string;
+  location: Location;
+}
+
+interface WriteResult {
   IsSent?: boolean;
-  Message?: string;
   error?: string;
 }
 
@@ -77,28 +119,42 @@ async function request<T>(endpoint: string, init: RequestInit = {}): Promise<T> 
   const body: unknown = await response.json().catch(() => undefined);
   const error = errorMessage(body);
   if (!response.ok || error !== undefined) {
-    // "No matching endpoint found." = le bug FRM après un rechargement de la partie.
-    throw new FrmError(`${endpoint} : ${error ?? `HTTP ${response.status}`}`);
+    const hint =
+      error === "No matching endpoint found."
+        ? " (bug FRM connu après un rechargement de la partie : redémarrer le serveur)"
+        : "";
+    throw new FrmError(`${endpoint} : ${error ?? `HTTP ${response.status}`}${hint}`);
   }
   return body as T;
 }
 
-async function sendChatMessage(sender: string, message: string): Promise<void> {
+/** Endpoints d'écriture : demandent le jeton FRM et renvoient un résultat par objet envoyé. */
+async function write(endpoint: string, payload: object): Promise<WriteResult[]> {
   if (!config.frmToken) {
-    throw new FrmError("FRM_TOKEN manquant dans le .env : impossible d'écrire dans le chat du jeu");
+    throw new FrmError(`FRM_TOKEN manquant dans le .env : ${endpoint} impossible`);
   }
-  const results = await request<SendChatResult[]>("sendChatMessage", {
+  const results = await request<WriteResult[]>(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-FRM-Authorization": config.frmToken,
     },
-    body: JSON.stringify({ sender, message }),
+    body: JSON.stringify(payload),
   });
-  const result = Array.isArray(results) ? results[0] : undefined;
-  if (!result?.IsSent) {
-    throw new FrmError(`sendChatMessage : ${result?.error ?? "message refusé par FRM"}`);
-  }
+  const list = Array.isArray(results) ? results : [];
+  const error = list.map(errorMessage).find((message) => message !== undefined);
+  if (error !== undefined) throw new FrmError(`${endpoint} : ${error}`);
+  return list;
+}
+
+async function sendChatMessage(sender: string, message: string): Promise<void> {
+  const [result] = await write("sendChatMessage", { sender, message });
+  if (!result?.IsSent) throw new FrmError("sendChatMessage : message refusé par FRM");
+}
+
+/** Pose un marqueur (« ping ») dans le jeu. FRM refuse si aucun joueur n'est connecté. */
+async function createPing({ x, y, z }: Location): Promise<void> {
+  await write("createPing", { x, y, z });
 }
 
 export const frm = {
@@ -106,5 +162,14 @@ export const frm = {
   players: () => request<Player[]>("getPlayer"),
   power: () => request<PowerCircuit[]>("getPower"),
   chatMessages: () => request<ChatMessage[]>("getChatMessages"),
+  /** Contenu cumulé de tous les conteneurs de stockage. */
+  storageTotals: () => request<ItemAmount[]>("getWorldInv"),
+  /** Contenu du dépôt dimensionnel. */
+  dimensionalDepot: () => request<ItemAmount[]>("getCloudInv"),
+  productionStats: () => request<ProductionStat[]>("getProdStats"),
+  mapMarkers: () => request<MapMarker[]>("getMapMarkers"),
+  trainStations: () => request<Building[]>("getTrainStation"),
+  hubTerminals: () => request<Building[]>("getHUBTerminal"),
   sendChatMessage,
+  createPing,
 };

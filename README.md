@@ -5,7 +5,7 @@
 Un serveur **Satisfactory 1.2 moddé** (Satisfactory Plus et une vingtaine de mods) qui tourne 24 h/24 pour deux joueurs, avec tout un outillage autour :
 
 - **dashboards Grafana** : production, énergie, trains, drones, stockages… ;
-- **bot Discord** en TypeScript : état du serveur en direct, pont avec le chat du jeu, bientôt des commandes pour piloter l'usine ;
+- **bot Discord** en TypeScript : état du serveur en direct, pont avec le chat du jeu, commandes pour interroger l'usine (stocks, énergie, joueurs) et poser des marqueurs en jeu ;
 - **alertes Discord** : fusible grillé, batteries, trains, recherches, joueurs connectés ;
 - **sauvegardes automatiques** et entretien du serveur.
 

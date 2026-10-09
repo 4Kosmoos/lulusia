@@ -2,6 +2,7 @@
 
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import { startChatBridge } from "./chat.ts";
+import { handleInteraction, registerCommands } from "./commands/index.ts";
 import { config } from "./config.ts";
 import { updateStatus } from "./status.ts";
 
@@ -11,6 +12,10 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent, // intent privilégié, activé dans le Developer Portal
   ],
+});
+
+client.on(Events.InteractionCreate, (interaction) => {
+  void handleInteraction(interaction);
 });
 
 client.once(Events.ClientReady, async (readyClient) => {
@@ -35,6 +40,12 @@ client.once(Events.ClientReady, async (readyClient) => {
     await startChatBridge(readyClient);
   } catch (error) {
     console.error("Pont du chat impossible à démarrer :", error);
+  }
+
+  try {
+    await registerCommands(readyClient);
+  } catch (error) {
+    console.error("Enregistrement des commandes impossible :", error);
   }
 });
 
