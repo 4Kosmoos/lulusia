@@ -53,7 +53,7 @@ async function runSlashCommand(interaction: ChatInputCommandInteraction, command
   const result = await command.run({ options, author });
   await interaction.editReply(discordPayload(result.discord));
 
-  // Lancée dans #chat-jeu : le résultat est aussi recopié dans le chat du jeu.
+  // Lancée dans le salon du pont : le résultat est aussi recopié dans le chat du jeu.
   if (interaction.channelId === config.chatChannelId && result.game.length > 0) {
     await botSays(result.game).catch((error) =>
       console.warn(`/${command.data.name} : recopie dans le chat du jeu impossible :`, errorText(error)),
@@ -125,7 +125,7 @@ async function runInGame(command: Command, argument: string, author: string): Pr
 
 /**
  * Message du chat du jeu qui commence par « ! » : exécute la commande et répond dans le jeu.
- * Renvoie le résultat pour #chat-jeu, ou undefined si le message n'est pas une commande du bot.
+ * Renvoie le résultat pour le salon du pont, ou undefined si le message n'est pas une commande du bot.
  */
 export async function runGameCommand(text: string, author: string): Promise<CommandResult | undefined> {
   if (!text.startsWith("!")) return undefined;

@@ -1,9 +1,9 @@
-// Pont entre le chat du jeu et le salon #chat-jeu.
+// Pont entre le chat du jeu et un salon Discord (CHAT_CHANNEL_ID).
 //  - Jeu -> Discord : lecture de getChatMessages toutes les quelques secondes
 //    (messages des joueurs et messages système, sauf les connexions et déconnexions,
 //    déjà annoncées dans #alertes par FRM).
 //  - Discord -> jeu : envoi par sendChatMessage (demande FRM_TOKEN).
-//  - Commandes « !stock », « !energie »… tapées d'un côté ou de l'autre : réponse dans le jeu et dans #chat-jeu.
+//  - Commandes « !stock », « !energie »… tapées d'un côté ou de l'autre : réponse dans le jeu et dans le salon du pont.
 
 import { ChannelType, Events, escapeMarkdown, type Client, type Message, type TextChannel } from "discord.js";
 import { discordPayload, runGameCommand } from "./commands/index.ts";
@@ -77,7 +77,7 @@ async function pollGameChat(channel: TextChannel): Promise<void> {
   }
 }
 
-/** Si le message est une commande (« !stock iron plate »), répond dans le jeu et dans #chat-jeu. */
+/** Si le message est une commande (« !stock iron plate »), répond dans le jeu et dans le salon du pont. */
 async function answerCommand(channel: TextChannel, text: string, author: string): Promise<void> {
   try {
     const result = await runGameCommand(text, author);

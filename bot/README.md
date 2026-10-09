@@ -5,7 +5,7 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 ## Fonctionnalités
 
 - [x] `#statut` : un message mis à jour toutes les minutes (joueurs connectés, partie, énergie, batteries, fusibles).
-- [x] Pont entre le chat du jeu et `#chat-jeu` : les messages des joueurs et les messages système du jeu arrivent sur Discord (sauf les arrivées et départs de joueurs, déjà dans `#alertes`), et ceux de `#chat-jeu` arrivent dans le jeu sous le nom « [Discord] pseudo ».
+- [x] Pont entre le chat du jeu et `#general` : les messages des joueurs et les messages système du jeu arrivent sur Discord (sauf les arrivées et départs de joueurs, déjà dans `#alertes`), et ceux de `#general` arrivent dans le jeu sous le nom « [Discord] pseudo ».
 - [x] Commandes slash, utilisables dans tous les salons, avec suggestions pendant la saisie :
 
   | Commande | Réponse |
@@ -15,8 +15,8 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
   | `/joueurs` | Joueurs connectés : santé, vitesse, et position par rapport au lieu nommé le plus proche (« à 420 m au nord-est de 🚉 Gare Fer ») |
   | `/ping <lieu> [message]` | Marqueur en jeu sur le HUB, une gare, un marqueur de carte ou un joueur, annoncé dans le chat du jeu |
 
-- [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs` et `!aide`, tapées dans Satisfactory ou dans `#chat-jeu`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#chat-jeu`.
-- [x] Une commande slash lancée dans `#chat-jeu` est aussi recopiée dans le chat du jeu.
+- [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs` et `!aide`, tapées dans Satisfactory ou dans `#general`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#general`.
+- [x] Une commande slash lancée dans `#general` est aussi recopiée dans le chat du jeu.
 - [ ] Alertes perso (ex. « fer bas »).
 
 ## Organisation du code

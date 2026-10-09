@@ -20,7 +20,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 ## Bot Discord
 
 - [x] **Commandes** `/stock`, `/energie`, `/joueurs`, `/ping`, dans tous les salons (détail dans le [README du bot](../bot/README.md)).
-- [x] **Commandes depuis le chat du jeu** : `!stock`, `!energie`, `!joueurs`, `!aide`, avec réponse dans le jeu et dans `#chat-jeu`.
+- [x] **Commandes depuis le chat du jeu** : `!stock`, `!energie`, `!joueurs`, `!aide`, avec réponse dans le jeu et dans `#general`.
 - [ ] **Piloter l'usine** avec les endpoints d'écriture de FRM : `setSwitches` pour les interrupteurs, `setEnabled` pour activer ou couper des bâtiments.
 - [ ] **Alertes perso** dans `#alertes`, par exemple « fer bas » : seuils sur les stocks ou la production.
 - [ ] **Surveillance de FRM** : prévenir sur Discord quand FRM ne répond plus. Éventuellement, redémarrer le serveur tout seul si personne n'est connecté.
