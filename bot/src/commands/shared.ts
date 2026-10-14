@@ -9,9 +9,14 @@ import type {
 } from "discord.js";
 import { normalize } from "../format.ts";
 
-export interface CommandInput {
-  /** Valeur de chaque option texte, par nom. */
+export interface CommandArgs {
+  /** Sous-commande (« /alerte stock » → « stock »), s'il y en a. */
+  subcommand?: string;
+  /** Valeur de chaque option, en texte, par nom. */
   options: Record<string, string | undefined>;
+}
+
+export interface CommandInput extends CommandArgs {
   /** Pseudo de la personne qui lance la commande, sur Discord ou dans le jeu. */
   author: string;
 }
@@ -26,11 +31,13 @@ export interface CommandResult {
 export interface Command {
   /** Définition envoyée à Discord (nom, description, options). */
   data: RESTPostAPIChatInputApplicationCommandsJSONBody;
-  /**
-   * Utilisation dans le chat du jeu (« !stock <objet> »), ou undefined si la commande n'y est pas proposée.
-   * Le texte tapé après le nom de la commande va dans la première option.
-   */
+  /** Utilisation dans le chat du jeu (« !stock <objet> »), ou undefined si la commande n'y est pas proposée. */
   gameUsage?: string;
+  /**
+   * Lecture du texte tapé en jeu après le nom de la commande. Sans elle, tout le texte va dans la
+   * première option. Renvoie undefined si le texte n'est pas valide : le bot affiche alors `gameUsage`.
+   */
+  parseGame?(text: string): CommandArgs | undefined;
   run(input: CommandInput): Promise<CommandResult>;
   /** Suggestions pendant la saisie d'une option. Discord exige une réponse en moins de 3 s. */
   autocomplete?(interaction: AutocompleteInteraction): Promise<void>;

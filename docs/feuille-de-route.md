@@ -22,7 +22,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Commandes** `/stock`, `/energie`, `/joueurs`, `/ping`, dans tous les salons (détail dans le [README du bot](../bot/README.md)).
 - [x] **Commandes depuis le chat du jeu** : `!stock`, `!energie`, `!joueurs`, `!aide`, avec réponse dans le jeu et dans `#general`.
 - [ ] **Piloter l'usine** avec les endpoints d'écriture de FRM : `setSwitches` pour les interrupteurs, `setEnabled` pour activer ou couper des bâtiments.
-- [ ] **Alertes perso** dans `#alertes`, par exemple « fer bas » : seuils sur les stocks ou la production.
+- [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alerte` ou `!alerte` (détail dans le [README du bot](../bot/README.md)).
 - [ ] **Redémarrer le serveur tout seul** quand FRM est en panne et que personne n'est connecté. Le bot tourne dans Docker sans accès à systemd : il faudrait un petit script côté serveur (timer systemd) qui fait la vérification et le redémarrage.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
 - [ ] Idée : déploiement automatique du bot à chaque push (GitHub Actions, connexion au VPS par Tailscale).

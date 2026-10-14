@@ -11,14 +11,17 @@ import { config } from "../config.ts";
 import { normalize } from "../format.ts";
 import { FrmError } from "../frm.ts";
 import { botSays } from "../game-chat.ts";
+import { alerte } from "./alerte.ts";
 import { energie } from "./energie.ts";
 import { joueurs } from "./joueurs.ts";
 import { ping } from "./ping.ts";
-import type { Command, CommandResult } from "./shared.ts";
+import type { Command, CommandArgs, CommandResult } from "./shared.ts";
 import { stock } from "./stock.ts";
 
-const commands: Command[] = [stock, energie, joueurs, ping];
+const commands: Command[] = [stock, energie, joueurs, ping, alerte];
 const byName = new Map(commands.map((command) => [command.data.name, command]));
+/** Raccourcis du chat du jeu : « !alertes » = « !alerte liste ». */
+const GAME_ALIASES: Record<string, string> = { alertes: "alerte liste" };
 
 const errorText = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
@@ -44,13 +47,20 @@ export async function registerCommands(client: Client<true>): Promise<void> {
 // ---------------------------------------------------------------------------------------------
 // Depuis Discord
 
+/** Sous-commande et options d'une commande slash, toutes converties en texte (comme dans le jeu). */
+function readArgs(interaction: ChatInputCommandInteraction): CommandArgs {
+  const subcommand = interaction.options.getSubcommand(false) ?? undefined;
+  const given = subcommand ? (interaction.options.data[0]?.options ?? []) : interaction.options.data;
+  return {
+    subcommand,
+    options: Object.fromEntries(given.map((option) => [option.name, option.value === undefined ? undefined : String(option.value)])),
+  };
+}
+
 async function runSlashCommand(interaction: ChatInputCommandInteraction, command: Command): Promise<void> {
   await interaction.deferReply();
-  const options = Object.fromEntries(
-    (command.data.options ?? []).map((option) => [option.name, interaction.options.getString(option.name) ?? undefined]),
-  );
   const author = interaction.inCachedGuild() ? interaction.member.displayName : interaction.user.displayName;
-  const result = await command.run({ options, author });
+  const result = await command.run({ ...readArgs(interaction), author });
   await interaction.editReply(discordPayload(result.discord));
 
   // Lancée dans le salon du pont : le résultat est aussi recopié dans le chat du jeu.
@@ -109,13 +119,18 @@ function gameHelp(): CommandResult {
   };
 }
 
-async function runInGame(command: Command, argument: string, author: string): Promise<CommandResult> {
-  const usage = { discord: `Utilisation : \`${command.gameUsage}\``, game: [`Utilisation : ${command.gameUsage}`] };
-  // Le texte tapé après le nom de la commande va dans sa première option.
+/** Par défaut, le texte tapé après le nom de la commande va dans sa première option. */
+function defaultGameArgs(command: Command, argument: string): CommandArgs | undefined {
   const option = command.data.options?.[0];
-  if (option && "required" in option && option.required && !argument) return usage;
+  if (option && "required" in option && option.required && !argument) return undefined;
+  return { options: option ? { [option.name]: argument } : {} };
+}
+
+async function runInGame(command: Command, argument: string, author: string): Promise<CommandResult> {
+  const args = command.parseGame ? command.parseGame(argument) : defaultGameArgs(command, argument);
+  if (!args) return { discord: `Utilisation : \`${command.gameUsage}\``, game: [`Utilisation : ${command.gameUsage}`] };
   try {
-    return await command.run({ options: option ? { [option.name]: argument } : {}, author });
+    return await command.run({ ...args, author });
   } catch (error) {
     if (!(error instanceof FrmError)) console.error(`!${command.data.name} :`, error);
     const reason = error instanceof FrmError ? error.message : "erreur inattendue, voir les logs du bot";
@@ -129,7 +144,9 @@ async function runInGame(command: Command, argument: string, author: string): Pr
  */
 export async function runGameCommand(text: string, author: string): Promise<CommandResult | undefined> {
   if (!text.startsWith("!")) return undefined;
-  const [first = "", ...rest] = text.slice(1).trim().split(/\s+/);
+  let [first = "", ...rest] = text.slice(1).trim().split(/\s+/);
+  const alias = GAME_ALIASES[normalize(first)];
+  if (alias) [first = "", ...rest] = [...alias.split(" "), ...rest];
   const name = normalize(first);
 
   let result: CommandResult;

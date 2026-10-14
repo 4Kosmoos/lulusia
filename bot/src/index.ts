@@ -1,6 +1,7 @@
 // Point d'entrée du bot Lulusia.
 
 import { Client, Events, GatewayIntentBits } from "discord.js";
+import { startAlertWatcher } from "./alerts.ts";
 import { startChatBridge } from "./chat.ts";
 import { handleInteraction, registerCommands } from "./commands/index.ts";
 import { config } from "./config.ts";
@@ -54,6 +55,12 @@ client.once(Events.ClientReady, async (readyClient) => {
     await startMonitoring(readyClient);
   } catch (error) {
     console.error("Surveillance impossible à démarrer :", error);
+  }
+
+  try {
+    await startAlertWatcher(readyClient);
+  } catch (error) {
+    console.error("Alertes perso impossibles à démarrer :", error);
   }
 
   startHeartbeat();

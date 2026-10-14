@@ -10,8 +10,14 @@ services:
     # FRM écoute sur la machine hôte (port 8080, autorisé par ufw pour les réseaux Docker).
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    # Alertes perso (data/alerts.json) : gardées d'une reconstruction à l'autre.
+    volumes:
+      - bot-data:/app/data
     logging:
       driver: json-file
       options:
         max-size: "10m"
         max-file: "3"
+
+volumes:
+  bot-data:

@@ -14,12 +14,16 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
   | `/energie` | Chaque réseau électrique : consommation actuelle et max, capacité, marge, batteries, fusibles |
   | `/joueurs` | Joueurs connectés : santé, vitesse, et position par rapport au lieu nommé le plus proche (« à 420 m au nord-est de 🚉 Gare Fer ») |
   | `/ping <lieu> [message]` | Marqueur en jeu sur le HUB, une gare, un marqueur de carte ou un joueur, annoncé dans le chat du jeu |
+  | `/alerte stock`, `bilan`, `liste`, `supprimer` | Alertes perso (voir plus bas) |
 
-- [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs` et `!aide`, tapées dans Satisfactory ou dans `#general`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#general`.
+- [x] Les mêmes commandes dans le chat du jeu : `!stock <objet>`, `!energie`, `!joueurs`, `!alerte …`, `!alertes` et `!aide`, tapées dans Satisfactory ou dans `#general`. Le bot (« Lulusia », en orange) répond en texte simple dans le jeu, et avec la réponse habituelle dans `#general`.
 - [x] Une commande slash lancée dans `#general` est aussi recopiée dans le chat du jeu.
 - [x] Surveillance dans `#alertes` : serveur de jeu ou FRM qui ne répond plus depuis 5 min, RAM ou disque à 90 % ou plus. Un message quand le problème commence, un quand il cesse.
 - [x] Signal de vie vers Healthchecks.io chaque minute : si le VPS ou le bot tombe, Healthchecks.io prévient dans `#alertes`.
-- [ ] Alertes perso (ex. « fer bas »).
+- [x] Alertes perso, dans `#alertes` et dans le chat du jeu, avec à chaque fois la production et la consommation de l'objet :
+  - **stock bas** : `/alerte stock objet:Iron Plate sous:1000`, ou `!alerte stock iron plate 1000` en jeu. Alerte après 2 min sous le seuil, fin d'alerte à 10 % au-dessus ;
+  - **bilan négatif** : `/alerte bilan objet:Iron Ingot`, ou `!alerte bilan iron ingot`. Alerte quand l'objet est consommé plus vite que produit pendant 10 min, fin d'alerte dès que le bilan est rétabli ;
+  - `/alerte liste` (`!alertes`) et `/alerte supprimer` (`!alerte supprimer 2`). Une seule alerte de chaque type par objet : en recréer une met à jour son seuil.
 
 ## Organisation du code
 
@@ -32,9 +36,10 @@ Bot du serveur Discord « Lulusia ». Il lit l'état de la partie Satisfactory v
 | `src/chat.ts` | Pont avec le chat du jeu, et commandes `!` |
 | `src/game-chat.ts` | Écriture dans le chat du jeu : expéditeurs, texte sans emoji, file d'attente |
 | `src/monitor.ts` | Surveillance du serveur, de la RAM et du disque |
+| `src/alerts.ts` | Alertes perso : enregistrement des règles (`data/alerts.json`) et vérification chaque minute |
 | `src/heartbeat.ts` | Signal de vie pour Healthchecks.io |
 | `src/power.ts`, `src/format.ts` | Mise en forme commune (électricité, nombres, durées) |
-| `src/commands/` | Une commande par fichier, qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (cache, autocomplétion) et `places.ts` (lieux nommés et positions) |
+| `src/commands/` | Une commande par fichier, qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (cache, autocomplétion), `inventory.ts` (stocks et rythmes par objet) et `places.ts` (lieux nommés et positions) |
 
 Les commandes slash sont enregistrées sur le serveur Discord du salon `#statut` à chaque démarrage. Les commandes `!` passent par le pont du chat : elles demandent `CHAT_CHANNEL_ID` et `FRM_TOKEN`.
 

@@ -15,6 +15,9 @@ export function plural(count: number, singular: string, pluralForm = `${singular
   return `${count} ${count > 1 ? pluralForm : singular}`;
 }
 
+/** Première lettre en majuscule. */
+export const capitalize = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
+
 /** Texte sans accents ni majuscules, pour comparer ce que tape un joueur aux noms du jeu. */
 export function normalize(text: string): string {
   return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().trim();

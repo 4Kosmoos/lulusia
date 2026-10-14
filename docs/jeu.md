@@ -32,7 +32,7 @@ FicsIt-Networks (ordinateurs programmables en Lua) viendra quand il sera compati
 
 ### Versions installées
 
-Profil SMM et profil ficsit-cli « Lulusia », installés le 25/09/2026. Les 22 mods ont une version serveur Linux et le mod loader les charge tous.
+Profil SMM et profil ficsit-cli « Lulusia », installés le 25/09/2026, mis à jour le 14/10/2026 pour le jeu en **1.2.4.1** (build 513885). Les 22 mods ont une version serveur Linux et le mod loader les charge tous.
 
 | Mod | Référence | Version | Remarque |
 |---|---|---|---|
@@ -42,19 +42,19 @@ Profil SMM et profil ficsit-cli « Lulusia », installés le 25/09/2026. Les 22 
 | Ficsit Farming | FicsitFarming | 2026.3.18 | Dépendance de SF+ |
 | Fluid Extras | AB_FluidExtras | 1.0.13 | Dépendance de SF+ |
 | Structural Solutions | SS_Mod | 1.1.47 | |
-| Smart! | SmartFoundations | 34.3.1 | |
-| Efficiency Checker | EfficiencyCheckerMod | 2.5.17 | |
+| Smart! | SmartFoundations | 34.4.0 | |
+| Efficiency Checker | EfficiencyCheckerMod | 2.5.18 | |
 | Digital Storage | DigitalStorage | 2026.3.11 | |
-| Ficsit Remote Monitoring | FicsitRemoteMonitoring | 1.5.3 | |
+| Ficsit Remote Monitoring | FicsitRemoteMonitoring | 1.5.4 | |
 | Enhanced Sorting | EnhancedSorting | 1.0.4 | Même auteur que Digital Storage, probablement sa dépendance |
 | Marcio Common Libs | MarcioCommonLibs | 1.3.12 | Dépendance d'Efficiency Checker |
 | Cross-Mod Compatibility Packs | KPatchwork | 2026.3.81 | Bibliothèque KMods |
-| KMods Blueprint Function Library | KBFL | 2026.3.506 | Bibliothèque KMods |
+| KMods Blueprint Function Library | KBFL | 2026.4.599 | Bibliothèque KMods |
 | KMods Library - API | KAPI | 2026.3.506 | Bibliothèque KMods |
 | KMods Library - Code | KPrivateCodeLib | 2026.3.514 | Bibliothèque KMods |
 | KMods Library - Content | KLib | 2026.3.512 | Bibliothèque KMods |
 | KMods Library - UI/UX | KUI | 2026.3.511 | Bibliothèque KMods |
-| Satisfactory Content Forge | KDataForge | 2026.3.570 | Bibliothèque KMods |
+| Satisfactory Content Forge | KDataForge | 2026.4.582 | Bibliothèque KMods |
 | Modular UI | ModularUI | 2026.3.8 | Bibliothèque |
 | RefinedRDApi | RefinedRDApi | 2026.3.12 | Bibliothèque Refined R&D |
 | RefinedRDLib | RefinedRDLib | 2026.3.44 | Bibliothèque Refined R&D |
