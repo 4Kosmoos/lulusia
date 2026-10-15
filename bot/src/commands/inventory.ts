@@ -1,12 +1,12 @@
-// Inventaire de l'usine : stock de chaque objet (conteneurs, dépôt dimensionnel) et rythmes de production.
-// Partagé par /stock, /alerte et la surveillance des alertes perso.
+// Factory inventory: stock of each item (containers, dimensional depot) and production rates.
+// Shared by /stock, /alert and the custom alert watcher.
 
 import { formatDuration, formatInteger, formatNumber } from "../format.ts";
 import { frm, type ItemAmount, type ProductionStat } from "../frm.ts";
 import { cached, resolve, type Candidate } from "./shared.ts";
 
 export interface Item {
-  /** Identifiant stable du jeu (« Desc_IronPlate_C »). */
+  /** Stable game identifier ("Desc_IronPlate_C"). */
   className: string;
   name: string;
 }
@@ -15,11 +15,11 @@ export interface Inventory {
   storage: ItemAmount[];
   depot: ItemAmount[];
   stats: ProductionStat[];
-  /** Objets en stock, au dépôt ou dans une recette en cours, triés par nom. */
+  /** Items in stock, in the depot or in a running recipe, sorted by name. */
   items: Item[];
 }
 
-/** En dessous de cet écart (par minute), production et consommation sont considérées à l'équilibre. */
+/** Below this difference (per minute), production and consumption are considered balanced. */
 export const BALANCED = 0.05;
 
 function listItems(...sources: { ClassName: string; Name: string }[][]): Item[] {
@@ -29,7 +29,7 @@ function listItems(...sources: { ClassName: string; Name: string }[][]): Item[] 
   }
   return [...names]
     .map(([className, name]) => ({ className, name }))
-    .sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    .sort((a, b) => a.name.localeCompare(b.name, "en"));
 }
 
 export async function loadInventory(): Promise<Inventory> {
@@ -41,13 +41,13 @@ export async function loadInventory(): Promise<Inventory> {
   return { storage, depot, stats, items: listItems(storage, depot, stats) };
 }
 
-/** Pour l'autocomplétion : la liste des objets, gardée 1 min. */
+/** For autocomplete: the list of items, kept for 1 min. */
 export const knownItems = cached(async () => (await loadInventory()).items, 60_000);
 
 export const itemCandidates = (items: Item[]): Candidate[] =>
   items.map((item) => ({ label: item.name, value: item.className, search: item.name }));
 
-/** Retrouve l'objet choisi dans les suggestions, ou tapé à la main (nom exact ou seul nom qui contient le texte). */
+/** Finds the item picked in the suggestions, or typed by hand (exact name, or the only name containing the text). */
 export const findItem = (items: Item[], typed: string) =>
   resolve(items, typed, (i) => i.className, (i) => i.name);
 
@@ -56,12 +56,12 @@ export interface ItemReport {
   inStorage: number;
   inDepot: number;
   total: number;
-  /** Unité des fluides (« m³ »), vide pour les objets. */
+  /** Unit of fluids (" m³"), empty for items. */
   unit: string;
   fluid: boolean;
-  /** Rythmes, seulement si au moins une machine produit ou consomme l'objet. */
+  /** Rates, only if at least one machine produces or consumes the item. */
   stat?: ProductionStat;
-  /** Production moins consommation, par minute (0 si aucune machine ne s'en sert). */
+  /** Production minus consumption, per minute (0 if no machine uses it). */
   balance: number;
 }
 
@@ -88,23 +88,23 @@ export function reportFor(inventory: Inventory, item: Item): ItemReport {
 export const amountText = (r: ItemReport, value: number) => `${formatInteger(value)}${r.unit}`;
 export const perMinuteText = (r: ItemReport, value: number) => `${formatNumber(value)}${r.unit}/min`;
 
-/** « stock vide dans ~2 h 05 » si le bilan est négatif et qu'il reste du stock, sinon chaîne vide. */
+/** "empty in ~2h 05m at this rate" if the balance is negative and there is stock left, otherwise "". */
 export function emptyInText(r: ItemReport): string {
-  return r.balance < -BALANCED && r.total > 0 ? `stock vide dans ~${formatDuration(r.total / -r.balance)} à ce rythme` : "";
+  return r.balance < -BALANCED && r.total > 0 ? `empty in ~${formatDuration(r.total / -r.balance)} at this rate` : "";
 }
 
-/** « prod 450/min (max 480/min), conso 300/min (max 320/min), bilan +150/min », en texte simple. */
+/** "prod 450/min (max 480/min), cons 300/min (max 320/min), net +150/min", as plain text. */
 export function ratesText(r: ItemReport): string {
   const { stat } = r;
-  if (!stat) return "ni produit ni consommé en ce moment";
+  if (!stat) return "not produced or consumed right now";
   const parts: string[] = [];
   if (stat.MaxProd > 0) parts.push(`prod ${perMinuteText(r, stat.CurrentProd)} (max ${perMinuteText(r, stat.MaxProd)})`);
   if (stat.MaxConsumed > 0) {
-    parts.push(`conso ${perMinuteText(r, stat.CurrentConsumed)} (max ${perMinuteText(r, stat.MaxConsumed)})`);
+    parts.push(`cons ${perMinuteText(r, stat.CurrentConsumed)} (max ${perMinuteText(r, stat.MaxConsumed)})`);
   }
-  if (Math.abs(r.balance) < BALANCED) parts.push("bilan équilibré");
-  else if (r.balance > 0) parts.push(`bilan +${perMinuteText(r, r.balance)}`);
-  else parts.push(`bilan -${perMinuteText(r, -r.balance)}`);
+  if (Math.abs(r.balance) < BALANCED) parts.push("balanced");
+  else if (r.balance > 0) parts.push(`net +${perMinuteText(r, r.balance)}`);
+  else parts.push(`net -${perMinuteText(r, -r.balance)}`);
   const empty = emptyInText(r);
   if (empty) parts.push(empty);
   return parts.join(", ");

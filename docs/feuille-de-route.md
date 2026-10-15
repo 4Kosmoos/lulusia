@@ -19,10 +19,11 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## Bot Discord
 
-- [x] **Commandes** `/stock`, `/energie`, `/joueurs`, `/ping`, `/alerte`, `/interrupteur`, `/machines`, dans tous les salons (détail dans le [README du bot](../bot/README.md)).
-- [x] **Commandes depuis le chat du jeu** : les mêmes avec `!` (`!stock`, `!interrupteur`, `!machines`, `!aide`…), avec réponse dans le jeu et dans `#general`.
+- [x] **Commandes** `/stock`, `/power`, `/players`, `/ping`, `/alert`, `/switch`, `/machines`, dans tous les salons (détail dans le [README du bot](../bot/README.md)).
+- [x] **Commandes depuis le chat du jeu** : les mêmes avec `!` (`!stock`, `!switch`, `!machines`, `!help`…), avec réponse dans le jeu et dans `#general`.
 - [x] **Piloter l'usine** sans confirmation, chaque action annoncée dans le chat du jeu : interrupteurs électriques par leur nom (`setSwitches` de FRM), pause et relance de toutes les machines qui fabriquent un objet (`setEnabled`).
-- [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alerte` ou `!alerte` (détail dans le [README du bot](../bot/README.md)).
+- [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alert` ou `!alert` (détail dans le [README du bot](../bot/README.md)).
+- [x] **Bot en anglais** (octobre 2026) : commandes, réponses et logs, comme le jeu et les noms d'objets renvoyés par le serveur. La doc reste en français.
 - [ ] **Redémarrer le serveur tout seul** quand FRM est en panne et que personne n'est connecté. Le bot tourne dans Docker sans accès à systemd : il faudrait un petit script côté serveur (timer systemd) qui fait la vérification et le redémarrage.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
 - [ ] Idée : déploiement automatique du bot à chaque push (GitHub Actions, connexion au VPS par Tailscale).

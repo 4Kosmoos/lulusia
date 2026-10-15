@@ -1,4 +1,4 @@
-// Point d'entrée du bot Lulusia.
+// Entry point of the Lulusia bot.
 
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import { startAlertWatcher } from "./alerts.ts";
@@ -13,7 +13,7 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent, // intent privilégié, activé dans le Developer Portal
+    GatewayIntentBits.MessageContent, // privileged intent, enabled in the Developer Portal
   ],
 });
 
@@ -22,7 +22,7 @@ client.on(Events.InteractionCreate, (interaction) => {
 });
 
 client.once(Events.ClientReady, async (readyClient) => {
-  console.log(`Connecté à Discord en tant que ${readyClient.user.tag}`);
+  console.log(`Logged in to Discord as ${readyClient.user.tag}`);
 
   let running = false;
   const tick = async () => {
@@ -31,7 +31,7 @@ client.once(Events.ClientReady, async (readyClient) => {
     try {
       await updateStatus(readyClient);
     } catch (error) {
-      console.error("Mise à jour de #statut impossible :", error);
+      console.error("Cannot update the status message:", error);
     } finally {
       running = false;
     }
@@ -42,25 +42,25 @@ client.once(Events.ClientReady, async (readyClient) => {
   try {
     await startChatBridge(readyClient);
   } catch (error) {
-    console.error("Pont du chat impossible à démarrer :", error);
+    console.error("Cannot start the chat bridge:", error);
   }
 
   try {
     await registerCommands(readyClient);
   } catch (error) {
-    console.error("Enregistrement des commandes impossible :", error);
+    console.error("Cannot register the commands:", error);
   }
 
   try {
     await startMonitoring(readyClient);
   } catch (error) {
-    console.error("Surveillance impossible à démarrer :", error);
+    console.error("Cannot start monitoring:", error);
   }
 
   try {
     await startAlertWatcher(readyClient);
   } catch (error) {
-    console.error("Alertes perso impossibles à démarrer :", error);
+    console.error("Cannot start custom alerts:", error);
   }
 
   startHeartbeat();
@@ -68,7 +68,7 @@ client.once(Events.ClientReady, async (readyClient) => {
 
 for (const signal of ["SIGINT", "SIGTERM"] as const) {
   process.on(signal, async () => {
-    console.log(`${signal} reçu, arrêt du bot.`);
+    console.log(`${signal} received, stopping the bot.`);
     await client.destroy();
     process.exit(0);
   });

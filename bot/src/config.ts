@@ -1,9 +1,9 @@
-// Lecture et vérification des variables d'environnement (voir .env.example).
+// Reads and checks the environment variables (see .env.example).
 
 function required(name: string): string {
   const value = process.env[name]?.trim();
   if (!value) {
-    throw new Error(`Variable d'environnement manquante : ${name} (voir .env.example)`);
+    throw new Error(`Missing environment variable: ${name} (see .env.example)`);
   }
   return value;
 }
@@ -16,7 +16,7 @@ function optional(name: string): string | undefined {
 function seconds(name: string, fallback: number, minimum: number): number {
   const value = Number(optional(name) ?? fallback);
   if (!Number.isFinite(value) || value < minimum) {
-    throw new Error(`${name} doit être un nombre supérieur ou égal à ${minimum}`);
+    throw new Error(`${name} must be a number greater than or equal to ${minimum}`);
   }
   return value * 1000;
 }
@@ -27,11 +27,11 @@ export const config = {
   frmUrl: required("FRM_URL").replace(/\/+$/, ""),
   frmToken: optional("FRM_TOKEN"),
   statusIntervalMs: seconds("STATUS_INTERVAL_SECONDS", 60, 15),
-  /** Salon du pont avec le chat du jeu. Sans lui, le pont est désactivé. */
+  /** Channel bridged with the game chat. Without it, the bridge is disabled. */
   chatChannelId: optional("CHAT_CHANNEL_ID"),
   chatPollMs: seconds("CHAT_POLL_SECONDS", 3, 1),
-  /** Salon des alertes de surveillance (serveur, RAM, disque). Sans lui, la surveillance est désactivée. */
+  /** Channel for monitoring alerts (server, RAM, disk) and custom alerts. Without it, both are disabled. */
   alertChannelId: optional("ALERT_CHANNEL_ID"),
-  /** URL de ping Healthchecks.io (signal de vie). Secrète : elle permet d'envoyer de faux signaux. */
+  /** Healthchecks.io ping URL (heartbeat). Secret: it can be used to send fake signals. */
   healthcheckUrl: optional("HEALTHCHECK_URL"),
 };

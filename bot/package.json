@@ -2,7 +2,7 @@
   "name": "lulusia-bot",
   "version": "0.1.0",
   "private": true,
-  "description": "Bot Discord du serveur Satisfactory Lulusia (données via Ficsit Remote Monitoring)",
+  "description": "Discord bot for the Lulusia Satisfactory server (data from Ficsit Remote Monitoring)",
   "type": "module",
   "engines": {
     "node": ">=24"

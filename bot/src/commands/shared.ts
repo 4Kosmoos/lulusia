@@ -1,4 +1,4 @@
-// Outils communs aux commandes : forme d'une commande, cache, autocomplétion.
+// Shared tools for the commands: shape of a command, cache, autocomplete.
 
 import { setTimeout as delay } from "node:timers/promises";
 import type {
@@ -10,52 +10,52 @@ import type {
 import { normalize } from "../format.ts";
 
 export interface CommandArgs {
-  /** Sous-commande (« /alerte stock » → « stock »), s'il y en a. */
+  /** Subcommand ("/alert stock" → "stock"), if any. */
   subcommand?: string;
-  /** Valeur de chaque option, en texte, par nom. */
+  /** Value of each option, as text, by name. */
   options: Record<string, string | undefined>;
 }
 
 export interface CommandInput extends CommandArgs {
-  /** Pseudo de la personne qui lance la commande, sur Discord ou dans le jeu. */
+  /** Name of the person running the command, on Discord or in the game. */
   author: string;
 }
 
 export interface CommandResult {
-  /** Réponse sur Discord. */
+  /** Answer on Discord. */
   discord: string | EmbedBuilder;
-  /** La même réponse pour le chat du jeu : une ligne par message, sans Markdown (les emoji sont retirés à l'envoi). */
+  /** The same answer for the game chat: one line per message, no Markdown (emoji are removed when sent). */
   game: string[];
   /**
-   * Toujours envoyer `game` dans le chat du jeu, d'où que vienne la commande : pour les actions qui
-   * changent la partie (couper un interrupteur…), les joueurs doivent savoir ce qui se passe et qui l'a fait.
+   * Always send `game` to the game chat, wherever the command comes from: for actions that change
+   * the game (turning a switch off…), players must know what happens and who did it.
    */
   announce?: boolean;
 }
 
 export interface Command {
-  /** Définition envoyée à Discord (nom, description, options). */
+  /** Definition sent to Discord (name, description, options). */
   data: RESTPostAPIChatInputApplicationCommandsJSONBody;
-  /** Utilisation dans le chat du jeu (« !stock <objet> »), ou undefined si la commande n'y est pas proposée. */
+  /** Usage in the game chat ("!stock <item>"), or undefined if the command is not available there. */
   gameUsage?: string;
   /**
-   * Lecture du texte tapé en jeu après le nom de la commande. Sans elle, tout le texte va dans la
-   * première option. Renvoie undefined si le texte n'est pas valide : le bot affiche alors `gameUsage`.
+   * Reads the text typed in game after the command name. Without it, the whole text goes into the
+   * first option. Returns undefined if the text is not valid: the bot then shows `gameUsage`.
    */
   parseGame?(text: string): CommandArgs | undefined;
   run(input: CommandInput): Promise<CommandResult>;
-  /** Suggestions pendant la saisie d'une option. Discord exige une réponse en moins de 3 s. */
+  /** Suggestions while an option is being typed. Discord requires an answer within 3 s. */
   autocomplete?(interaction: AutocompleteInteraction): Promise<void>;
 }
 
-/** Délai laissé à FRM pendant l'autocomplétion, pour répondre à Discord à temps. */
+/** Time given to FRM during autocomplete, to answer Discord in time. */
 const AUTOCOMPLETE_TIMEOUT_MS = 2000;
-const MAX_CHOICES = 25; // limite de Discord
-const MAX_CHOICE_LENGTH = 100; // limite de Discord, pour le nom comme pour la valeur
+const MAX_CHOICES = 25; // Discord limit
+const MAX_CHOICE_LENGTH = 100; // Discord limit, for the name and for the value
 
 /**
- * Garde le résultat de `load` pendant `ttlMs`. Les appels simultanés partagent la même requête,
- * pour ne pas solliciter FRM à chaque touche tapée.
+ * Keeps the result of `load` for `ttlMs`. Simultaneous calls share the same request,
+ * so that FRM is not called at every key typed.
  */
 export function cached<T>(load: () => Promise<T>, ttlMs: number): () => Promise<T> {
   let value: T | undefined;
@@ -77,8 +77,8 @@ export function cached<T>(load: () => Promise<T>, ttlMs: number): () => Promise<
 }
 
 /**
- * Données pour l'autocomplétion, ou undefined si FRM est trop lent ou en panne.
- * La requête continue en arrière-plan et remplit le cache pour la touche suivante.
+ * Data for autocomplete, or undefined if FRM is too slow or down.
+ * The request keeps going in the background and fills the cache for the next key.
  */
 export async function forAutocomplete<T>(load: () => Promise<T>): Promise<T | undefined> {
   const request = load().catch(() => undefined);
@@ -87,15 +87,15 @@ export async function forAutocomplete<T>(load: () => Promise<T>): Promise<T | un
 }
 
 export interface Candidate {
-  /** Texte affiché dans la liste de Discord. */
+  /** Text shown in Discord's list. */
   label: string;
-  /** Identifiant renvoyé au bot quand le joueur choisit cette entrée. */
+  /** Identifier sent back to the bot when the player picks this entry. */
   value: string;
-  /** Texte sur lequel porte la recherche. */
+  /** Text the search applies to. */
   search: string;
 }
 
-/** Pertinence d'un nom pour une recherche : début du nom, puis début d'un mot, puis n'importe où. */
+/** Relevance of a name for a search: start of the name, then start of a word, then anywhere. */
 function score(search: string, query: string): number {
   if (!query) return 1;
   const text = normalize(search);
@@ -105,8 +105,8 @@ function score(search: string, query: string): number {
 }
 
 /**
- * Les meilleures suggestions pour ce que le joueur a tapé, dans le format attendu par Discord.
- * À pertinence égale, l'ordre des candidats est conservé.
+ * The best suggestions for what the player typed, in the format Discord expects.
+ * Candidates with the same relevance keep their order.
  */
 export function suggestions(candidates: Candidate[], typed: string): ApplicationCommandOptionChoiceData<string>[] {
   const query = normalize(typed);
@@ -122,8 +122,8 @@ export function suggestions(candidates: Candidate[], typed: string): Application
 }
 
 /**
- * Retrouve ce que le joueur a choisi : par identifiant s'il a pris une suggestion, sinon par le nom tapé
- * (nom exact, ou seul nom qui contient le texte). Renvoie aussi les noms possibles si c'est ambigu.
+ * Finds what the player chose: by identifier if they picked a suggestion, otherwise by the name typed
+ * (exact name, or the only name containing the text). Also returns the possible names if it is ambiguous.
  */
 export function resolve<T>(
   items: T[],

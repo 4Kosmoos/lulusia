@@ -1,9 +1,10 @@
-// Message de #statut : un seul message du bot, modifié à chaque mise à jour.
+// #statut message: a single bot message, edited at every update.
 
 import { ChannelType, EmbedBuilder, type Client, type Message } from "discord.js";
+import { batteryText, powerLines } from "./circuits.ts";
 import { config } from "./config.ts";
+import { plural } from "./format.ts";
 import { frm, type Player, type PowerCircuit, type SessionInfo } from "./frm.ts";
-import { batteryText, powerLines } from "./power.ts";
 
 const COLORS = {
   running: 0x2ecc71,
@@ -18,34 +19,34 @@ let lastSuccess: Date | undefined;
 function formatPlayTime(totalSeconds: number): string {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
-  return `${hours} h ${String(minutes).padStart(2, "0")}`;
+  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
 }
 
 function playersField(players: Player[]): string {
-  const online = players.filter((p) => p.Online).map((p) => p.Name || "Pionnier sans nom");
-  return online.length > 0 ? online.join("\n") : "Personne";
+  const online = players.filter((p) => p.Online).map((p) => p.Name || "Unnamed pioneer");
+  return online.length > 0 ? online.join("\n") : "Nobody";
 }
 
 function powerField(circuits: PowerCircuit[]): string {
-  if (circuits.length === 0) return "Aucun réseau électrique";
+  if (circuits.length === 0) return "No power circuit";
   const lines = powerLines(circuits);
   const tripped = circuits.filter((c) => c.FuseTriggered).length;
-  if (tripped > 0) lines.push(`⚠️ **Fusible grillé** sur ${tripped} réseau${tripped > 1 ? "x" : ""} !`);
+  if (tripped > 0) lines.push(`⚠️ **Fuse blown** on ${plural(tripped, "circuit")}!`);
   return lines.join("\n");
 }
 
 function sessionField(session: SessionInfo): string {
   const clock = `${String(session.Hours).padStart(2, "0")}:${String(session.Minutes).padStart(2, "0")}`;
   return [
-    `Jour ${session.PassedDays}, ${clock} ${session.IsDay ? "☀️" : "🌙"}`,
-    `Temps de jeu : ${formatPlayTime(session.TotalPlayDuration)}`,
+    `Day ${session.PassedDays}, ${clock} ${session.IsDay ? "☀️" : "🌙"}`,
+    `Play time: ${formatPlayTime(session.TotalPlayDuration)}`,
   ].join("\n");
 }
 
 async function buildEmbed(): Promise<EmbedBuilder> {
   const embed = new EmbedBuilder()
     .setTitle("🏭 Lulusia")
-    .setFooter({ text: `Mis à jour toutes les ${config.statusIntervalMs / 1000} s` })
+    .setFooter({ text: `Updated every ${config.statusIntervalMs / 1000} s` })
     .setTimestamp(new Date());
 
   try {
@@ -54,10 +55,10 @@ async function buildEmbed(): Promise<EmbedBuilder> {
     const fuseTripped = power.some((c) => c.FuseTriggered);
     const online = players.filter((p) => p.Online).length;
 
-    let state = "🟢 En ligne, partie en cours";
+    let state = "🟢 Online, game running";
     let color = COLORS.running;
     if (session.IsPaused) {
-      state = "⏸️ En ligne, en pause (personne n'est connecté)";
+      state = "⏸️ Online, paused (nobody connected)";
       color = COLORS.paused;
     }
     if (fuseTripped) color = COLORS.problem;
@@ -66,26 +67,26 @@ async function buildEmbed(): Promise<EmbedBuilder> {
       .setColor(color)
       .setDescription(state)
       .addFields(
-        { name: `👷 Joueurs (${online})`, value: playersField(players), inline: true },
-        { name: "📅 Partie", value: sessionField(session), inline: true },
-        { name: "⚡ Consommation électrique", value: powerField(power) },
-        { name: "🔋 Batteries", value: batteryText(power) ?? "Aucune" },
+        { name: `👷 Players (${online})`, value: playersField(players), inline: true },
+        { name: "📅 Game", value: sessionField(session), inline: true },
+        { name: "⚡ Power consumption", value: powerField(power) },
+        { name: "🔋 Batteries", value: batteryText(power) ?? "None" },
       );
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
     const since = lastSuccess
-      ? `Dernière réponse <t:${Math.floor(lastSuccess.getTime() / 1000)}:R>.`
-      : "Aucune réponse depuis le démarrage du bot.";
+      ? `Last answer <t:${Math.floor(lastSuccess.getTime() / 1000)}:R>.`
+      : "No answer since the bot started.";
     return embed
       .setColor(COLORS.down)
-      .setDescription(`🔴 Serveur ou FRM injoignable\n${since}\n\`${reason}\``);
+      .setDescription(`🔴 Server or FRM unreachable\n${since}\n\`${reason}\``);
   }
 }
 
 async function findOrCreateMessage(client: Client<true>, embed: EmbedBuilder): Promise<Message> {
   const channel = await client.channels.fetch(config.statusChannelId);
   if (!channel || channel.type !== ChannelType.GuildText) {
-    throw new Error(`STATUS_CHANNEL_ID (${config.statusChannelId}) n'est pas un salon textuel accessible au bot`);
+    throw new Error(`STATUS_CHANNEL_ID (${config.statusChannelId}) is not a text channel the bot can access`);
   }
   const recent = await channel.messages.fetch({ limit: 20 });
   const existing = recent.find((m) => m.author.id === client.user.id);
@@ -100,7 +101,7 @@ export async function updateStatus(client: Client<true>): Promise<void> {
       statusMessage = await statusMessage.edit({ embeds: [embed] });
       return;
     } catch {
-      // Message supprimé à la main ou inaccessible : on le recherche ou on en recrée un.
+      // Message deleted by hand or no longer accessible: look for it again or create a new one.
       statusMessage = undefined;
     }
   }

@@ -1,4 +1,4 @@
-// Commandes du bot : enregistrement sur Discord, et exécution depuis Discord (/stock) ou depuis le chat du jeu (!stock).
+// Bot commands: registration on Discord, and execution from Discord (/stock) or from the game chat (!stock).
 
 import {
   MessageFlags,
@@ -11,45 +11,45 @@ import { config } from "../config.ts";
 import { normalize } from "../format.ts";
 import { FrmError } from "../frm.ts";
 import { botSays } from "../game-chat.ts";
-import { alerte } from "./alerte.ts";
-import { energie } from "./energie.ts";
-import { interrupteur } from "./interrupteur.ts";
-import { joueurs } from "./joueurs.ts";
+import { alert } from "./alert.ts";
 import { machines } from "./machines.ts";
 import { ping } from "./ping.ts";
+import { players } from "./players.ts";
+import { power } from "./power.ts";
 import type { Command, CommandArgs, CommandResult } from "./shared.ts";
 import { stock } from "./stock.ts";
+import { switchCommand } from "./switch.ts";
 
-const commands: Command[] = [stock, energie, joueurs, ping, alerte, interrupteur, machines];
+const commands: Command[] = [stock, power, players, ping, alert, switchCommand, machines];
 const byName = new Map(commands.map((command) => [command.data.name, command]));
-/** Raccourcis du chat du jeu : « !alertes » = « !alerte liste », « !interrupteurs » = « !interrupteur liste ». */
-const GAME_ALIASES: Record<string, string> = { alertes: "alerte liste", interrupteurs: "interrupteur liste" };
+/** Game chat shortcuts: "!alerts" = "!alert list", "!switches" = "!switch list". */
+const GAME_ALIASES: Record<string, string> = { alerts: "alert list", switches: "switch list" };
 
 const errorText = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
-/** Réponse Discord d'une commande, prête pour `send` ou `editReply`. */
+/** Discord answer of a command, ready for `send` or `editReply`. */
 export function discordPayload(discord: string | EmbedBuilder) {
   return typeof discord === "string" ? { content: discord, embeds: [] } : { embeds: [discord] };
 }
 
 /**
- * Déclare les commandes sur le serveur Discord du salon #statut. Une commande de serveur est
- * disponible tout de suite (une commande globale peut mettre du temps à apparaître).
- * `set` remplace toute la liste : une commande retirée du code disparaît aussi de Discord.
+ * Registers the commands on the Discord server of the #statut channel. A server command is
+ * available right away (a global command can take a while to show up).
+ * `set` replaces the whole list: a command removed from the code also disappears from Discord.
  */
 export async function registerCommands(client: Client<true>): Promise<void> {
   const channel = await client.channels.fetch(config.statusChannelId);
   if (!channel || channel.isDMBased()) {
-    throw new Error(`STATUS_CHANNEL_ID (${config.statusChannelId}) n'est pas un salon de serveur accessible au bot`);
+    throw new Error(`STATUS_CHANNEL_ID (${config.statusChannelId}) is not a server channel the bot can access`);
   }
   await channel.guild.commands.set(commands.map((command) => command.data));
-  console.log(`Commandes enregistrées : ${commands.map((command) => `/${command.data.name}`).join(", ")}`);
+  console.log(`Commands registered: ${commands.map((command) => `/${command.data.name}`).join(", ")}`);
 }
 
 // ---------------------------------------------------------------------------------------------
-// Depuis Discord
+// From Discord
 
-/** Sous-commande et options d'une commande slash, toutes converties en texte (comme dans le jeu). */
+/** Subcommand and options of a slash command, all converted to text (as in the game). */
 function readArgs(interaction: ChatInputCommandInteraction): CommandArgs {
   const subcommand = interaction.options.getSubcommand(false) ?? undefined;
   const given = subcommand ? (interaction.options.data[0]?.options ?? []) : interaction.options.data;
@@ -65,27 +65,27 @@ async function runSlashCommand(interaction: ChatInputCommandInteraction, command
   const result = await command.run({ ...readArgs(interaction), author });
   await interaction.editReply(discordPayload(result.discord));
 
-  // Lancée dans le salon du pont, ou action à annoncer : le résultat part aussi dans le chat du jeu.
+  // Run in the bridge channel, or an action to announce: the result also goes to the game chat.
   if ((interaction.channelId === config.chatChannelId || result.announce) && result.game.length > 0) {
     await botSays(result.game).catch((error) =>
-      console.warn(`/${command.data.name} : recopie dans le chat du jeu impossible :`, errorText(error)),
+      console.warn(`/${command.data.name}: cannot copy to the game chat:`, errorText(error)),
     );
   }
 }
 
 async function replyWithError(interaction: ChatInputCommandInteraction, error: unknown): Promise<void> {
-  let content = "⚠️ Erreur inattendue, voir les logs du bot.";
+  let content = "⚠️ Unexpected error, see the bot logs.";
   if (error instanceof FrmError) {
-    content = `⚠️ FRM ne répond pas : ${error.message}`;
-    console.warn(`/${interaction.commandName} :`, error.message);
+    content = `⚠️ FRM is not responding: ${error.message}`;
+    console.warn(`/${interaction.commandName}:`, error.message);
   } else {
-    console.error(`/${interaction.commandName} :`, error);
+    console.error(`/${interaction.commandName}:`, error);
   }
   try {
     if (interaction.deferred || interaction.replied) await interaction.editReply({ content, embeds: [] });
     else await interaction.reply({ content, flags: MessageFlags.Ephemeral });
   } catch {
-    // Interaction expirée : rien de plus à faire.
+    // Interaction expired: nothing more to do.
   }
 }
 
@@ -94,8 +94,8 @@ export async function handleInteraction(interaction: Interaction): Promise<void>
     try {
       await byName.get(interaction.commandName)?.autocomplete?.(interaction);
     } catch (error) {
-      // Souvent une suggestion arrivée trop tard (le joueur a continué à taper) : sans gravité.
-      console.warn(`Autocomplétion /${interaction.commandName} :`, errorText(error));
+      // Usually a suggestion that arrived too late (the player kept typing): harmless.
+      console.warn(`Autocomplete /${interaction.commandName}:`, errorText(error));
     }
     return;
   }
@@ -111,17 +111,17 @@ export async function handleInteraction(interaction: Interaction): Promise<void>
 }
 
 // ---------------------------------------------------------------------------------------------
-// Depuis le chat du jeu
+// From the game chat
 
 function gameHelp(): CommandResult {
   const usages = commands.flatMap((command) => (command.gameUsage ? [command.gameUsage] : []));
   return {
-    discord: `Commandes du chat du jeu : ${usages.map((usage) => `\`${usage}\``).join(", ")}`,
-    game: [`Commandes : ${usages.join(" | ")}`],
+    discord: `Game chat commands: ${usages.map((usage) => `\`${usage}\``).join(", ")}`,
+    game: [`Commands: ${usages.join(" | ")}`],
   };
 }
 
-/** Par défaut, le texte tapé après le nom de la commande va dans sa première option. */
+/** By default, the text typed after the command name goes into its first option. */
 function defaultGameArgs(command: Command, argument: string): CommandArgs | undefined {
   const option = command.data.options?.[0];
   if (option && "required" in option && option.required && !argument) return undefined;
@@ -130,19 +130,19 @@ function defaultGameArgs(command: Command, argument: string): CommandArgs | unde
 
 async function runInGame(command: Command, argument: string, author: string): Promise<CommandResult> {
   const args = command.parseGame ? command.parseGame(argument) : defaultGameArgs(command, argument);
-  if (!args) return { discord: `Utilisation : \`${command.gameUsage}\``, game: [`Utilisation : ${command.gameUsage}`] };
+  if (!args) return { discord: `Usage: \`${command.gameUsage}\``, game: [`Usage: ${command.gameUsage}`] };
   try {
     return await command.run({ ...args, author });
   } catch (error) {
-    if (!(error instanceof FrmError)) console.error(`!${command.data.name} :`, error);
-    const reason = error instanceof FrmError ? error.message : "erreur inattendue, voir les logs du bot";
-    return { discord: `⚠️ ${reason}`, game: [`Erreur : ${reason}`] };
+    if (!(error instanceof FrmError)) console.error(`!${command.data.name}:`, error);
+    const reason = error instanceof FrmError ? error.message : "unexpected error, see the bot logs";
+    return { discord: `⚠️ ${reason}`, game: [`Error: ${reason}`] };
   }
 }
 
 /**
- * Message du chat du jeu qui commence par « ! » : exécute la commande et répond dans le jeu.
- * Renvoie le résultat pour le salon du pont, ou undefined si le message n'est pas une commande du bot.
+ * Game chat message starting with "!": runs the command and answers in the game.
+ * Returns the result for the bridge channel, or undefined if the message is not a bot command.
  */
 export async function runGameCommand(text: string, author: string): Promise<CommandResult | undefined> {
   if (!text.startsWith("!")) return undefined;
@@ -152,11 +152,11 @@ export async function runGameCommand(text: string, author: string): Promise<Comm
   const name = normalize(first);
 
   let result: CommandResult;
-  if (name === "aide" || name === "help") {
+  if (name === "help") {
     result = gameHelp();
   } else {
     const command = byName.get(name);
-    if (!command?.gameUsage) return undefined; // un « ! » qui n'est pas une commande : message normal
+    if (!command?.gameUsage) return undefined; // a "!" that is not a command: normal message
     result = await runInGame(command, rest.join(" "), author);
   }
   await botSays(result.game);

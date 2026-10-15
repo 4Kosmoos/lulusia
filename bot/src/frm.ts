@@ -1,9 +1,9 @@
-// Client minimal pour l'API HTTP de Ficsit Remote Monitoring (FRM).
-// Documentation des endpoints : https://docs.ficsit.app/ficsitremotemonitoring/latest/
+// Minimal client for the HTTP API of Ficsit Remote Monitoring (FRM).
+// Endpoint documentation: https://docs.ficsit.app/ficsitremotemonitoring/latest/
 
 import { config } from "./config.ts";
 
-/** Position dans le monde du jeu, en centimètres (x vers l'est, y vers le sud, z vers le haut). */
+/** Position in the game world, in centimeters (x towards east, y towards south, z up). */
 export interface Location {
   x: number;
   y: number;
@@ -47,23 +47,23 @@ export interface PowerCircuit {
 }
 
 export interface ChatMessage {
-  /** Horodatage Unix (secondes). */
+  /** Unix timestamp (seconds). */
   TimeStamp: number;
-  /** Secondes depuis le chargement de la partie : repart de zéro à chaque redémarrage. */
+  /** Seconds since the game was loaded: starts again from zero at every restart. */
   ServerTimeStamp: number;
   Sender: string;
   Type: "System" | "Ada" | "Player";
   Message: string;
 }
 
-/** Quantité d'un objet. Les fluides sont en m³. */
+/** Amount of an item. Fluids are in m³. */
 export interface ItemAmount {
   Name: string;
   ClassName: string;
   Amount: number;
 }
 
-/** Rythmes par minute d'un objet, toutes machines, extracteurs et générateurs confondus. */
+/** Rates per minute of an item, across all machines, extractors and generators. */
 export interface ProductionStat {
   Name: string;
   ClassName: string;
@@ -74,7 +74,7 @@ export interface ProductionStat {
   Type: "Solid" | "Liquid" | "Gas" | "Invalid" | "Unknown";
 }
 
-/** Marqueur posé sur la carte par un joueur. */
+/** Marker placed on the map by a player. */
 export interface MapMarker {
   ID: string;
   Name: string;
@@ -82,39 +82,39 @@ export interface MapMarker {
   location: Location;
 }
 
-/** Bâtiment nommé (gare, HUB…). */
+/** Named building (train station, HUB…). */
 export interface Building {
   ID: string;
   Name: string;
   location: Location;
 }
 
-/** Interrupteur électrique (simple ou prioritaire). */
+/** Power switch (simple or priority). */
 export interface PowerSwitch {
   ID: string;
-  /** Nom donné en jeu à l'interrupteur, vide s'il n'en a pas. */
+  /** Name given to the switch in game, empty if it has none. */
   SwitchTag: string;
   IsOn: boolean;
-  /** Priorité d'un interrupteur prioritaire, -1 pour un interrupteur simple. */
+  /** Priority of a priority switch, -1 for a simple switch. */
   Priority: number;
   location: Location;
 }
 
 export interface MachineProduct {
   Name: string;
-  /** « Unassigned » pour une machine sans recette. */
+  /** "Unassigned" for a machine without a recipe. */
   ClassName: string;
   CurrentProd: number;
   MaxProd: number;
 }
 
-/** Machine de production (constructeur, assembleuse… et machines des mods). */
+/** Production machine (constructor, assembler… and modded machines). */
 export interface Machine {
   ID: string;
-  /** Type de machine (« Constructor »). */
+  /** Machine type ("Constructor"). */
   Name: string;
   Recipe: string;
-  /** Produits de la recette, le produit principal en premier. */
+  /** Products of the recipe, main product first. */
   production: MachineProduct[];
   IsProducing: boolean;
   IsPaused: boolean;
@@ -146,7 +146,7 @@ async function request<T>(endpoint: string, init: RequestInit = {}): Promise<T> 
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
   } catch (cause) {
-    throw new FrmError(`FRM injoignable (${endpoint})`, { cause });
+    throw new FrmError(`FRM unreachable (${endpoint})`, { cause });
   }
 
   const body: unknown = await response.json().catch(() => undefined);
@@ -154,26 +154,26 @@ async function request<T>(endpoint: string, init: RequestInit = {}): Promise<T> 
   if (!response.ok || error !== undefined) {
     const hint =
       error === "No matching endpoint found."
-        ? " (bug FRM connu après un rechargement de la partie : redémarrer le serveur)"
+        ? " (known FRM bug after a game reload: restart the server)"
         : "";
-    throw new FrmError(`${endpoint} : ${error ?? `HTTP ${response.status}`}${hint}`);
+    throw new FrmError(`${endpoint}: ${error ?? `HTTP ${response.status}`}${hint}`);
   }
   return body as T;
 }
 
 /**
- * JSON en ASCII pur. FRM lit le corps des requêtes octet par octet (comme du Latin-1), ce qui casse
- * l'UTF-8 : « é » arrive dans le jeu sous la forme « Ã© ». Les caractères non ASCII partent donc en
- * séquences \uXXXX, que le lecteur JSON du jeu décode correctement.
+ * Pure ASCII JSON. FRM reads request bodies byte by byte (like Latin-1), which breaks UTF-8:
+ * "é" shows up in the game as "Ã©". Non-ASCII characters are therefore sent as \uXXXX escapes,
+ * which the game's JSON reader decodes correctly (FRM issue #314).
  */
 function asciiJson(payload: object): string {
   return JSON.stringify(payload).replace(/[\u0080-\uffff]/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}`);
 }
 
-/** Endpoints d'écriture : demandent le jeton FRM et renvoient un résultat par objet envoyé. */
+/** Write endpoints: need the FRM token and return one result per object sent. */
 async function post(endpoint: string, payload: object): Promise<WriteResult[]> {
   if (!config.frmToken) {
-    throw new FrmError(`FRM_TOKEN manquant dans le .env : ${endpoint} impossible`);
+    throw new FrmError(`FRM_TOKEN missing from .env: cannot call ${endpoint}`);
   }
   const results = await request<WriteResult[]>(endpoint, {
     method: "POST",
@@ -186,17 +186,17 @@ async function post(endpoint: string, payload: object): Promise<WriteResult[]> {
   return Array.isArray(results) ? results : [];
 }
 
-/** Comme `post`, mais échoue dès qu'un des résultats est une erreur. */
+/** Like `post`, but fails as soon as one of the results is an error. */
 async function write(endpoint: string, payload: object): Promise<WriteResult[]> {
   const list = await post(endpoint, payload);
   const error = list.map(errorMessage).find((message) => message !== undefined);
-  if (error !== undefined) throw new FrmError(`${endpoint} : ${error}`);
+  if (error !== undefined) throw new FrmError(`${endpoint}: ${error}`);
   return list;
 }
 
 /**
- * Allume ou éteint des interrupteurs (setSwitches) ou des machines (setEnabled) d'un seul appel.
- * Renvoie les ID réellement modifiés et ceux en échec (bâtiment démoli entre-temps, par exemple).
+ * Turns switches (setSwitches) or machines (setEnabled) on or off in a single call.
+ * Returns the IDs actually changed and those that failed (building demolished in the meantime, for example).
  */
 async function setStatus(
   endpoint: "setSwitches" | "setEnabled",
@@ -209,7 +209,7 @@ async function setStatus(
   return { changed: [...changed], failed: ids.filter((id) => !changed.has(id)) };
 }
 
-/** Couleur du nom de l'expéditeur, composantes de 0 à 1. */
+/** Color of the sender's name, components from 0 to 1. */
 export interface ChatColor {
   r: number;
   g: number;
@@ -219,10 +219,10 @@ export interface ChatColor {
 
 async function sendChatMessage(sender: string, message: string, color?: ChatColor): Promise<void> {
   const [result] = await write("sendChatMessage", color ? { sender, message, color } : { sender, message });
-  if (!result?.IsSent) throw new FrmError("sendChatMessage : message refusé par FRM");
+  if (!result?.IsSent) throw new FrmError("sendChatMessage: message rejected by FRM");
 }
 
-/** Pose un marqueur (« ping ») dans le jeu. FRM refuse si aucun joueur n'est connecté. */
+/** Places a marker ("ping") in the game. FRM refuses if no player is online. */
 async function createPing({ x, y, z }: Location): Promise<void> {
   await write("createPing", { x, y, z });
 }
@@ -232,9 +232,9 @@ export const frm = {
   players: () => request<Player[]>("getPlayer"),
   power: () => request<PowerCircuit[]>("getPower"),
   chatMessages: () => request<ChatMessage[]>("getChatMessages"),
-  /** Contenu cumulé de tous les conteneurs de stockage. */
+  /** Combined content of all storage containers. */
   storageTotals: () => request<ItemAmount[]>("getWorldInv"),
-  /** Contenu du dépôt dimensionnel. */
+  /** Content of the dimensional depot. */
   dimensionalDepot: () => request<ItemAmount[]>("getCloudInv"),
   productionStats: () => request<ProductionStat[]>("getProdStats"),
   mapMarkers: () => request<MapMarker[]>("getMapMarkers"),

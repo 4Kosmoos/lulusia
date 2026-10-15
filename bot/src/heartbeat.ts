@@ -1,6 +1,6 @@
-// Signal de vie pour Healthchecks.io : le bot appelle une URL chaque minute. Si les appels cessent
-// (VPS en panne, bot arrêté ou planté), Healthchecks.io prévient sur Discord. C'est ce qui couvre
-// les pannes que le bot ne peut pas signaler lui-même.
+// Heartbeat for Healthchecks.io: the bot calls a URL every minute. If the calls stop (VPS down,
+// bot stopped or crashed), Healthchecks.io warns on Discord. This covers the failures the bot
+// cannot report itself.
 
 import { config } from "./config.ts";
 
@@ -10,7 +10,7 @@ const TIMEOUT_MS = 10_000;
 export function startHeartbeat(): void {
   const url = config.healthcheckUrl;
   if (!url) {
-    console.log("Signal de vie désactivé (HEALTHCHECK_URL absent du .env).");
+    console.log("Heartbeat disabled (HEALTHCHECK_URL missing from .env).");
     return;
   }
 
@@ -19,15 +19,15 @@ export function startHeartbeat(): void {
     try {
       const response = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      if (failing) console.log("Signal de vie : de nouveau transmis.");
+      if (failing) console.log("Heartbeat: delivered again.");
       failing = false;
     } catch (error) {
-      // L'URL n'est jamais écrite dans les logs : elle permet d'envoyer de faux signaux.
-      if (!failing) console.warn("Signal de vie impossible :", error instanceof Error ? error.message : error);
+      // The URL is never written to the logs: it can be used to send fake signals.
+      if (!failing) console.warn("Heartbeat failed:", error instanceof Error ? error.message : error);
       failing = true;
     }
   };
   void beat();
   setInterval(beat, INTERVAL_MS);
-  console.log("Signal de vie actif (Healthchecks.io, toutes les minutes).");
+  console.log("Heartbeat active (Healthchecks.io, every minute).");
 }

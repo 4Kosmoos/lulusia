@@ -1,5 +1,5 @@
-// /ping <lieu> [message] : pose un marqueur dans le jeu sur un lieu nommé ou un joueur,
-// et l'annonce dans le chat du jeu pour que les joueurs sachent d'où il vient.
+// /ping <place> [message]: places a marker in the game on a named place or a player,
+// and announces it in the game chat so that players know where it comes from.
 
 import { SlashCommandBuilder, escapeMarkdown } from "discord.js";
 import { FrmError, frm } from "../frm.ts";
@@ -12,20 +12,20 @@ const MAX_NOTE_LENGTH = 200;
 export const ping: Command = {
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Pose un marqueur dans le jeu sur un lieu (HUB, gare, marqueur de carte) ou un joueur")
+    .setDescription("Places a marker in the game on a place (HUB, train station, map marker) or a player")
     .addStringOption((option) =>
-      option.setName("lieu").setDescription("Où poser le marqueur").setRequired(true).setAutocomplete(true),
+      option.setName("place").setDescription("Where to place the marker").setRequired(true).setAutocomplete(true),
     )
     .addStringOption((option) =>
       option
         .setName("message")
-        .setDescription("Texte envoyé avec le marqueur dans le chat du jeu")
+        .setDescription("Text sent with the marker in the game chat")
         .setMaxLength(MAX_NOTE_LENGTH),
     )
     .toJSON(),
 
   async run({ options, author }) {
-    const typed = options.lieu ?? "";
+    const typed = options.place ?? "";
     const note = options.message?.replace(/\s+/g, " ").trim();
 
     const [named, players] = await Promise.all([loadNamedPlaces(), frm.players()]);
@@ -34,10 +34,10 @@ export const ping: Command = {
     if (!found) {
       const reason =
         ambiguous.length > 0
-          ? `plusieurs lieux correspondent : ${ambiguous.map((n) => `**${escapeMarkdown(n)}**`).join(", ")}.`
-          : "aucun HUB, gare, marqueur de carte ou joueur connecté de ce nom.";
+          ? `several places match: ${ambiguous.map((n) => `**${escapeMarkdown(n)}**`).join(", ")}.`
+          : "no HUB, train station, map marker or online player with this name.";
       return {
-        discord: `❓ « ${escapeMarkdown(typed)} » : ${reason}\nChoisis le lieu dans la liste proposée pendant la saisie.`,
+        discord: `❓ "${escapeMarkdown(typed)}": ${reason}\nPick the place from the list shown while typing.`,
         game: [],
       };
     }
@@ -46,24 +46,24 @@ export const ping: Command = {
       await frm.createPing(found.location);
     } catch (error) {
       if (error instanceof FrmError && error.message.includes("No player connected")) {
-        return { discord: "😴 Personne n'est connecté au jeu : le marqueur ne serait vu par personne.", game: [] };
+        return { discord: "😴 Nobody is in the game: nobody would see the marker.", game: [] };
       }
       throw error;
     }
 
-    // L'annonce dans le chat du jeu fait partie de la commande : pas de recopie en plus (game vide).
-    const announce = note ? `Marqueur sur ${found.name} : ${note}` : `Marqueur posé sur ${found.name}`;
+    // The announcement in the game chat is part of the command: no extra copy (empty game).
+    const announce = note ? `Marker on ${found.name}: ${note}` : `Marker placed on ${found.name}`;
     let chatWarning = "";
     try {
       await frm.sendChatMessage(discordSender(author), forGame(announce));
     } catch (error) {
-      console.warn("/ping : annonce dans le chat impossible :", error instanceof Error ? error.message : error);
-      chatWarning = "\n⚠️ L'annonce dans le chat du jeu n'a pas pu être envoyée.";
+      console.warn("/ping: cannot announce in the game chat:", error instanceof Error ? error.message : error);
+      chatWarning = "\n⚠️ The announcement could not be sent to the game chat.";
     }
 
-    const noteText = note ? ` : « ${escapeMarkdown(note)} »` : "";
+    const noteText = note ? `: "${escapeMarkdown(note)}"` : "";
     return {
-      discord: `📍 Marqueur posé en jeu sur ${escapeMarkdown(placeLabel(found))}${noteText}${chatWarning}`,
+      discord: `📍 Marker placed in game on ${escapeMarkdown(placeLabel(found))}${noteText}${chatWarning}`,
       game: [],
     };
   },

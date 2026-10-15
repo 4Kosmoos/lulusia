@@ -1,7 +1,7 @@
-// Alertes perso : « préviens quand le stock d'Iron Plate passe sous 1 000 », « …quand Iron Ingot est
-// consommé plus vite que produit ». Les règles se créent avec /alerte (Discord) ou !alerte (jeu) et sont
-// enregistrées dans data/alerts.json (un volume Docker en production). Vérifiées chaque minute, elles
-// préviennent dans #alertes et dans le chat du jeu, au début du problème puis à sa fin.
+// Custom alerts: "warn me when the Iron Plate stock drops below 1,000", "…when Iron Ingot is consumed
+// faster than it is produced". Rules are created with /alert (Discord) or !alert (game) and saved in
+// data/alerts.json (a Docker volume in production). Checked every minute, they warn in #alertes and in
+// the game chat, when the problem starts and when it ends.
 
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { ChannelType, escapeMarkdown, type Client } from "discord.js";
@@ -11,16 +11,16 @@ import { capitalize, formatDuration, formatInteger } from "./format.ts";
 import { botSays } from "./game-chat.ts";
 import { Incident, type IncidentEvent } from "./monitor.ts";
 
-export type AlertKind = "stock" | "bilan";
+export type AlertKind = "stock" | "deficit";
 
 export interface AlertRule {
-  /** Numéro affiché et utilisé pour supprimer l'alerte. */
+  /** Number shown to players and used to remove the alert. */
   id: number;
   kind: AlertKind;
   className: string;
-  /** Nom de l'objet au moment de la création. */
+  /** Item name when the alert was created. */
   name: string;
-  /** Pour « stock » : alerte quand le stock passe sous ce seuil. */
+  /** For "stock": alert when the stock drops below this threshold. */
   threshold?: number;
   createdBy: string;
   createdAt: string;
@@ -28,23 +28,28 @@ export interface AlertRule {
 
 const FILE = new URL("../data/alerts.json", import.meta.url);
 const CHECK_INTERVAL_MS = 60_000;
-/** Stock bas : 2 min sous le seuil (évite les creux passagers, un train qui se charge par exemple). */
+/** Low stock: 2 min below the threshold (ignores short dips, a train being loaded for example). */
 const LOW_STOCK_AFTER_MS = 2 * 60_000;
-/** Fin d'alerte « stock bas » à 10 % au-dessus du seuil, pour ne pas recevoir d'alerte à chaque oscillation. */
+/** A low stock alert ends 10% above the threshold, so that small oscillations do not trigger it again. */
 const LOW_STOCK_CLEAR_RATIO = 1.1;
-/** Bilan négatif : 10 min de suite (une machine qui attend un instant ses ingrédients ne compte pas). */
+/** Deficit: 10 min in a row (a machine waiting a moment for its inputs does not count). */
 const DEFICIT_AFTER_MS = 10 * 60_000;
 
 // ---------------------------------------------------------------------------------------------
-// Enregistrement des règles
+// Saved rules
 
 let rules: AlertRule[] | undefined;
+
+/** Rules saved before the bot switched to English used "bilan" for deficit alerts. */
+function upgrade(rule: AlertRule): AlertRule {
+  return (rule.kind as string) === "bilan" ? { ...rule, kind: "deficit" } : rule;
+}
 
 async function load(): Promise<AlertRule[]> {
   if (rules) return rules;
   try {
     const parsed: unknown = JSON.parse(await readFile(FILE, "utf8"));
-    rules = Array.isArray(parsed) ? (parsed as AlertRule[]) : [];
+    rules = Array.isArray(parsed) ? (parsed as AlertRule[]).map(upgrade) : [];
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     rules = [];
@@ -52,7 +57,7 @@ async function load(): Promise<AlertRule[]> {
   return rules;
 }
 
-/** Écriture dans un fichier temporaire puis renommage : un arrêt brutal ne laisse pas un fichier à moitié écrit. */
+/** Written to a temporary file then renamed: a sudden stop never leaves a half-written file. */
 async function save(list: AlertRule[]): Promise<void> {
   await mkdir(new URL(".", FILE), { recursive: true });
   const temporary = new URL("alerts.json.tmp", FILE);
@@ -65,7 +70,7 @@ export async function listRules(): Promise<AlertRule[]> {
   return [...(await load())].sort((a, b) => a.id - b.id);
 }
 
-/** Crée la règle, ou met à jour son seuil si la même alerte existe déjà pour cet objet. */
+/** Creates the rule, or updates its threshold if the same alert already exists for this item. */
 export async function upsertRule(
   kind: AlertKind,
   item: Item,
@@ -100,18 +105,18 @@ export async function removeRule(id: number): Promise<AlertRule | undefined> {
 }
 
 // ---------------------------------------------------------------------------------------------
-// Textes
+// Texts
 
-/** « Stock bas · Iron Plate < 1 000 », « Bilan négatif · Iron Ingot ». */
+/** "Low stock · Iron Plate < 1,000", "Deficit · Iron Ingot". */
 export function ruleText(rule: AlertRule): string {
   return rule.kind === "stock"
-    ? `Stock bas · ${rule.name} < ${formatInteger(rule.threshold ?? 0)}`
-    : `Bilan négatif · ${rule.name}`;
+    ? `Low stock · ${rule.name} < ${formatInteger(rule.threshold ?? 0)}`
+    : `Deficit · ${rule.name}`;
 }
 
-/** État actuel de l'objet surveillé, en une ligne. */
+/** Current state of the watched item, in one line. */
 export function currentText(rule: AlertRule, report: ItemReport): string {
-  return rule.kind === "stock" ? `${amountText(report, report.total)} en stock` : ratesText(report);
+  return rule.kind === "stock" ? `${amountText(report, report.total)} in stock` : ratesText(report);
 }
 
 function eventTexts(rule: AlertRule, report: ItemReport, event: IncidentEvent): { discord: string; game: string } {
@@ -119,38 +124,38 @@ function eventTexts(rule: AlertRule, report: ItemReport, event: IncidentEvent): 
   const stock = amountText(report, report.total);
   const rates = capitalize(ratesText(report));
   const name = escapeMarkdown(report.name);
-  const id = `(alerte n°${rule.id})`;
+  const id = `(alert #${rule.id})`;
 
   if (rule.kind === "stock" && event.kind === "start") {
     return {
-      discord: `📉 **Stock bas : ${name}** : ${stock}, seuil ${threshold} ${id}\n${rates}`,
-      game: `Stock bas : ${report.name}, ${stock} (seuil ${threshold}). ${rates}`,
+      discord: `📉 **Low stock: ${name}**: ${stock}, threshold ${threshold} ${id}\n${rates}`,
+      game: `Low stock: ${report.name}, ${stock} (threshold ${threshold}). ${rates}`,
     };
   }
   if (rule.kind === "stock") {
     return {
-      discord: `✅ **${name}** : stock revenu à ${stock}, seuil ${threshold} ${id}`,
-      game: `${report.name} : stock revenu à ${stock} (seuil ${threshold}).`,
+      discord: `✅ **${name}**: stock back to ${stock}, threshold ${threshold} ${id}`,
+      game: `${report.name}: stock back to ${stock} (threshold ${threshold}).`,
     };
   }
-  const minutes = formatDuration(event.elapsedMs / 60_000);
+  const duration = formatDuration(event.elapsedMs / 60_000);
   if (event.kind === "start") {
     return {
-      discord: `📉 **Bilan négatif : ${name}** depuis ${minutes} ${id}\n${rates}. Stock : ${stock}.`,
-      game: `Bilan négatif : ${report.name} depuis ${minutes}. ${rates}. Stock : ${stock}.`,
+      discord: `📉 **Deficit: ${name}** for ${duration} ${id}\n${rates}. Stock: ${stock}.`,
+      game: `Deficit: ${report.name} for ${duration}. ${rates}. Stock: ${stock}.`,
     };
   }
   return {
-    discord: `✅ **${name}** : bilan rétabli ${id}\n${rates}`,
-    game: `${report.name} : bilan rétabli. ${rates}`,
+    discord: `✅ **${name}**: deficit over ${id}\n${rates}`,
+    game: `${report.name}: deficit over. ${rates}`,
   };
 }
 
 // ---------------------------------------------------------------------------------------------
-// Vérification
+// Checking
 
 /**
- * `say` envoie un message (Discord et jeu). `check` fait une vérification ; `now` n'est passé que par les tests.
+ * `say` sends a message (Discord and game). `check` runs one check; `now` is only passed by tests.
  */
 export function createAlertWatcher(say: (texts: { discord: string; game: string }) => Promise<void>) {
   const incidents = new Map<number, Incident>();
@@ -164,7 +169,7 @@ export function createAlertWatcher(say: (texts: { discord: string; game: string 
     try {
       inventory = await loadInventory();
     } catch {
-      return; // FRM en panne : la surveillance du serveur s'en charge déjà
+      return; // FRM down: the server monitoring already reports it
     }
 
     for (const rule of current) {
@@ -189,19 +194,19 @@ export function createAlertWatcher(say: (texts: { discord: string; game: string 
 
 export async function startAlertWatcher(client: Client<true>): Promise<void> {
   if (!config.alertChannelId) {
-    console.log("Alertes perso désactivées (ALERT_CHANNEL_ID absent du .env).");
+    console.log("Custom alerts disabled (ALERT_CHANNEL_ID missing from .env).");
     return;
   }
   const channel = await client.channels.fetch(config.alertChannelId);
   if (!channel || channel.type !== ChannelType.GuildText) {
-    throw new Error(`ALERT_CHANNEL_ID (${config.alertChannelId}) n'est pas un salon textuel accessible au bot`);
+    throw new Error(`ALERT_CHANNEL_ID (${config.alertChannelId}) is not a text channel the bot can access`);
   }
 
   const watcher = createAlertWatcher(async ({ discord, game }) => {
-    console.log(`Alerte perso : ${game}`);
+    console.log(`Custom alert: ${game}`);
     await channel.send({ content: discord, allowedMentions: { parse: [] } });
     await botSays([game]).catch((error) =>
-      console.warn("Alerte perso : envoi dans le chat du jeu impossible :", error instanceof Error ? error.message : error),
+      console.warn("Custom alert: cannot send to the game chat:", error instanceof Error ? error.message : error),
     );
   });
 
@@ -212,12 +217,13 @@ export async function startAlertWatcher(client: Client<true>): Promise<void> {
     try {
       await watcher.check();
     } catch (error) {
-      console.error("Alertes perso : vérification impossible :", error);
+      console.error("Custom alerts: check failed:", error);
     } finally {
       running = false;
     }
   };
   await tick();
   setInterval(tick, CHECK_INTERVAL_MS);
-  console.log(`Alertes perso actives (${(await listRules()).length} enregistrée(s)).`);
+  const count = (await listRules()).length;
+  console.log(`Custom alerts active (${count} saved).`);
 }
