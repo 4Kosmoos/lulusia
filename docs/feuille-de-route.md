@@ -19,9 +19,9 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## Bot Discord
 
-- [x] **Commandes** `/stock`, `/energie`, `/joueurs`, `/ping`, dans tous les salons (détail dans le [README du bot](../bot/README.md)).
-- [x] **Commandes depuis le chat du jeu** : `!stock`, `!energie`, `!joueurs`, `!aide`, avec réponse dans le jeu et dans `#general`.
-- [ ] **Piloter l'usine** avec les endpoints d'écriture de FRM : `setSwitches` pour les interrupteurs, `setEnabled` pour activer ou couper des bâtiments.
+- [x] **Commandes** `/stock`, `/energie`, `/joueurs`, `/ping`, `/alerte`, `/interrupteur`, `/machines`, dans tous les salons (détail dans le [README du bot](../bot/README.md)).
+- [x] **Commandes depuis le chat du jeu** : les mêmes avec `!` (`!stock`, `!interrupteur`, `!machines`, `!aide`…), avec réponse dans le jeu et dans `#general`.
+- [x] **Piloter l'usine** sans confirmation, chaque action annoncée dans le chat du jeu : interrupteurs électriques par leur nom (`setSwitches` de FRM), pause et relance de toutes les machines qui fabriquent un objet (`setEnabled`).
 - [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alerte` ou `!alerte` (détail dans le [README du bot](../bot/README.md)).
 - [ ] **Redémarrer le serveur tout seul** quand FRM est en panne et que personne n'est connecté. Le bot tourne dans Docker sans accès à systemd : il faudrait un petit script côté serveur (timer systemd) qui fait la vérification et le redémarrage.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
@@ -59,7 +59,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [ ] **RAM** : passer au VPS-4 au-delà de 80 % d'utilisation régulière (procédure dans [Architecture](architecture.md#passer-au-vps-4)).
 - [ ] **Processeur** : OVH ne communique pas le modèle exact.
 - [ ] **Effet de la stack Grafana** sur les performances du jeu : certains endpoints FRM passent par le thread principal du jeu.
-- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `bot/src/frm.ts`.
+- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `bot/src/frm.ts`. La 1.5.4 ne corrige pas #314. Pour #313, à vérifier dans les logs du jeu après le rechargement de 04:00 : « Websocket Thread is already running » signifie que le bug est toujours là.
 - [ ] **Nouvelle version de ficsit-cli** où `profile mod add` fonctionne : on pourra alors abandonner le script Python.
 - [ ] **SMM gère les clés SSH** (issue #304) : on pourra alors gérer les mods du serveur depuis SMM.
 - [ ] **Sortie de FicsIt-Networks** pour la 1.2 (« Works » en 1.2, avec une version serveur Linux).

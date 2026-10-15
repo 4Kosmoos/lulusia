@@ -89,7 +89,40 @@ export interface Building {
   location: Location;
 }
 
+/** Interrupteur électrique (simple ou prioritaire). */
+export interface PowerSwitch {
+  ID: string;
+  /** Nom donné en jeu à l'interrupteur, vide s'il n'en a pas. */
+  SwitchTag: string;
+  IsOn: boolean;
+  /** Priorité d'un interrupteur prioritaire, -1 pour un interrupteur simple. */
+  Priority: number;
+  location: Location;
+}
+
+export interface MachineProduct {
+  Name: string;
+  /** « Unassigned » pour une machine sans recette. */
+  ClassName: string;
+  CurrentProd: number;
+  MaxProd: number;
+}
+
+/** Machine de production (constructeur, assembleuse… et machines des mods). */
+export interface Machine {
+  ID: string;
+  /** Type de machine (« Constructor »). */
+  Name: string;
+  Recipe: string;
+  /** Produits de la recette, le produit principal en premier. */
+  production: MachineProduct[];
+  IsProducing: boolean;
+  IsPaused: boolean;
+  location: Location;
+}
+
 interface WriteResult {
+  ID?: string;
   IsSent?: boolean;
   error?: string;
 }
@@ -138,7 +171,7 @@ function asciiJson(payload: object): string {
 }
 
 /** Endpoints d'écriture : demandent le jeton FRM et renvoient un résultat par objet envoyé. */
-async function write(endpoint: string, payload: object): Promise<WriteResult[]> {
+async function post(endpoint: string, payload: object): Promise<WriteResult[]> {
   if (!config.frmToken) {
     throw new FrmError(`FRM_TOKEN manquant dans le .env : ${endpoint} impossible`);
   }
@@ -150,10 +183,30 @@ async function write(endpoint: string, payload: object): Promise<WriteResult[]> 
     },
     body: asciiJson(payload),
   });
-  const list = Array.isArray(results) ? results : [];
+  return Array.isArray(results) ? results : [];
+}
+
+/** Comme `post`, mais échoue dès qu'un des résultats est une erreur. */
+async function write(endpoint: string, payload: object): Promise<WriteResult[]> {
+  const list = await post(endpoint, payload);
   const error = list.map(errorMessage).find((message) => message !== undefined);
   if (error !== undefined) throw new FrmError(`${endpoint} : ${error}`);
   return list;
+}
+
+/**
+ * Allume ou éteint des interrupteurs (setSwitches) ou des machines (setEnabled) d'un seul appel.
+ * Renvoie les ID réellement modifiés et ceux en échec (bâtiment démoli entre-temps, par exemple).
+ */
+async function setStatus(
+  endpoint: "setSwitches" | "setEnabled",
+  ids: string[],
+  on: boolean,
+): Promise<{ changed: string[]; failed: string[] }> {
+  if (ids.length === 0) return { changed: [], failed: [] };
+  const results = await post(endpoint, ids.map((ID) => ({ ID, status: on })));
+  const changed = new Set(results.filter((r) => r.error === undefined && r.ID).map((r) => r.ID as string));
+  return { changed: [...changed], failed: ids.filter((id) => !changed.has(id)) };
 }
 
 /** Couleur du nom de l'expéditeur, composantes de 0 à 1. */
@@ -187,6 +240,10 @@ export const frm = {
   mapMarkers: () => request<MapMarker[]>("getMapMarkers"),
   trainStations: () => request<Building[]>("getTrainStation"),
   hubTerminals: () => request<Building[]>("getHUBTerminal"),
+  switches: () => request<PowerSwitch[]>("getSwitches"),
+  machines: () => request<Machine[]>("getFactory"),
   sendChatMessage,
   createPing,
+  setSwitches: (ids: string[], on: boolean) => setStatus("setSwitches", ids, on),
+  setMachines: (ids: string[], on: boolean) => setStatus("setEnabled", ids, on),
 };

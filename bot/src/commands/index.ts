@@ -13,15 +13,17 @@ import { FrmError } from "../frm.ts";
 import { botSays } from "../game-chat.ts";
 import { alerte } from "./alerte.ts";
 import { energie } from "./energie.ts";
+import { interrupteur } from "./interrupteur.ts";
 import { joueurs } from "./joueurs.ts";
+import { machines } from "./machines.ts";
 import { ping } from "./ping.ts";
 import type { Command, CommandArgs, CommandResult } from "./shared.ts";
 import { stock } from "./stock.ts";
 
-const commands: Command[] = [stock, energie, joueurs, ping, alerte];
+const commands: Command[] = [stock, energie, joueurs, ping, alerte, interrupteur, machines];
 const byName = new Map(commands.map((command) => [command.data.name, command]));
-/** Raccourcis du chat du jeu : « !alertes » = « !alerte liste ». */
-const GAME_ALIASES: Record<string, string> = { alertes: "alerte liste" };
+/** Raccourcis du chat du jeu : « !alertes » = « !alerte liste », « !interrupteurs » = « !interrupteur liste ». */
+const GAME_ALIASES: Record<string, string> = { alertes: "alerte liste", interrupteurs: "interrupteur liste" };
 
 const errorText = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
@@ -63,8 +65,8 @@ async function runSlashCommand(interaction: ChatInputCommandInteraction, command
   const result = await command.run({ ...readArgs(interaction), author });
   await interaction.editReply(discordPayload(result.discord));
 
-  // Lancée dans le salon du pont : le résultat est aussi recopié dans le chat du jeu.
-  if (interaction.channelId === config.chatChannelId && result.game.length > 0) {
+  // Lancée dans le salon du pont, ou action à annoncer : le résultat part aussi dans le chat du jeu.
+  if ((interaction.channelId === config.chatChannelId || result.announce) && result.game.length > 0) {
     await botSays(result.game).catch((error) =>
       console.warn(`/${command.data.name} : recopie dans le chat du jeu impossible :`, errorText(error)),
     );

@@ -26,6 +26,11 @@ export interface CommandResult {
   discord: string | EmbedBuilder;
   /** La même réponse pour le chat du jeu : une ligne par message, sans Markdown (les emoji sont retirés à l'envoi). */
   game: string[];
+  /**
+   * Toujours envoyer `game` dans le chat du jeu, d'où que vienne la commande : pour les actions qui
+   * changent la partie (couper un interrupteur…), les joueurs doivent savoir ce qui se passe et qui l'a fait.
+   */
+  announce?: boolean;
 }
 
 export interface Command {
