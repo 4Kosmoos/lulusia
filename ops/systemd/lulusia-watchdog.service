@@ -1,0 +1,8 @@
+[Unit]
+Description=Watchdog de FRM : redémarre le serveur Satisfactory si FRM ne répond plus
+After=satisfactory.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lulusia-watchdog
+StateDirectory=lulusia-watchdog

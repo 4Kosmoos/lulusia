@@ -24,7 +24,7 @@ Sur le serveur, tout se range en trois familles :
 
 1. **Le jeu** : le serveur dédié, ses mods et ses parties, sous l'utilisateur `steam`.
 2. **Nos outils Docker** : la stack Grafana et le bot Discord, sous l'utilisateur `ubuntu`.
-3. **L'entretien automatique** : les timers systemd (sauvegardes, redémarrage complet).
+3. **L'entretien automatique** : les timers systemd (sauvegardes, redémarrage complet, watchdog de FRM).
 
 La commande `lulusia-status` affiche l'état des trois d'un coup (voir [Exploitation](exploitation.md)). Le VPS est réglé en UTC.
 
@@ -40,8 +40,8 @@ La commande `lulusia-status` affiche l'état des trois d'un coup (voir [Exploita
 | Stack Grafana (Docker) | `/home/ubuntu/satisfactory-monitoring` | `ubuntu` |
 | Ce repo, dont le bot Discord | `/home/ubuntu/lulusia` (bot : `/home/ubuntu/lulusia/bot`) | `ubuntu` |
 | Archives des parties | `/var/backups/lulusia` | root : `sudo ls …` |
-| Scripts maison | `/usr/local/bin/lulusia-backup`, `/usr/local/bin/lulusia-status` | |
-| Services et timers systemd | `/etc/systemd/system/satisfactory.service`, `satisfactory-full-restart.{service,timer}`, `lulusia-backup.{service,timer}` | |
+| Scripts maison | `/usr/local/bin/lulusia-backup`, `/usr/local/bin/lulusia-status`, `/usr/local/bin/lulusia-watchdog` | |
+| Services et timers systemd | `/etc/systemd/system/satisfactory.service`, `satisfactory-full-restart.{service,timer}`, `lulusia-backup.{service,timer}`, `lulusia-watchdog.{service,timer}` | |
 
 Les originaux des scripts, services et configs installés à la main sont versionnés dans [`ops/`](../ops/).
 

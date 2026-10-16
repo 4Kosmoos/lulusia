@@ -20,7 +20,9 @@ else
 fi
 
 title "Tâches planifiées"
-systemctl list-timers satisfactory-full-restart.timer lulusia-backup.timer --no-pager | head -n 3 | sed 's/^/  /'
+systemctl list-timers satisfactory-full-restart.timer lulusia-backup.timer lulusia-watchdog.timer --no-pager | head -n 4 | sed 's/^/  /'
+watchdog=$(journalctl -t lulusia-watchdog -n 1 -q --no-pager -o short-iso | sed -E 's/ [^ ]+ lulusia-watchdog\[[0-9]+\]:/ :/')
+printf '  Dernier message du watchdog de FRM : %s\n' "${watchdog:-aucun, FRM est toujours resté joignable}"
 
 title "Conteneurs Docker (Grafana et bot)"
 docker ps -a --format '{{.Names}}\t{{.Status}}' | sort | sed 's/^/  /'
@@ -49,8 +51,9 @@ cat <<'MAP'
   Stack Grafana ..... /home/ubuntu/satisfactory-monitoring
   Bot Discord ....... /home/ubuntu/lulusia/bot
   Sauvegardes ....... /var/backups/lulusia                       (root : sudo ls …)
-  Scripts ........... /usr/local/bin/lulusia-backup, /usr/local/bin/lulusia-status
+  Scripts ........... /usr/local/bin/lulusia-backup, lulusia-status, lulusia-watchdog
   Services systemd .. /etc/systemd/system/satisfactory.service
                       /etc/systemd/system/satisfactory-full-restart.{service,timer}
                       /etc/systemd/system/lulusia-backup.{service,timer}
+                      /etc/systemd/system/lulusia-watchdog.{service,timer}
 MAP

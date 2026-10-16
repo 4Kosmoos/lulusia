@@ -6,9 +6,11 @@ Les fichiers installés à la main sur le serveur, versionnés ici pour ne pas l
 |---|---|---|
 | `scripts/lulusia-backup` | `/usr/local/bin/lulusia-backup` | Archive les parties et les configs dans `/var/backups/lulusia` |
 | `scripts/lulusia-status` | `/usr/local/bin/lulusia-status` | Vue d'ensemble du serveur |
+| `scripts/lulusia-watchdog` | `/usr/local/bin/lulusia-watchdog` | Redémarre le serveur si FRM ne répond plus (3 fois par jour au maximum) |
 | `systemd/satisfactory.service` | `/etc/systemd/system/` | Le serveur de jeu (utilisateur `steam`, `Restart=always`) |
 | `systemd/satisfactory-full-restart.service` et `.timer` | `/etc/systemd/system/` | Redémarrage complet à 04:10 UTC (contournement du bug FRM), seulement si le serveur tourne |
 | `systemd/lulusia-backup.service` et `.timer` | `/etc/systemd/system/` | Sauvegarde à 00:15, 06:15, 12:15 et 18:15 UTC |
+| `systemd/lulusia-watchdog.service` et `.timer` | `/etc/systemd/system/` | Watchdog de FRM toutes les 5 minutes |
 | `ssh/00-hardening.conf` | `/etc/ssh/sshd_config.d/` | SSH : clé uniquement, pas de root |
 | `journald/lulusia.conf` | `/etc/systemd/journald.conf.d/` | Logs systemd limités à 2 Go |
 | `docker/daemon.json` | `/etc/docker/` | Logs des conteneurs Docker limités à 3 × 10 Mo par conteneur |
@@ -31,7 +33,7 @@ Sur le serveur, depuis `~/lulusia/ops` après un `git pull`, seulement pour la p
 
 ```bash
 # Scripts
-sudo install -m 755 scripts/lulusia-backup scripts/lulusia-status /usr/local/bin/
+sudo install -m 755 scripts/lulusia-backup scripts/lulusia-status scripts/lulusia-watchdog /usr/local/bin/
 
 # Services et timers
 sudo install -m 644 systemd/* /etc/systemd/system/
@@ -65,7 +67,7 @@ Puis `bash check.sh` pour vérifier, et `lulusia-status` pour l'état général.
 Sur un serveur reconstruit, en plus des fichiers ci-dessus, activer les services et les timers :
 
 ```bash
-sudo systemctl enable --now satisfactory lulusia-backup.timer satisfactory-full-restart.timer
+sudo systemctl enable --now satisfactory lulusia-backup.timer satisfactory-full-restart.timer lulusia-watchdog.timer
 ```
 
 Le reste de l'installation (sécurisation, SteamCMD, mods, Docker, Tailscale) n'est pas scripté : [`docs/`](../docs/) décrit l'état attendu de chaque brique, à reproduire à la main.

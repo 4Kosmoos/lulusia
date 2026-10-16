@@ -24,7 +24,6 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Piloter l'usine** sans confirmation, chaque action annoncée dans le chat du jeu : interrupteurs électriques par leur nom (`setSwitches` de FRM), pause et relance de toutes les machines qui fabriquent un objet (`setEnabled`).
 - [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alert` ou `!alert` (détail dans le [README du bot](../bot/README.md)).
 - [x] **Bot en anglais** (octobre 2026) : commandes, réponses et logs, comme le jeu et les noms d'objets renvoyés par le serveur. La doc reste en français.
-- [ ] **Redémarrer le serveur tout seul** quand FRM est en panne et que personne n'est connecté. Le bot tourne dans Docker sans accès à systemd : il faudrait un petit script côté serveur (timer systemd) qui fait la vérification et le redémarrage.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
 - [ ] Idée : déploiement automatique du bot à chaque push (GitHub Actions, connexion au VPS par Tailscale).
 
@@ -35,6 +34,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - Décidé : **pas de copie automatique hors du serveur** pour l'instant. Les archives locales couvrent les erreurs et les sauvegardes corrompues, la sauvegarde quotidienne d'OVH couvre une panne du VPS. Pour le risque restant (perdre les deux ensemble), [copie manuelle sur le PC](exploitation.md#copier-une-archive-sur-le-pc) de temps en temps. Options si on change d'avis : une tâche planifiée Windows qui récupère l'archive par Tailscale avec une clé SSH en lecture seule (PC allumé nécessaire), ou `rclone` chiffré vers un compte cloud dédié au projet.
 - [x] **Alertes Discord du serveur** par le bot dans `#alertes` : serveur de jeu ou FRM qui ne répond plus, RAM et disque presque pleins ([détail](exploitation.md#bot-discord)).
 - [x] **Surveillance externe** : signal de vie du bot vers Healthchecks.io chaque minute, alerte dans `#alertes` s'il cesse (VPS ou bot en panne).
+- [x] **Redémarrage automatique quand FRM tombe** : `lulusia-watchdog`, un timer systemd côté serveur (le bot, dans Docker, n'a pas accès à systemd). Redémarrage après 5 à 10 min de panne, 3 fois par jour au maximum ([détail](exploitation.md#redémarrage-automatique-quand-frm-tombe)). Décidé : il redémarre même si quelqu'un joue. Compter les joueurs demanderait un jeton d'administration du serveur, pour un cas rare (un « Charger sauv. »).
 
 ## Grafana
 

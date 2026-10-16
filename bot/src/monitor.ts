@@ -94,7 +94,8 @@ const minutes = (ms: number) => formatDuration(ms / 60_000);
 function downText(error: unknown, elapsedMs: number): string {
   const reason = error instanceof Error ? error.message : String(error);
   const cause = reason.includes("No matching endpoint")
-    ? "FRM is down (known bug after a game reload). Restart the server: `sudo systemctl restart satisfactory`."
+    ? "FRM is down (known bug after a game reload). The watchdog restarts the server within 10 min " +
+      "(at most 3 times a day). If it does not come back: `sudo systemctl restart satisfactory`."
     : `Game server stopped or crashed, or FRM unreachable. Check with \`lulusia-status\`.\n\`${reason}\``;
   return `🔴 **The game server has not been responding** for ${minutes(elapsedMs)}.\n${cause}`;
 }

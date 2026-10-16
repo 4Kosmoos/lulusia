@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Watchdog de FRM : redémarre le serveur de jeu quand FRM ne répond plus (bug #313 après un
+# « Charger sauv. », par exemple). Lancé toutes les 5 minutes par lulusia-watchdog.timer.
+# Les joueurs connectés sont éjectés par le redémarrage (3 min de coupure) : c'est voulu.
+set -uo pipefail
+[ "$EUID" -ne 0 ] && exec sudo "$0" "$@"
+
+STATE_DIR=/var/lib/lulusia-watchdog
+CHECKS_BEFORE_RESTART=2   # 2 vérifications ratées de suite, soit 5 à 10 min de panne
+MIN_UPTIME_MIN=10         # rien pendant les 10 premières minutes (chargement de la carte)
+MAX_RESTARTS_PER_DAY=3    # garde-fou : si un redémarrage ne répare pas FRM, pas de boucle
+
+mkdir -p "$STATE_DIR"
+FAILED="$STATE_DIR/failed-checks"
+RESTARTS="$STATE_DIR/restarts"
+
+# Serveur arrêté à la main : rien à faire.
+if ! systemctl is-active --quiet satisfactory; then
+  rm -f "$FAILED"
+  exit 0
+fi
+
+# FRM répond normalement : rien à faire.
+frm=$(curl -s -m 5 localhost:8080/getSessionInfo)
+if printf '%s' "$frm" | grep -q '"SessionName"'; then
+  rm -f "$FAILED"
+  exit 0
+fi
+
+# Rechargement du jeu à 04:00 et redémarrage complet à 04:10 (UTC) : déjà pris en charge.
+now=$(date -u +%H%M)
+if (( 10#$now >= 400 && 10#$now < 420 )); then
+  echo "FRM ne répond pas, mais c'est le créneau des redémarrages planifiés (04:00-04:20 UTC)."
+  rm -f "$FAILED"
+  exit 0
+fi
+
+# Serveur démarré il y a peu : la carte est sans doute encore en chargement.
+started=$(date -d "$(systemctl show satisfactory -p ActiveEnterTimestamp --value)" +%s)
+uptime_min=$(( ($(date +%s) - started) / 60 ))
+if (( uptime_min < MIN_UPTIME_MIN )); then
+  echo "FRM ne répond pas, mais le serveur tourne depuis seulement $uptime_min min."
+  rm -f "$FAILED"
+  exit 0
+fi
+
+failed=$(( $(cat "$FAILED" 2>/dev/null || echo 0) + 1 ))
+echo "$failed" > "$FAILED"
+echo "FRM ne répond pas, vérification ratée n°$failed : ${frm:-aucune réponse}"
+if (( failed < CHECKS_BEFORE_RESTART )); then
+  exit 0
+fi
+
+today=$(date -u +%F)
+done_today=$(grep -c "^$today" "$RESTARTS" 2>/dev/null)
+if (( ${done_today:-0} >= MAX_RESTARTS_PER_DAY )); then
+  echo "ERREUR : déjà $done_today redémarrages automatiques aujourd'hui, plus rien jusqu'à demain. À regarder à la main." >&2
+  exit 1
+fi
+
+echo "Redémarrage du serveur : FRM ne répond plus ($failed vérifications ratées de suite)."
+date -u '+%F %T' >> "$RESTARTS"
+rm -f "$FAILED"
+systemctl restart satisfactory

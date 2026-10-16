@@ -21,6 +21,7 @@ check() {
 
 check scripts/lulusia-backup /usr/local/bin/lulusia-backup
 check scripts/lulusia-status /usr/local/bin/lulusia-status
+check scripts/lulusia-watchdog /usr/local/bin/lulusia-watchdog
 for unit in systemd/*; do
   check "$unit" "/etc/systemd/system/$(basename "$unit")"
 done
