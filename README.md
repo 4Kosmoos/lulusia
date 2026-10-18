@@ -1,5 +1,7 @@
 # Lulusia
 
+[![Bot](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy-bot.yml/badge.svg)](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy-bot.yml)
+
 ![Lulusia](images/lulusia.jpg)
 
 Un serveur **Satisfactory 1.2 moddé** (Satisfactory Plus et une vingtaine de mods) qui tourne 24 h/24 pour deux joueurs, avec tout un outillage autour :
