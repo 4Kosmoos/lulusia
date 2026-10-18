@@ -6,6 +6,7 @@ Les fichiers installés à la main sur le serveur, versionnés ici pour ne pas l
 |---|---|---|
 | `scripts/lulusia-backup` | `/usr/local/bin/lulusia-backup` | Archive les parties et les configs dans `/var/backups/lulusia` |
 | `scripts/lulusia-status` | `/usr/local/bin/lulusia-status` | Vue d'ensemble du serveur |
+| `scripts/lulusia-deploy-bot` | `/usr/local/bin/lulusia-deploy-bot` | Déploiement du bot, lancé par GitHub Actions ou à la main |
 | `scripts/lulusia-watchdog` | `/usr/local/bin/lulusia-watchdog` | Redémarre le serveur si FRM ne répond plus (3 fois par jour au maximum) |
 | `systemd/satisfactory.service` | `/etc/systemd/system/` | Le serveur de jeu (utilisateur `steam`, `Restart=always`) |
 | `systemd/satisfactory-full-restart.service` et `.timer` | `/etc/systemd/system/` | Redémarrage complet à 04:10 UTC (contournement du bug FRM), seulement si le serveur tourne |
@@ -16,6 +17,7 @@ Les fichiers installés à la main sur le serveur, versionnés ici pour ne pas l
 | `docker/daemon.json` | `/etc/docker/` | Logs des conteneurs Docker limités à 3 × 10 Mo par conteneur |
 | `monitoring/docker-compose.override.yml` | `/home/ubuntu/satisfactory-monitoring/` | Notre adaptation de la stack Grafana (rien de publié sur Internet) |
 | `monitoring/.env.example` | modèle du `.env` de la stack | Le vrai `.env` n'existe que sur le serveur |
+| (pas dans le repo) | `/home/ubuntu/.ssh/authorized_keys` | Clé de déploiement de GitHub Actions, avec ses restrictions ([procédure](../docs/exploitation.md#déploiement-automatique-du-bot)) |
 
 ## Vérifier que le serveur correspond au repo
 
@@ -33,7 +35,7 @@ Sur le serveur, depuis `~/lulusia/ops` après un `git pull`, seulement pour la p
 
 ```bash
 # Scripts
-sudo install -m 755 scripts/lulusia-backup scripts/lulusia-status scripts/lulusia-watchdog /usr/local/bin/
+sudo install -m 755 scripts/lulusia-backup scripts/lulusia-status scripts/lulusia-watchdog scripts/lulusia-deploy-bot /usr/local/bin/
 
 # Services et timers
 sudo install -m 644 systemd/* /etc/systemd/system/

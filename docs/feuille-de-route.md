@@ -25,7 +25,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alert` ou `!alert` (détail dans le [README du bot](../bot/README.md)).
 - [x] **Bot en anglais** (octobre 2026) : commandes, réponses et logs, comme le jeu et les noms d'objets renvoyés par le serveur. La doc reste en français.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
-- [ ] Idée : déploiement automatique du bot à chaque push (GitHub Actions, connexion au VPS par Tailscale).
+- [x] **Déploiement automatique du bot** à chaque push : vérification puis déploiement par GitHub Actions, connexion au VPS par Tailscale ([détail](exploitation.md#déploiement-automatique-du-bot)).
 
 ## Sauvegardes et surveillance
 

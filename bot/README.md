@@ -76,4 +76,6 @@ sudo docker compose up -d --build     # construire et (re)lancer
 sudo docker compose logs -f --tail 20 # suivre les logs
 ```
 
-Un seul bot à la fois avec le même jeton : arrêter le bot de production (`sudo docker compose stop`) avant de lancer `npm run dev` en local, puis le relancer après.
+**Déploiement** : automatique à chaque push sur `main` qui touche `bot/`. GitHub Actions vérifie le code, puis le déploie sur le VPS à travers Tailscale (voir [Exploitation](../docs/exploitation.md#déploiement-automatique-du-bot)). À la main, sur le serveur : `lulusia-deploy-bot`.
+
+Un seul bot à la fois avec le même jeton : arrêter le bot de production (`sudo docker compose stop`) avant de lancer `npm run dev` en local, puis le relancer après. Pendant ce temps, ne pas pousser de changement dans `bot/` : le déploiement automatique relancerait le bot du serveur.
