@@ -1,0 +1,71 @@
+# Bot Discord : vérification à chaque push qui le touche, puis déploiement sur le VPS par Tailscale.
+# Mise en place, secrets et dépannage : docs/exploitation.md, section « Déploiement automatique ».
+name: Bot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "bot/**"
+      - ".github/workflows/deploy-bot.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Un seul déploiement à la fois ; un push arrivé pendant un déploiement attend son tour.
+concurrency:
+  group: deploy-bot
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Vérification
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bot
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: bot/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+
+  deploy:
+    name: Déploiement
+    needs: check
+    runs-on: ubuntu-latest
+    # Environnement réservé à main : ses secrets ne sont visibles que de ce job.
+    environment: production
+    permissions:
+      contents: read
+      id-token: write # fédération d'identité : GitHub prouve à Tailscale que le job vient de ce repo
+    steps:
+      - name: Rejoindre Tailscale (machine temporaire tag:ci)
+        uses: tailscale/github-action@d1b6cd204f8dceda5b3eaad7f1f767be390056cd # v4.2.0
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
+          ping: ${{ secrets.VPS_HOST }}
+
+      - name: Déployer sur le VPS
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          # La clé n'autorise qu'une commande sur le VPS (lulusia-deploy-bot) : on lui passe
+          # seulement le commit à déployer.
+          ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 \
+            "ubuntu@$VPS_HOST" "$GITHUB_SHA"
