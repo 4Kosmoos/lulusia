@@ -38,8 +38,8 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## Grafana
 
-- [ ] Vérifier que les dashboards affichent bien les usines récentes depuis la réparation de FRM.
-- [ ] Prendre en main les dashboards (variables serveur et session, filtres par objet ou par zone).
+- [x] Vérifier que les dashboards affichent bien les usines récentes depuis la réparation de FRM (octobre 2026 : recettes et bâtiments de SF+ présents, données continues, erreurs de collecte seulement pendant le redémarrage de 04:10).
+- [x] Prendre en main les dashboards (variables serveur et session, filtres par objet ou par zone) : tour complet fait en octobre 2026.
 - Décidé : **pas d'alertes de la stack vers Discord pour l'instant**. Elle n'envoie que fusible grillé et batterie vide, que FRM envoie déjà, et FRM les envoie depuis le jeu même quand son serveur web est en panne. À reconsidérer pour avoir les alertes de production (surconsommation, sous-production) sur Discord.
 
 ## Sécurité et entretien
@@ -52,8 +52,8 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## À vérifier en jeu
 
-- [ ] Le multiplicateur d'ascenseur ×5 s'applique aux phases de SF+, et gisements et pureté aléatoires fonctionnent avec les ressources de SF+.
-- [ ] Digital Storage : cohabitation avec SF+, et FRM voit-il son contenu ?
+- [x] Le multiplicateur d'ascenseur ×5 s'applique aux phases de SF+, et gisements et pureté aléatoires fonctionnent avec les ressources de SF+ (octobre 2026).
+- [x] Digital Storage cohabite avec SF+ sans problème (octobre 2026).
 
 ## À surveiller au fil de la partie
 
@@ -61,6 +61,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [ ] **Processeur** : OVH ne communique pas le modèle exact.
 - [ ] **Effet de la stack Grafana** sur les performances du jeu : certains endpoints FRM passent par le thread principal du jeu.
 - [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `bot/src/frm.ts`. La 1.5.4 ne corrige ni l'un ni l'autre : #313 vérifié le 15/10/2026 dans les logs du jeu après le rechargement de 04:00 (« Websocket Thread is already running »). Le contournement des accents reste compatible avec la future correction : on pourra le retirer sans urgence.
+- [ ] **Digital Storage et FRM** : vérifier que FRM voit le contenu du Digital Storage quand on s'en servira (stocks du bot et de Grafana).
 - [ ] **Nouvelle version de ficsit-cli** où `profile mod add` fonctionne : on pourra alors abandonner le script Python.
 - [ ] **SMM gère les clés SSH** (issue #304) : on pourra alors gérer les mods du serveur depuis SMM.
 - [ ] **Sortie de FicsIt-Networks** pour la 1.2 (« Works » en 1.2, avec une version serveur Linux).
