@@ -1,0 +1,2343 @@
+[
+ {
+  "ID": "Build_ConstructorMk1_C_2147322312",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 80678.8515625,
+   "y": -83764.0859375,
+   "z": 12266.12109375,
+   "rotation": 260.0024416281088,
+   "pitch": 0
+  },
+  "Recipe": "Copper Rod",
+  "RecipeClassName": "Recipe_Constructor_CopperRod_C",
+  "production": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentProd": 10.517647743225098,
+    "MaxProd": 18,
+    "ProdPercent": 58.43137635125054
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentConsumed": 7.011765003204346,
+    "MaxConsumed": 12,
+    "ConsPercent": 58.43137502670288
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 198,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 58.431373596191406,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": true,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147324544",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 78315.21875,
+   "y": -83347.359375,
+   "z": 12266.1103515625,
+   "rotation": 260.00000002904665,
+   "pitch": 0
+  },
+  "Recipe": "Copper Rod",
+  "RecipeClassName": "Recipe_Constructor_CopperRod_C",
+  "production": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentProd": 10.517647743225098,
+    "MaxProd": 18,
+    "ProdPercent": 58.43137635125054
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentConsumed": 7.011765003204346,
+    "MaxConsumed": 12,
+    "ConsPercent": 58.43137502670288
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 196,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 58.431373596191406,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2145801677",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": -48015.5234375,
+   "y": 32049.857421875,
+   "z": 24415.255859375,
+   "rotation": 130.00122208934042,
+   "pitch": 0
+  },
+  "Recipe": "Copper Rod",
+  "RecipeClassName": "Recipe_Constructor_CopperRod_C",
+  "production": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentProd": 8.89411735534668,
+    "MaxProd": 18,
+    "ProdPercent": 49.41176308525933
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentConsumed": 5.929411888122559,
+    "MaxConsumed": 12,
+    "ConsPercent": 49.41176573435466
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 198,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 49.411766052246094,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147322942",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 77527.3515625,
+   "y": -83208.515625,
+   "z": 12266.119140625,
+   "rotation": 260.0024416281088,
+   "pitch": 0
+  },
+  "Recipe": "Copper Rod",
+  "RecipeClassName": "Recipe_Constructor_CopperRod_C",
+  "production": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentProd": 10.447059631347656,
+    "MaxProd": 18,
+    "ProdPercent": 58.03922017415365
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentConsumed": 6.9647064208984375,
+    "MaxConsumed": 12,
+    "ConsPercent": 58.03922017415365
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 197,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 58.03921890258789,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147367669",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 69714.5546875,
+   "y": -87249.3359375,
+   "z": 10534.240234375,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Iron Plate",
+  "RecipeClassName": "Recipe_IronPlate_C",
+  "production": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentProd": 10.039216041564941,
+    "MaxProd": 20,
+    "ProdPercent": 50.196080207824714
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentConsumed": 15.05882453918457,
+    "MaxConsumed": 30,
+    "ConsPercent": 50.1960817972819
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 50.196083068847656,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147371923",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 70514.6015625,
+   "y": -86449.296875,
+   "z": 10534.2509765625,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Iron Plate",
+  "RecipeClassName": "Recipe_IronPlate_C",
+  "production": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentProd": 20,
+    "MaxProd": 20,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentConsumed": 30,
+    "MaxConsumed": 30,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 5,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2145821091",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": -42333.17578125,
+   "y": 40212.14453125,
+   "z": 24415.26953125,
+   "rotation": 130.00122208934042,
+   "pitch": 0
+  },
+  "Recipe": "Iron Plate",
+  "RecipeClassName": "Recipe_IronPlate_C",
+  "production": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentProd": 5.647058963775635,
+    "MaxProd": 20,
+    "ProdPercent": 28.235294818878177
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentConsumed": 8.470588684082031,
+    "MaxConsumed": 30,
+    "ConsPercent": 28.23529561360677
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 199,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 28.23529624938965,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147335909",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 70869.1875,
+   "y": -92373.21875,
+   "z": 9401.73828125,
+   "rotation": 49.9987563197688,
+   "pitch": 0
+  },
+  "Recipe": "Iron Plate",
+  "RecipeClassName": "Recipe_IronPlate_C",
+  "production": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentProd": 13.568628311157227,
+    "MaxProd": 20,
+    "ProdPercent": 67.84314155578613
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentConsumed": 20.352941513061523,
+    "MaxConsumed": 30,
+    "ConsPercent": 67.84313837687175
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 99,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 196,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 67.8431396484375,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2145821040",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": -41720.375,
+   "y": 40726.34375,
+   "z": 24415.26953125,
+   "rotation": 130.00122208934042,
+   "pitch": 0
+  },
+  "Recipe": "Iron Plate",
+  "RecipeClassName": "Recipe_IronPlate_C",
+  "production": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentProd": 5.254902362823486,
+    "MaxProd": 20,
+    "ProdPercent": 26.274511814117428
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentConsumed": 7.88235330581665,
+    "MaxConsumed": 30,
+    "ConsPercent": 26.274511019388836
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 26.274511337280273,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147079346",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 113311.859375,
+   "y": -90382.890625,
+   "z": 14245.5009765625,
+   "rotation": 94.99877904572367,
+   "pitch": 0
+  },
+  "Recipe": "Iron Plate",
+  "RecipeClassName": "Recipe_IronPlate_C",
+  "production": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentProd": 20,
+    "MaxProd": 20,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentConsumed": 30,
+    "MaxConsumed": 30,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 5,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2145871197",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": -46009.96484375,
+   "y": 37126.91796875,
+   "z": 24415.267578125,
+   "rotation": 130.00000131878627,
+   "pitch": 0
+  },
+  "Recipe": "Iron Rod",
+  "RecipeClassName": "Recipe_Constructor_IronRod_C",
+  "production": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentProd": 0,
+    "MaxProd": 15,
+    "ProdPercent": 0
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentConsumed": 0,
+    "MaxConsumed": 15,
+    "ConsPercent": 0
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 0,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147365365",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 68914.5546875,
+   "y": -87249.3359375,
+   "z": 10534.240234375,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Iron Rod",
+  "RecipeClassName": "Recipe_Constructor_IronRod_C",
+  "production": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentProd": 15,
+    "MaxProd": 15,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentConsumed": 15,
+    "MaxConsumed": 15,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2145870687",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": -45397.17578125,
+   "y": 37641.14453125,
+   "z": 24415.30078125,
+   "rotation": 130.00122208934042,
+   "pitch": 0
+  },
+  "Recipe": "Iron Rod",
+  "RecipeClassName": "Recipe_Constructor_IronRod_C",
+  "production": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentProd": 11.352941513061523,
+    "MaxProd": 15,
+    "ProdPercent": 75.68627675374348
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentConsumed": 11.352941513061523,
+    "MaxConsumed": 15,
+    "ConsPercent": 75.68627675374348
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 75.686279296875,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2145815725",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": -45080.05859375,
+   "y": 34774.19921875,
+   "z": 24415.263671875,
+   "rotation": 130.00000131878627,
+   "pitch": 0
+  },
+  "Recipe": "Wire",
+  "RecipeClassName": "Recipe_Constructor_CopperWire_C",
+  "production": [
+   {
+    "Name": "Wire",
+    "ClassName": "Desc_Wire_C",
+    "Amount": 5,
+    "MaxAmount": 500,
+    "CurrentProd": 8.705883026123047,
+    "MaxProd": 30,
+    "ProdPercent": 29.019610087076824
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 5.223529815673828,
+    "MaxConsumed": 18,
+    "ConsPercent": 29.019610087076824
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Wire",
+    "ClassName": "Desc_Wire_C",
+    "Amount": 498,
+    "MaxAmount": 500
+   }
+  ],
+  "Productivity": 29.019609451293945,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147303297",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 78686.3125,
+   "y": -85849.8203125,
+   "z": 12266.1162109375,
+   "rotation": 260.00000002904665,
+   "pitch": 0
+  },
+  "Recipe": "Wire",
+  "RecipeClassName": "Recipe_Constructor_CopperWire_C",
+  "production": [
+   {
+    "Name": "Wire",
+    "ClassName": "Desc_Wire_C",
+    "Amount": 5,
+    "MaxAmount": 500,
+    "CurrentProd": 30,
+    "MaxProd": 30,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 18,
+    "MaxConsumed": 18,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Copper Rod",
+    "ClassName": "Desc_CopperRod_C",
+    "Amount": 199,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Wire",
+    "ClassName": "Desc_Wire_C",
+    "Amount": 3,
+    "MaxAmount": 500
+   }
+  ],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147360739",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 68114.5546875,
+   "y": -88149.3359375,
+   "z": 10534.240234375,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Screws",
+  "RecipeClassName": "Recipe_Constructor_IronScrew_C",
+  "production": [
+   {
+    "Name": "Screws",
+    "ClassName": "Desc_IronScrew_C",
+    "Amount": 5,
+    "MaxAmount": 500,
+    "CurrentProd": 37.45098114013672,
+    "MaxProd": 50,
+    "ProdPercent": 74.90196228027344
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentConsumed": 14.980392456054688,
+    "MaxConsumed": 20,
+    "ConsPercent": 74.90196228027344
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Rod",
+    "ClassName": "Desc_IronRod_C",
+    "Amount": 2,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Screws",
+    "ClassName": "Desc_IronScrew_C",
+    "Amount": 2,
+    "MaxAmount": 500
+   }
+  ],
+  "Productivity": 74.90196228027344,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147078585",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 113224.765625,
+   "y": -89386.703125,
+   "z": 14245.5,
+   "rotation": 94.99877904572367,
+   "pitch": 0
+  },
+  "Recipe": "Alternate: Compacted Iron Plate",
+  "RecipeClassName": "Recipe_Alternative_CompactedIronPlate_C",
+  "production": [
+   {
+    "Name": "Reinforced Iron Plate",
+    "ClassName": "Desc_IronPlateReinforced_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentProd": 2,
+    "MaxProd": 2,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 20,
+    "MaxAmount": 200,
+    "CurrentConsumed": 20,
+    "MaxConsumed": 20,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 28,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 100,
+  "ManuSpeed": 66.66667175292969,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 2.3403449058532715,
+   "MaxPowerConsumed": 2.3403449058532715
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147405904",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 62060.20703125,
+   "y": -85102.6484375,
+   "z": 9543.978515625,
+   "rotation": 1.4210854715202004e-14,
+   "pitch": 0
+  },
+  "Recipe": "Solid Biofuel",
+  "RecipeClassName": "Recipe_Biofuel_C",
+  "production": [
+   {
+    "Name": "Solid Biofuel",
+    "ClassName": "Desc_Biofuel_C",
+    "Amount": 4,
+    "MaxAmount": 200,
+    "CurrentProd": 0,
+    "MaxProd": 60,
+    "ProdPercent": 0
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Biomass",
+    "ClassName": "Desc_GenericBiomass_C",
+    "Amount": 8,
+    "MaxAmount": 200,
+    "CurrentConsumed": 0,
+    "MaxConsumed": 120,
+    "ConsPercent": 0
+   }
+  ],
+  "InputInventory": [],
+  "OutputInventory": [],
+  "Productivity": 0,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 0,
+   "CircuitID": 0,
+   "FuseTriggered": false,
+   "PowerConsumed": 0,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147404803",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 60460.20703125,
+   "y": -85902.6484375,
+   "z": 9543.9638671875,
+   "rotation": 1.4210854715202004e-14,
+   "pitch": 0
+  },
+  "Recipe": "Biomass (Wood)",
+  "RecipeClassName": "Recipe_Constructor_WoodBio_C",
+  "production": [
+   {
+    "Name": "Biomass",
+    "ClassName": "Desc_GenericBiomass_C",
+    "Amount": 8,
+    "MaxAmount": 200,
+    "CurrentProd": 0,
+    "MaxProd": 120,
+    "ProdPercent": 0
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Wood",
+    "ClassName": "Desc_Wood_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 0,
+    "MaxConsumed": 45,
+    "ConsPercent": 0
+   }
+  ],
+  "InputInventory": [],
+  "OutputInventory": [],
+  "Productivity": 0,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 0,
+   "CircuitID": 0,
+   "FuseTriggered": false,
+   "PowerConsumed": 0,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_ConstructorMk1_C_2147404886",
+  "Name": "Constructor",
+  "ClassName": "Build_ConstructorMk1_C",
+  "location": {
+   "x": 60460.20703125,
+   "y": -84302.6484375,
+   "z": 9543.9638671875,
+   "rotation": 1.4210854715202004e-14,
+   "pitch": 0
+  },
+  "Recipe": "Biomass (Leaves)",
+  "RecipeClassName": "Recipe_Biomass_Leaves_C",
+  "production": [
+   {
+    "Name": "Biomass",
+    "ClassName": "Desc_GenericBiomass_C",
+    "Amount": 5,
+    "MaxAmount": 200,
+    "CurrentProd": 0,
+    "MaxProd": 60,
+    "ProdPercent": 0
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Leaves",
+    "ClassName": "Desc_Leaves_C",
+    "Amount": 10,
+    "MaxAmount": 500,
+    "CurrentConsumed": 0,
+    "MaxConsumed": 120,
+    "ConsPercent": 0
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Leaves",
+    "ClassName": "Desc_Leaves_C",
+    "Amount": 1,
+    "MaxAmount": 500
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 0,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 0,
+   "CircuitID": 0,
+   "FuseTriggered": false,
+   "PowerConsumed": 0,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2146983216",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 38731.78125,
+   "y": 114871.3125,
+   "z": 13621.509765625,
+   "rotation": 299.99816775420334,
+   "pitch": 0
+  },
+  "Recipe": "Impure Iron Ingot",
+  "RecipeClassName": "Recipe_Smelter_Dirty_IronIngots_C",
+  "production": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentProd": 12.235294342041016,
+    "MaxProd": 30,
+    "ProdPercent": 40.784314473470054
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Siterite",
+    "ClassName": "Desc_CrushedSiterite_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentConsumed": 12.235294342041016,
+    "MaxConsumed": 30,
+    "ConsPercent": 40.784314473470054
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Siterite",
+    "ClassName": "Desc_CrushedSiterite_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 40.7843132019043,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2147336215",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 70106.078125,
+   "y": -93282.6328125,
+   "z": 9364.9169921875,
+   "rotation": 49.999998681213754,
+   "pitch": 0
+  },
+  "Recipe": "Impure Iron Ingot",
+  "RecipeClassName": "Recipe_Smelter_Dirty_IronIngots_C",
+  "production": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentProd": 20.47058868408203,
+    "MaxProd": 30,
+    "ProdPercent": 68.23529561360677
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Siterite",
+    "ClassName": "Desc_CrushedSiterite_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentConsumed": 20.47058868408203,
+    "MaxConsumed": 30,
+    "ConsPercent": 68.23529561360677
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Siterite",
+    "ClassName": "Desc_CrushedSiterite_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 98,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 68.23529815673828,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2146983156",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 38298.78125,
+   "y": 114621.3125,
+   "z": 13621.509765625,
+   "rotation": 299.99816775420334,
+   "pitch": 0
+  },
+  "Recipe": "Impure Iron Ingot",
+  "RecipeClassName": "Recipe_Smelter_Dirty_IronIngots_C",
+  "production": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentProd": 12.117647171020508,
+    "MaxProd": 30,
+    "ProdPercent": 40.392157236735024
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Siterite",
+    "ClassName": "Desc_CrushedSiterite_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentConsumed": 12.117647171020508,
+    "MaxConsumed": 30,
+    "ConsPercent": 40.392157236735024
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Siterite",
+    "ClassName": "Desc_CrushedSiterite_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 99,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 40.39215850830078,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2145889795",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": -43545.33203125,
+   "y": 35278.7890625,
+   "z": 24415.279296875,
+   "rotation": 220.00000057762918,
+   "pitch": 0
+  },
+  "Recipe": "Iron Ingot",
+  "RecipeClassName": "Recipe_Smelter_IronIngot_C",
+  "production": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentProd": 16.823530197143555,
+    "MaxProd": 30,
+    "ProdPercent": 56.078433990478516
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Iron",
+    "ClassName": "Desc_CrushedIron_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 16.823530197143555,
+    "MaxConsumed": 30,
+    "ConsPercent": 56.078433990478516
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Iron",
+    "ClassName": "Desc_CrushedIron_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 98,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 56.078433990478516,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2147385040",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 70214.5546875,
+   "y": -84849.3359375,
+   "z": 10534.240234375,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Iron Ingot",
+  "RecipeClassName": "Recipe_Smelter_IronIngot_C",
+  "production": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentProd": 30,
+    "MaxProd": 30,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Iron",
+    "ClassName": "Desc_CrushedIron_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 30,
+    "MaxConsumed": 30,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Iron",
+    "ClassName": "Desc_CrushedIron_C",
+    "Amount": 198,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2145888744",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": -43866.703125,
+   "y": 35661.81640625,
+   "z": 24415.30078125,
+   "rotation": 220.00121989091696,
+   "pitch": 0
+  },
+  "Recipe": "Iron Ingot",
+  "RecipeClassName": "Recipe_Smelter_IronIngot_C",
+  "production": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 3,
+    "MaxAmount": 100,
+    "CurrentProd": 16.47058868408203,
+    "MaxProd": 30,
+    "ProdPercent": 54.901962280273445
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Iron",
+    "ClassName": "Desc_CrushedIron_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 16.47058868408203,
+    "MaxConsumed": 30,
+    "ConsPercent": 54.901962280273445
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Iron",
+    "ClassName": "Desc_CrushedIron_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Iron Ingot",
+    "ClassName": "Desc_IronIngot_C",
+    "Amount": 98,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 54.90196228027344,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2145890757",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": -42452.59765625,
+   "y": 33976.5859375,
+   "z": 24415.279296875,
+   "rotation": 220.00121989091696,
+   "pitch": 0
+  },
+  "Recipe": "Tin Ingot",
+  "RecipeClassName": "Recipe_Smelter_TinIngot_C",
+  "production": [
+   {
+    "Name": "Tin Ingot",
+    "ClassName": "Desc_TinIngot_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentProd": 6.705882549285889,
+    "MaxProd": 15,
+    "ProdPercent": 44.70588366190593
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Tin",
+    "ClassName": "Desc_CrushedTin_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentConsumed": 6.705882549285889,
+    "MaxConsumed": 15,
+    "ConsPercent": 44.70588366190593
+   }
+  ],
+  "InputInventory": [],
+  "OutputInventory": [],
+  "Productivity": 44.70588302612305,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2147379036",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 71214.5546875,
+   "y": -84749.3359375,
+   "z": 10534.240234375,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Tin Ingot",
+  "RecipeClassName": "Recipe_Smelter_TinIngot_C",
+  "production": [
+   {
+    "Name": "Tin Ingot",
+    "ClassName": "Desc_TinIngot_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentProd": 15,
+    "MaxProd": 15,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Tin",
+    "ClassName": "Desc_CrushedTin_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentConsumed": 15,
+    "MaxConsumed": 15,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Tin",
+    "ClassName": "Desc_CrushedTin_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2147334846",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 78731.9765625,
+   "y": -80983.8203125,
+   "z": 12266.1103515625,
+   "rotation": 260.00000002904665,
+   "pitch": 0
+  },
+  "Recipe": "Impure Copper Ingot",
+  "RecipeClassName": "Recipe_Smelter_Dirty_CopperIngot_C",
+  "production": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentProd": 13.082353591918945,
+    "MaxProd": 24,
+    "ProdPercent": 54.509806632995605
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Callanite",
+    "ClassName": "Desc_CrushedCallanite_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentConsumed": 13.082353591918945,
+    "MaxConsumed": 24,
+    "ConsPercent": 54.509806632995605
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Callanite",
+    "ClassName": "Desc_CrushedCallanite_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 98,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 54.50980758666992,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_SmelterMk1_C_2147335950",
+  "Name": "Smelter",
+  "ClassName": "Build_SmelterMk1_C",
+  "location": {
+   "x": 77944.1328125,
+   "y": -80844.8984375,
+   "z": 12266.1103515625,
+   "rotation": 260.00000002904665,
+   "pitch": 0
+  },
+  "Recipe": "Impure Copper Ingot",
+  "RecipeClassName": "Recipe_Smelter_Dirty_CopperIngot_C",
+  "production": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 2,
+    "MaxAmount": 100,
+    "CurrentProd": 13.176471710205078,
+    "MaxProd": 24,
+    "ProdPercent": 54.90196545918783
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Crushed Callanite",
+    "ClassName": "Desc_CrushedCallanite_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentConsumed": 13.176471710205078,
+    "MaxConsumed": 24,
+    "ConsPercent": 54.90196545918783
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Crushed Callanite",
+    "ClassName": "Desc_CrushedCallanite_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Copper Ingot",
+    "ClassName": "Desc_CopperIngot_C",
+    "Amount": 96,
+    "MaxAmount": 100
+   }
+  ],
+  "Productivity": 54.90196228027344,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 4,
+   "MaxPowerConsumed": 4
+  }
+ },
+ {
+  "ID": "Build_AssemblerMk1_C_2147332255",
+  "Name": "Assembler",
+  "ClassName": "Build_AssemblerMk1_C",
+  "location": {
+   "x": 72414.5546875,
+   "y": -86949.3359375,
+   "z": 10534.2451171875,
+   "rotation": 270,
+   "pitch": 0
+  },
+  "Recipe": "Tin Plate",
+  "RecipeClassName": "Recipe_Assembler_TinPlates_C",
+  "production": [
+   {
+    "Name": "Tin Plate",
+    "ClassName": "Desc_TinPlates_C",
+    "Amount": 12,
+    "MaxAmount": 200,
+    "CurrentProd": 27.137256622314453,
+    "MaxProd": 40,
+    "ProdPercent": 67.84314155578613
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Tin Ingot",
+    "ClassName": "Desc_TinIngot_C",
+    "Amount": 9,
+    "MaxAmount": 200,
+    "CurrentConsumed": 20.352941513061523,
+    "MaxConsumed": 30,
+    "ConsPercent": 67.84313837687175
+   },
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 6,
+    "MaxAmount": 200,
+    "CurrentConsumed": 13.568628311157227,
+    "MaxConsumed": 20,
+    "ConsPercent": 67.84314155578613
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Tin Ingot",
+    "ClassName": "Desc_TinIngot_C",
+    "Amount": 8,
+    "MaxAmount": 200
+   },
+   {
+    "Name": "Iron Plate",
+    "ClassName": "Desc_IronPlate_C",
+    "Amount": 200,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Tin Plate",
+    "ClassName": "Desc_TinPlates_C",
+    "Amount": 3,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 67.8431396484375,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 15
+  }
+ },
+ {
+  "ID": "Build_AssemblerMk1_C_2147163845",
+  "Name": "Assembler",
+  "ClassName": "Build_AssemblerMk1_C",
+  "location": {
+   "x": 21232.57421875,
+   "y": -209159.984375,
+   "z": 838.6409301757812,
+   "rotation": 279.99999997095335,
+   "pitch": 0
+  },
+  "Recipe": "Stator",
+  "RecipeClassName": "Recipe_Assembler_Stator_C",
+  "production": [
+   {
+    "Name": "Stator",
+    "ClassName": "Desc_Stator_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentProd": 3.4823532104492188,
+    "MaxProd": 6,
+    "ProdPercent": 58.03922017415365
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Steel Pipe",
+    "ClassName": "Desc_SteelPipe_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 10.447059631347656,
+    "MaxConsumed": 18,
+    "ConsPercent": 58.03922017415365
+   },
+   {
+    "Name": "Tinned Wire",
+    "ClassName": "Desc_TinnedWire_C",
+    "Amount": 6,
+    "MaxAmount": 500,
+    "CurrentConsumed": 20.894119262695312,
+    "MaxConsumed": 36,
+    "ConsPercent": 58.03922017415365
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Steel Pipe",
+    "ClassName": "Desc_SteelPipe_C",
+    "Amount": 3,
+    "MaxAmount": 200
+   },
+   {
+    "Name": "Tinned Wire",
+    "ClassName": "Desc_TinnedWire_C",
+    "Amount": 500,
+    "MaxAmount": 500
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 58.03921890258789,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 15
+  }
+ },
+ {
+  "ID": "Build_AssemblerMk1_C_2147163689",
+  "Name": "Assembler",
+  "ClassName": "Build_AssemblerMk1_C",
+  "location": {
+   "x": 22118.93359375,
+   "y": -209003.75,
+   "z": 838.65576171875,
+   "rotation": 279.9975583718912,
+   "pitch": 0
+  },
+  "Recipe": "Stator",
+  "RecipeClassName": "Recipe_Assembler_Stator_C",
+  "production": [
+   {
+    "Name": "Stator",
+    "ClassName": "Desc_Stator_C",
+    "Amount": 1,
+    "MaxAmount": 100,
+    "CurrentProd": 3.505882501602173,
+    "MaxProd": 6,
+    "ProdPercent": 58.43137502670288
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Steel Pipe",
+    "ClassName": "Desc_SteelPipe_C",
+    "Amount": 3,
+    "MaxAmount": 200,
+    "CurrentConsumed": 10.517647743225098,
+    "MaxConsumed": 18,
+    "ConsPercent": 58.43137635125054
+   },
+   {
+    "Name": "Tinned Wire",
+    "ClassName": "Desc_TinnedWire_C",
+    "Amount": 6,
+    "MaxAmount": 500,
+    "CurrentConsumed": 21.035295486450195,
+    "MaxConsumed": 36,
+    "ConsPercent": 58.43137635125054
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Steel Pipe",
+    "ClassName": "Desc_SteelPipe_C",
+    "Amount": 4,
+    "MaxAmount": 200
+   },
+   {
+    "Name": "Tinned Wire",
+    "ClassName": "Desc_TinnedWire_C",
+    "Amount": 500,
+    "MaxAmount": 500
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 58.431373596191406,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 15,
+   "MaxPowerConsumed": 15
+  }
+ },
+ {
+  "ID": "Build_AssemblerMk1_C_2147368468",
+  "Name": "Assembler",
+  "ClassName": "Build_AssemblerMk1_C",
+  "location": {
+   "x": 10601.6845703125,
+   "y": 60656.7421875,
+   "z": 23350.177734375,
+   "rotation": 180,
+   "pitch": 0
+  },
+  "Recipe": "Smart Plating",
+  "RecipeClassName": "Recipe_Assembler_SmartPlating_C",
+  "production": [
+   {
+    "Name": "Smart Plating",
+    "ClassName": "Desc_SpaceElevatorPart_1_C",
+    "Amount": 3,
+    "MaxAmount": 50,
+    "CurrentProd": 2.25,
+    "MaxProd": 2.25,
+    "ProdPercent": 100
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Rotor",
+    "ClassName": "Desc_Rotor_C",
+    "Amount": 5,
+    "MaxAmount": 100,
+    "CurrentConsumed": 3.75,
+    "MaxConsumed": 3.75,
+    "ConsPercent": 100
+   },
+   {
+    "Name": "Bronze Plates",
+    "ClassName": "Desc_BronzePlates_C",
+    "Amount": 16,
+    "MaxAmount": 200,
+    "CurrentConsumed": 12,
+    "MaxConsumed": 12,
+    "ConsPercent": 100
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Rotor",
+    "ClassName": "Desc_Rotor_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   },
+   {
+    "Name": "Bronze Plates",
+    "ClassName": "Desc_BronzePlates_C",
+    "Amount": 25,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 100,
+  "ManuSpeed": 100,
+  "Somersloops": 0,
+  "PowerShards": 0,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 15,
+   "MaxPowerConsumed": 15
+  }
+ },
+ {
+  "ID": "Build_AssemblerMk1_C_2147104091",
+  "Name": "Assembler",
+  "ClassName": "Build_AssemblerMk1_C",
+  "location": {
+   "x": 273403.25,
+   "y": -201425.40625,
+   "z": 3742.873779296875,
+   "rotation": 99.99999997095338,
+   "pitch": 0
+  },
+  "Recipe": "Smart Plating",
+  "RecipeClassName": "Recipe_Assembler_SmartPlating_C",
+  "production": [
+   {
+    "Name": "Smart Plating",
+    "ClassName": "Desc_SpaceElevatorPart_1_C",
+    "Amount": 3,
+    "MaxAmount": 50,
+    "CurrentProd": 1.5647060871124268,
+    "MaxProd": 3,
+    "ProdPercent": 52.15686957041422
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Rotor",
+    "ClassName": "Desc_Rotor_C",
+    "Amount": 5,
+    "MaxAmount": 100,
+    "CurrentConsumed": 2.6078433990478516,
+    "MaxConsumed": 5,
+    "ConsPercent": 52.15686798095703
+   },
+   {
+    "Name": "Bronze Plates",
+    "ClassName": "Desc_BronzePlates_C",
+    "Amount": 16,
+    "MaxAmount": 200,
+    "CurrentConsumed": 8.345098495483398,
+    "MaxConsumed": 16,
+    "ConsPercent": 52.15686559677124
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Rotor",
+    "ClassName": "Desc_Rotor_C",
+    "Amount": 100,
+    "MaxAmount": 100
+   },
+   {
+    "Name": "Bronze Plates",
+    "ClassName": "Desc_BronzePlates_C",
+    "Amount": 16,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [],
+  "Productivity": 52.156864166259766,
+  "ManuSpeed": 133.33334350585938,
+  "Somersloops": 0,
+  "PowerShards": 1,
+  "IsConfigured": true,
+  "IsProducing": true,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 21.940746307373047,
+   "MaxPowerConsumed": 21.940746307373047
+  }
+ },
+ {
+  "ID": "Build_AssemblerMk1_C_2147407036",
+  "Name": "Assembler",
+  "ClassName": "Build_AssemblerMk1_C",
+  "location": {
+   "x": 65011.10546875,
+   "y": -73916.1328125,
+   "z": 10616.6591796875,
+   "rotation": 90,
+   "pitch": 0
+  },
+  "Recipe": "Poled Kerr Crystal",
+  "RecipeClassName": "Recipe_Time_Stabilizer_C",
+  "production": [
+   {
+    "Name": "Poled Kerr Crystal",
+    "ClassName": "Desc_TimeC_StabilizedTimeCrystal_C",
+    "Amount": 1,
+    "MaxAmount": 200,
+    "CurrentProd": 0,
+    "MaxProd": 60,
+    "ProdPercent": 0
+   }
+  ],
+  "ingredients": [
+   {
+    "Name": "Kerr Crystal",
+    "ClassName": "Res_KerrCrystal_C",
+    "Amount": 2,
+    "MaxAmount": 200,
+    "CurrentConsumed": 0,
+    "MaxConsumed": 60,
+    "ConsPercent": 0
+   },
+   {
+    "Name": "Polarization Frame",
+    "ClassName": "Desc_TimeC_Case_C",
+    "Amount": 1,
+    "MaxAmount": 50,
+    "CurrentConsumed": 0,
+    "MaxConsumed": 30,
+    "ConsPercent": 0
+   }
+  ],
+  "InputInventory": [
+   {
+    "Name": "Kerr Crystal",
+    "ClassName": "Res_KerrCrystal_C",
+    "Amount": 98,
+    "MaxAmount": 200
+   }
+  ],
+  "OutputInventory": [
+   {
+    "Name": "Poled Kerr Crystal",
+    "ClassName": "Desc_TimeC_StabilizedTimeCrystal_C",
+    "Amount": 58,
+    "MaxAmount": 200
+   }
+  ],
+  "Productivity": 0,
+  "ManuSpeed": 250,
+  "Somersloops": 2,
+  "PowerShards": 3,
+  "IsConfigured": true,
+  "IsProducing": false,
+  "IsPaused": false,
+  "PowerInfo": {
+   "CircuitGroupID": 2,
+   "CircuitID": 15,
+   "FuseTriggered": false,
+   "PowerConsumed": 0.10000000149011612,
+   "MaxPowerConsumed": 201.4650421142578
+  }
+ }
+]

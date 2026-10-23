@@ -105,12 +105,43 @@ export interface PowerSwitch {
   location: Location;
 }
 
+/** Item made by a machine. Rates are per minute, at the machine's clock speed. */
 export interface MachineProduct {
   Name: string;
   /** "Unassigned" for a machine without a recipe. */
   ClassName: string;
+  /** Amount made per cycle. */
+  Amount: number;
   CurrentProd: number;
   MaxProd: number;
+}
+
+/** Item used by a machine. Rates are per minute, at the machine's clock speed. */
+export interface MachineIngredient {
+  Name: string;
+  ClassName: string;
+  /** Amount used per cycle. */
+  Amount: number;
+  CurrentConsumed: number;
+  MaxConsumed: number;
+}
+
+/** Content of one input or output slot of a machine. */
+export interface MachineSlot {
+  Name: string;
+  ClassName: string;
+  Amount: number;
+  /** Size of the slot (a stack). */
+  MaxAmount: number;
+}
+
+export interface MachinePower {
+  CircuitGroupID: number;
+  CircuitID: number;
+  FuseTriggered: boolean;
+  /** MW. A powered machine draws a little even when it does not produce. */
+  PowerConsumed: number;
+  MaxPowerConsumed: number;
 }
 
 /** Production machine (constructor, assembler… and modded machines). */
@@ -121,8 +152,20 @@ export interface Machine {
   Recipe: string;
   /** Products of the recipe, main product first. */
   production: MachineProduct[];
+  ingredients: MachineIngredient[];
+  /** Slots with something in them: an empty slot is not listed. */
+  InputInventory: MachineSlot[];
+  OutputInventory: MachineSlot[];
+  /** Share of the recent time spent producing, in %. */
+  Productivity: number;
+  /** Clock speed in % (100 is the normal speed). */
+  ManuSpeed: number;
+  Somersloops: number;
+  PowerShards: number;
+  IsConfigured: boolean;
   IsProducing: boolean;
   IsPaused: boolean;
+  PowerInfo: MachinePower;
   location: Location;
 }
 

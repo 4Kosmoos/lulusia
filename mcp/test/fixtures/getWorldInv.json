@@ -1,0 +1,584 @@
+[
+ {
+  "Name": "Tin Rod",
+  "ClassName": "Desc_TinRod_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Tin Plate",
+  "ClassName": "Desc_TinPlates_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Iron Plate",
+  "ClassName": "Desc_IronPlate_C",
+  "Amount": 14403,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Iron Rod",
+  "ClassName": "Desc_IronRod_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Iron Sheet",
+  "ClassName": "Desc_IronSheet_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Screws",
+  "ClassName": "Desc_IronScrew_C",
+  "Amount": 36000,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Iron Wire",
+  "ClassName": "Desc_IronWire_C",
+  "Amount": 36000,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Tinned Sheet",
+  "ClassName": "Desc_TinSheet_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Copper Sheet",
+  "ClassName": "Desc_CopperSheet_C",
+  "Amount": 33400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Reanimated SAM",
+  "ClassName": "Desc_SAMIngot_C",
+  "Amount": 14200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Carbon Powder",
+  "ClassName": "Desc_CarbonDust_C",
+  "Amount": 59102,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Siterite Ore",
+  "ClassName": "Desc_OreIron_C",
+  "Amount": 9715,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Steel Ingot",
+  "ClassName": "Desc_SteelIngot_C",
+  "Amount": 186,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Bronze Ingot",
+  "ClassName": "Desc_BronzeIngot_C",
+  "Amount": 411,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Copper Ingot",
+  "ClassName": "Desc_CopperIngot_C",
+  "Amount": 7689,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Fabric",
+  "ClassName": "Desc_Fabric_C",
+  "Amount": 52,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Iron Ingot",
+  "ClassName": "Desc_IronIngot_C",
+  "Amount": 4621,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Coal",
+  "ClassName": "Desc_Coal_C",
+  "Amount": 2019,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Modular Frame",
+  "ClassName": "Desc_ModularFrame_C",
+  "Amount": 5230,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Bronze Frame",
+  "ClassName": "Desc_BronzeFrame_C",
+  "Amount": 28620,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Rotor",
+  "ClassName": "Desc_Rotor_C",
+  "Amount": 8291,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Smooth Belt Drive",
+  "ClassName": "Desc_BeltDriveMk1_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Reinforced Iron Plate",
+  "ClassName": "Desc_IronPlateReinforced_C",
+  "Amount": 7200,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Bronze Plates",
+  "ClassName": "Desc_BronzePlates_C",
+  "Amount": 21543,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Bronze Pipes",
+  "ClassName": "Desc_BronzePipe_C",
+  "Amount": 21047,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Bronze Beam",
+  "ClassName": "Desc_BronzeBeam_C",
+  "Amount": 22357,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Smart Plating",
+  "ClassName": "Desc_SpaceElevatorPart_1_C",
+  "Amount": 5075,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Quickwire",
+  "ClassName": "Desc_HighSpeedWire_C",
+  "Amount": 125835,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "AI Limiter",
+  "ClassName": "Desc_CircuitBoardHighSpeed_C",
+  "Amount": 9939,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Caterium Heatsink",
+  "ClassName": "Desc_CateriumHeatsink_C",
+  "Amount": 21891,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Caterium Plate",
+  "ClassName": "Desc_CateriumPlates_C",
+  "Amount": 19751,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Callanite Ore",
+  "ClassName": "Desc_OreCopper_C",
+  "Amount": 1570,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Sand",
+  "ClassName": "Desc_Sand_C",
+  "Amount": 10117,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Callanite",
+  "ClassName": "Desc_CrushedCallanite_C",
+  "Amount": 199,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Larrussite Ore",
+  "ClassName": "Desc_Stone_C",
+  "Amount": 1007,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Caterium Ingot",
+  "ClassName": "Desc_GoldIngot_C",
+  "Amount": 27,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Zinc Ingot",
+  "ClassName": "Desc_ZincIngot_C",
+  "Amount": 4640,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Tin Ingot",
+  "ClassName": "Desc_TinIngot_C",
+  "Amount": 5215,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Tinned Wire",
+  "ClassName": "Desc_TinnedWire_C",
+  "Amount": 36000,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Zinc Plates",
+  "ClassName": "Desc_ZincPlates_C",
+  "Amount": 14200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Salt",
+  "ClassName": "Desc_Salt_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Glass",
+  "ClassName": "Desc_Glass_C",
+  "Amount": 82500,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Quartz Crystal",
+  "ClassName": "Desc_QuartzCrystal_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Brass Pipes",
+  "ClassName": "Desc_BrassPipe_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Brass Plates",
+  "ClassName": "Desc_BrassPlates_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Brass Ingot",
+  "ClassName": "Desc_BrassIngot_C",
+  "Amount": 19000,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Wood",
+  "ClassName": "Desc_Wood_C",
+  "Amount": 784,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Leaves",
+  "ClassName": "Desc_Leaves_C",
+  "Amount": 3742,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Biomass",
+  "ClassName": "Desc_GenericBiomass_C",
+  "Amount": 21495,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Fan Blades",
+  "ClassName": "Desc_FanBlade_C",
+  "Amount": 9600,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Crushed Larrussite",
+  "ClassName": "Desc_CrushedLarrussite_C",
+  "Amount": 20,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Siterite",
+  "ClassName": "Desc_CrushedSiterite_C",
+  "Amount": 4936,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Iron",
+  "ClassName": "Desc_CrushedIron_C",
+  "Amount": 12165,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Gangue",
+  "ClassName": "Desc_Gangue_C",
+  "Amount": 47185,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Tin",
+  "ClassName": "Desc_CrushedTin_C",
+  "Amount": 9562,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crystal Oscillator",
+  "ClassName": "Desc_CrystalOscillator_C",
+  "Amount": 9600,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Blue Slug",
+  "ClassName": "SlugDesc_BlueSlug_C",
+  "Amount": 19346,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Yellow Slug",
+  "ClassName": "SlugDesc_YellowSlug_C",
+  "Amount": 9932,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "White Slug",
+  "ClassName": "SlugDesc_WhiteSlug_C",
+  "Amount": 4103,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Yellow Slug Egg",
+  "ClassName": "EggDesc_EggYellow_C",
+  "Amount": 6,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Purple Slug Egg",
+  "ClassName": "EggDesc_EggPurple_C",
+  "Amount": 6,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Vegetable Meal",
+  "ClassName": "Desc_SnailFood_Tier_2_C",
+  "Amount": 7,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Purple Slug",
+  "ClassName": "SlugDesc_Purple_C",
+  "Amount": 2527,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Dirt",
+  "ClassName": "Desc_FF_Dirt_C",
+  "Amount": 600,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Slug DNA - Yellow",
+  "ClassName": "Desc_EggDNA_Yellow_C",
+  "Amount": 577,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Slug DNA - Purple",
+  "ClassName": "Desc_EggDNA_Purple_C",
+  "Amount": 416,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Slug DNA - Blue",
+  "ClassName": "Desc_EggDNA_Blue_C",
+  "Amount": 685,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Portable Miner",
+  "ClassName": "BP_ItemDescriptorPortableMiner_C",
+  "Amount": 900,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Cold Slag",
+  "ClassName": "Desc_ColdSlag_C",
+  "Amount": 3751,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Lime Slug",
+  "ClassName": "SlugDesc_Lime_C",
+  "Amount": 1891,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Turquoise Slug",
+  "ClassName": "SlugDesc_Turquise_C",
+  "Amount": 1200,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Power Shard Fragment",
+  "ClassName": "Desc_PowerShardCrystal_C",
+  "Amount": 5883,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Heavy Modular Frame",
+  "ClassName": "Desc_ModularFrameHeavy_C",
+  "Amount": 4800,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Steel Bolt",
+  "ClassName": "Desc_SteelBolt_C",
+  "Amount": 48000,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Steel Beam",
+  "ClassName": "Desc_SteelPlate_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Encased Industrial Beam",
+  "ClassName": "Desc_SteelPlateReinforced_C",
+  "Amount": 9600,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Steel Pipe",
+  "ClassName": "Desc_SteelPipe_C",
+  "Amount": 19200,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Diamonds",
+  "ClassName": "Desc_Diamond_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Steel Rod",
+  "ClassName": "Desc_SteelRod_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Versatile Framework",
+  "ClassName": "Desc_SpaceElevatorPart_2_C",
+  "Amount": 4750,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "DS Drive (256)",
+  "ClassName": "Desc_DS_Drive_256_C",
+  "Amount": 3600,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Copper Busbars",
+  "ClassName": "Desc_CopperBusbar_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Network Cable",
+  "ClassName": "Desc_DS_NetworkCable_Item_C",
+  "Amount": 36000,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Cable",
+  "ClassName": "Desc_Cable_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Wire",
+  "ClassName": "Desc_Wire_C",
+  "Amount": 36000,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Copper Rod",
+  "ClassName": "Desc_CopperRod_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Stator",
+  "ClassName": "Desc_Stator_C",
+  "Amount": 7200,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Brass Belt Drive",
+  "ClassName": "Desc_BeltDriveMk2_C",
+  "Amount": 14400,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Automated Wiring",
+  "ClassName": "Desc_SpaceElevatorPart_3_C",
+  "Amount": 3600,
+  "MaxAmount": 50
+ },
+ {
+  "Name": "Object Scanner",
+  "ClassName": "BP_EquipmentDescriptorObjectScanner_C",
+  "Amount": 1,
+  "MaxAmount": 1
+ },
+ {
+  "Name": "Concrete",
+  "ClassName": "Desc_Cement_C",
+  "Amount": 182598,
+  "MaxAmount": 500
+ },
+ {
+  "Name": "Power Shard",
+  "ClassName": "Desc_CrystalShard_C",
+  "Amount": 463,
+  "MaxAmount": 100
+ },
+ {
+  "Name": "Crushed Copper",
+  "ClassName": "Desc_CrushedCopper_C",
+  "Amount": 1355,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Magnesium",
+  "ClassName": "Desc_CrushedMagnesium_C",
+  "Amount": 3000,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Carrot",
+  "ClassName": "Desc_FF_Crop_Carrot_C",
+  "Amount": 1800,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Potato",
+  "ClassName": "Desc_FF_Crop_Potato_C",
+  "Amount": 1800,
+  "MaxAmount": 200
+ },
+ {
+  "Name": "Crushed Zinc",
+  "ClassName": "Desc_CrushedZinc_C",
+  "Amount": 4600,
+  "MaxAmount": 200
+ }
+]

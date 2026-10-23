@@ -3,10 +3,12 @@
 FROM node:24-alpine
 WORKDIR /app
 ENV NODE_ENV=production
-# Dependencies first, so that they stay in Docker's cache while only the code changes.
+# Dependencies first, so that they stay in Docker's cache while only the code changes. npm needs the
+# package.json of every workspace, but only installs the bot's dependencies.
 COPY package.json package-lock.json ./
 COPY lib/package.json lib/
 COPY bot/package.json bot/
+COPY mcp/package.json mcp/
 RUN npm ci --omit=dev --workspace bot
 COPY lib/src lib/src
 COPY bot/src bot/src

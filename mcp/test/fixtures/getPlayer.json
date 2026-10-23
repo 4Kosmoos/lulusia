@@ -1,0 +1,32 @@
+[
+ {
+  "ID": "Player_1",
+  "Name": "Player 1",
+  "Online": true,
+  "Dead": false,
+  "PlayerHP": 100,
+  "Speed": 0,
+  "location": {
+   "x": 62409.796875,
+   "y": -75269.03125,
+   "z": 10724.8076171875,
+   "rotation": 248.06030251142218,
+   "pitch": 0
+  }
+ },
+ {
+  "ID": "Player_2",
+  "Name": "Player 2",
+  "Online": false,
+  "Dead": false,
+  "PlayerHP": 100,
+  "Speed": 0,
+  "location": {
+   "x": 66562.8046875,
+   "y": -74810.2890625,
+   "z": 10701.6796875,
+   "rotation": 189.2285142681826,
+   "pitch": 0
+  }
+ }
+]

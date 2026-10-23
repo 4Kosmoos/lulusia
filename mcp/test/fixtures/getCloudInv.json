@@ -1,0 +1,758 @@
+[
+ {
+  "Name": "Modular Frame",
+  "ClassName": "Desc_ModularFrame_C",
+  "Amount": 200,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Bronze Pipes",
+  "ClassName": "Desc_BronzePipe_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Bronze Frame",
+  "ClassName": "Desc_BronzeFrame_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Bronze Plates",
+  "ClassName": "Desc_BronzePlates_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "AI Limiter",
+  "ClassName": "Desc_CircuitBoardHighSpeed_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Caterium Heatsink",
+  "ClassName": "Desc_CateriumHeatsink_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Quickwire",
+  "ClassName": "Desc_HighSpeedWire_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Smooth Belt Drive",
+  "ClassName": "Desc_BeltDriveMk1_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Rotor",
+  "ClassName": "Desc_Rotor_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Reinforced Iron Plate",
+  "ClassName": "Desc_IronPlateReinforced_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Tinned Wire",
+  "ClassName": "Desc_TinnedWire_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Tinned Sheet",
+  "ClassName": "Desc_TinSheet_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Copper Sheet",
+  "ClassName": "Desc_CopperSheet_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Screws",
+  "ClassName": "Desc_IronScrew_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Iron Sheet",
+  "ClassName": "Desc_IronSheet_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Iron Rod",
+  "ClassName": "Desc_IronRod_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Iron Plate",
+  "ClassName": "Desc_IronPlate_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Tin Rod",
+  "ClassName": "Desc_TinRod_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Tin Plate",
+  "ClassName": "Desc_TinPlates_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Iron Wire",
+  "ClassName": "Desc_IronWire_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Wire",
+  "ClassName": "Desc_Wire_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Cable",
+  "ClassName": "Desc_Cable_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Copper Busbars",
+  "ClassName": "Desc_CopperBusbar_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Brass Plates",
+  "ClassName": "Desc_BrassPlates_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Brass Pipes",
+  "ClassName": "Desc_BrassPipe_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Fan Blades",
+  "ClassName": "Desc_FanBlade_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Hatcher Remains",
+  "ClassName": "Desc_HatcherParts_C",
+  "Amount": 43,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Mycelia",
+  "ClassName": "Desc_Mycelia_C",
+  "Amount": 212,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Hog Remains",
+  "ClassName": "Desc_HogParts_C",
+  "Amount": 148,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Bacon Agaric",
+  "ClassName": "Desc_Shroom_C",
+  "Amount": 9,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Wood",
+  "ClassName": "Desc_Wood_C",
+  "Amount": 132,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Paleberry",
+  "ClassName": "Desc_Berry_C",
+  "Amount": 16,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "SAM Fluctuator",
+  "ClassName": "Desc_SAMFluctuator_C",
+  "Amount": 0,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Reanimated SAM",
+  "ClassName": "Desc_SAMIngot_C",
+  "Amount": 569,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Solid Biofuel",
+  "ClassName": "Desc_Biofuel_C",
+  "Amount": 437,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Slug DNA - Yellow",
+  "ClassName": "Desc_EggDNA_Yellow_C",
+  "Amount": 60,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Leaves",
+  "ClassName": "Desc_Leaves_C",
+  "Amount": 339,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Stator",
+  "ClassName": "Desc_Stator_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Motor",
+  "ClassName": "Desc_Motor_C",
+  "Amount": 0,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Spitter Remains",
+  "ClassName": "Desc_SpitterParts_C",
+  "Amount": 52,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Mercer Sphere",
+  "ClassName": "Desc_WAT2_C",
+  "Amount": 11,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Steel Bolt",
+  "ClassName": "Desc_SteelBolt_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Crystal Oscillator",
+  "ClassName": "Desc_CrystalOscillator_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Slug DNA - Purple",
+  "ClassName": "Desc_EggDNA_Purple_C",
+  "Amount": 38,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Somersloop",
+  "ClassName": "Desc_WAT1_C",
+  "Amount": 0,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Hard Drive",
+  "ClassName": "Desc_HardDrive_C",
+  "Amount": 5,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Blue Slug Egg",
+  "ClassName": "EggDesc_EggBlue_C",
+  "Amount": 2,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Yellow Slug Egg",
+  "ClassName": "EggDesc_EggYellow_C",
+  "Amount": 2,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Stinger Remains",
+  "ClassName": "Desc_StingerParts_C",
+  "Amount": 55,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Heavy Modular Frame",
+  "ClassName": "Desc_ModularFrameHeavy_C",
+  "Amount": 200,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Aluminum Casing",
+  "ClassName": "Desc_AluminumCasing_C",
+  "Amount": 311,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Slug DNA - Blue",
+  "ClassName": "Desc_EggDNA_Blue_C",
+  "Amount": 103,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Beryl Nut",
+  "ClassName": "Desc_Nut_C",
+  "Amount": 20,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Power Shard",
+  "ClassName": "Desc_CrystalShard_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Power Shard Fragment",
+  "ClassName": "Desc_PowerShardCrystal_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Encased Industrial Beam",
+  "ClassName": "Desc_SteelPlateReinforced_C",
+  "Amount": 400,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Alien Protein",
+  "ClassName": "Desc_AlienProtein_C",
+  "Amount": 0,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "SAM",
+  "ClassName": "Desc_SAM_C",
+  "Amount": 26,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "FICSIT Coupon",
+  "ClassName": "Desc_ResourceSinkCoupon_C",
+  "Amount": 556,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Steel Pipe",
+  "ClassName": "Desc_SteelPipe_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Steel Beam",
+  "ClassName": "Desc_SteelPlate_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Supercomputer",
+  "ClassName": "Desc_ComputerSuper_C",
+  "Amount": 1,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Turbo Motor",
+  "ClassName": "Desc_MotorLightweight_C",
+  "Amount": 29,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Circuit Board",
+  "ClassName": "Desc_CircuitBoard_C",
+  "Amount": 285,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Loam",
+  "ClassName": "Desc_FF_Dirt_Wet_C",
+  "Amount": 150,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Montanion Ore",
+  "ClassName": "Desc_OreBauxite_C",
+  "Amount": 54,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Computer",
+  "ClassName": "Desc_Computer_C",
+  "Amount": 1,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Black Powder",
+  "ClassName": "Desc_Gunpowder_C",
+  "Amount": 0,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Fused Modular Frame",
+  "ClassName": "Desc_ModularFrameFused_C",
+  "Amount": 19,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Cooling System",
+  "ClassName": "Desc_CoolingSystem_C",
+  "Amount": 39,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Versatile Framework",
+  "ClassName": "Desc_SpaceElevatorPart_2_C",
+  "Amount": 0,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Dirt",
+  "ClassName": "Desc_FF_Dirt_C",
+  "Amount": 7,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Sulfur",
+  "ClassName": "Desc_Sulfur_C",
+  "Amount": 0,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Salt",
+  "ClassName": "Desc_Salt_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Glass",
+  "ClassName": "Desc_Glass_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Quartz Crystal",
+  "ClassName": "Desc_QuartzCrystal_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Rubber",
+  "ClassName": "Desc_Rubber_C",
+  "Amount": 630,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "KMods Coupon",
+  "ClassName": "Desc_KModsCoupon_C",
+  "Amount": 5,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Plastic",
+  "ClassName": "Desc_Plastic_C",
+  "Amount": 145,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Peat",
+  "ClassName": "Desc_FF_Dirt_Fertilized_C",
+  "Amount": 161,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Gas Nobelisk",
+  "ClassName": "Desc_NobeliskGas_C",
+  "Amount": 3,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Silica",
+  "ClassName": "Desc_Silica_C",
+  "Amount": 550,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Gas Filter",
+  "ClassName": "Desc_Filter_C",
+  "Amount": 3,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Smart Plating",
+  "ClassName": "Desc_SpaceElevatorPart_1_C",
+  "Amount": 47,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Fabric",
+  "ClassName": "Desc_Fabric_C",
+  "Amount": 100,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Kerr Crystal",
+  "ClassName": "Res_KerrCrystal_C",
+  "Amount": 787,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Magnesium Granules",
+  "ClassName": "Desc_MagnesiumGranules_C",
+  "Amount": 11,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Alclad Aluminum Plate",
+  "ClassName": "Desc_AluminumPlate_C",
+  "Amount": 85,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Cold Slag",
+  "ClassName": "Desc_ColdSlag_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Carbon Powder",
+  "ClassName": "Desc_CarbonDust_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Iron Rebar",
+  "ClassName": "Desc_SpikedRebar_C",
+  "Amount": 0,
+  "MaxAmount": 100,
+  "Limit": 400
+ },
+ {
+  "Name": "Biomass",
+  "ClassName": "Desc_GenericBiomass_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Concrete",
+  "ClassName": "Desc_Cement_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Portable Miner",
+  "ClassName": "BP_ItemDescriptorPortableMiner_C",
+  "Amount": 80,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Steel Rod",
+  "ClassName": "Desc_SteelRod_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Crushed Iron",
+  "ClassName": "Desc_CrushedIron_C",
+  "Amount": 206,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Xeno-Basher",
+  "ClassName": "BP_EquipmentDescriptorStunSpear_C",
+  "Amount": 0,
+  "MaxAmount": 1,
+  "Limit": 4
+ },
+ {
+  "Name": "Crushed Tin",
+  "ClassName": "Desc_CrushedTin_C",
+  "Amount": 210,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Crushed Siterite",
+  "ClassName": "Desc_CrushedSiterite_C",
+  "Amount": 454,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Diamonds",
+  "ClassName": "Desc_Diamond_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Coal",
+  "ClassName": "Desc_Coal_C",
+  "Amount": 124,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Purple Slug Egg",
+  "ClassName": "EggDesc_EggPurple_C",
+  "Amount": 2,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Brass Belt Drive",
+  "ClassName": "Desc_BeltDriveMk2_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Automated Wiring",
+  "ClassName": "Desc_SpaceElevatorPart_3_C",
+  "Amount": 200,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "DS Drive (256)",
+  "ClassName": "Desc_DS_Drive_256_C",
+  "Amount": 200,
+  "MaxAmount": 50,
+  "Limit": 200
+ },
+ {
+  "Name": "Network Cable",
+  "ClassName": "Desc_DS_NetworkCable_Item_C",
+  "Amount": 2000,
+  "MaxAmount": 500,
+  "Limit": 2000
+ },
+ {
+  "Name": "Copper Rod",
+  "ClassName": "Desc_CopperRod_C",
+  "Amount": 800,
+  "MaxAmount": 200,
+  "Limit": 800
+ },
+ {
+  "Name": "Polarization Frame",
+  "ClassName": "Desc_TimeC_Case_C",
+  "Amount": 100,
+  "MaxAmount": 50,
+  "Limit": 200
+ }
+]

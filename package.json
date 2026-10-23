@@ -2,11 +2,12 @@
   "name": "lulusia",
   "version": "0.1.0",
   "private": true,
-  "description": "Tools around the Lulusia modded Satisfactory server: Discord bot and shared Ficsit Remote Monitoring client",
+  "description": "Tools around the Lulusia modded Satisfactory server: Discord bot, MCP server for Claude, shared Ficsit Remote Monitoring client",
   "type": "module",
   "workspaces": [
     "lib",
-    "bot"
+    "bot",
+    "mcp"
   ],
   "engines": {
     "node": ">=24"

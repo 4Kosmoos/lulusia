@@ -1,0 +1,10 @@
+{
+ "SessionName": "Test session",
+ "IsPaused": false,
+ "PassedDays": 602,
+ "Hours": 13,
+ "Minutes": 20,
+ "IsDay": true,
+ "TotalPlayDuration": 2160686,
+ "TotalPlayDurationText": "600:11:26"
+}
