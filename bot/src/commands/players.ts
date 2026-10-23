@@ -1,8 +1,9 @@
 // /players: who is online, where, and in what state.
 
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { formatInteger, plural } from "../format.ts";
-import { frm, type Player } from "../frm.ts";
+import { formatInteger, plural } from "@lulusia/lib/format";
+import type { Player } from "@lulusia/lib/frm";
+import { frm } from "../frm.ts";
 import { loadNamedPlaces, whereIs, type Place } from "./places.ts";
 import type { Command } from "./shared.ts";
 

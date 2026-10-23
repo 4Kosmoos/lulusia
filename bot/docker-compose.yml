@@ -3,7 +3,10 @@
 name: lulusia-bot
 services:
   bot:
-    build: .
+    # Built from the root of the repo: the image also needs the shared lib/ workspace.
+    build:
+      context: ..
+      dockerfile: bot/Dockerfile
     image: lulusia-bot
     restart: unless-stopped
     env_file: .env
@@ -12,7 +15,7 @@ services:
       - "host.docker.internal:host-gateway"
     # Custom alerts (data/alerts.json): kept from one rebuild to the next.
     volumes:
-      - bot-data:/app/data
+      - bot-data:/app/bot/data
     logging:
       driver: json-file
       options:

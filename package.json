@@ -1,0 +1,22 @@
+{
+  "name": "lulusia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tools around the Lulusia modded Satisfactory server: Discord bot and shared Ficsit Remote Monitoring client",
+  "type": "module",
+  "workspaces": [
+    "lib",
+    "bot"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  }
+}

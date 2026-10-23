@@ -37,6 +37,7 @@ Repo lulusia                            │ lecture          │ lecture / écri
 |---|---|
 | [`docs/`](docs/) | La doc du projet (voir ci-dessous) |
 | [`bot/`](bot/) | Bot Discord : TypeScript, discord.js, Docker |
+| [`lib/`](lib/) | Code partagé : client typé de l'API FRM et calculs sur ses données (stocks, bilan, énergie), avec ses tests |
 | [`ops/`](ops/) | Ce qui est installé à la main sur le serveur : scripts, services systemd, config de la stack Grafana |
 | [`mods/`](mods/) | Profil SMM « Lulusia » (liste exacte des mods et versions) |
 | [`images/`](images/) | Images du projet |

@@ -1,4 +1,5 @@
-# Bot Discord : vérification à chaque push qui le touche, puis déploiement sur le VPS par Tailscale.
+# Bot Discord : vérification à chaque push qui le touche (bot/, lib/ partagé, dépendances npm),
+# puis déploiement sur le VPS par Tailscale.
 # Mise en place, secrets et dépannage : docs/exploitation.md, section « Déploiement automatique ».
 name: Bot
 
@@ -7,6 +8,10 @@ on:
     branches: [main]
     paths:
       - "bot/**"
+      - "lib/**"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.base.json"
       - ".github/workflows/deploy-bot.yml"
   workflow_dispatch:
 
@@ -22,9 +27,6 @@ jobs:
   check:
     name: Vérification
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: bot
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -33,9 +35,10 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: bot/package-lock.json
+      # Tout le repo (workspaces npm) : le bot et le code partagé de lib/, avec ses tests.
       - run: npm ci
       - run: npm run typecheck
+      - run: npm test
 
   deploy:
     name: Déploiement

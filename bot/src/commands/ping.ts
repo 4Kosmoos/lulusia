@@ -2,10 +2,12 @@
 // and announces it in the game chat so that players know where it comes from.
 
 import { SlashCommandBuilder, escapeMarkdown } from "discord.js";
-import { FrmError, frm } from "../frm.ts";
+import { FrmError } from "@lulusia/lib/frm";
+import { resolve } from "@lulusia/lib/search";
+import { frm } from "../frm.ts";
 import { discordSender, forGame } from "../game-chat.ts";
 import { cachedNamedPlaces, cachedPlayers, loadNamedPlaces, placeCandidates, placeLabel, playerPlaces } from "./places.ts";
-import { forAutocomplete, resolve, suggestions, type Command } from "./shared.ts";
+import { forAutocomplete, suggestions, type Command } from "./shared.ts";
 
 const MAX_NOTE_LENGTH = 200;
 

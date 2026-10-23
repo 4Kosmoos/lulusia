@@ -1,8 +1,10 @@
 // Named places of the game (HUB, train stations, map markers, players), for /players, /ping and /switch.
 
-import { formatNumber } from "../format.ts";
-import { frm, type Location, type Player } from "../frm.ts";
-import { cached, type Candidate } from "./shared.ts";
+import { cached } from "@lulusia/lib/cache";
+import { formatNumber } from "@lulusia/lib/format";
+import type { Location, Player } from "@lulusia/lib/frm";
+import { frm } from "../frm.ts";
+import type { Candidate } from "./shared.ts";
 
 export type PlaceKind = "hub" | "station" | "marker" | "player";
 

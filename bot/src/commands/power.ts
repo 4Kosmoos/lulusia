@@ -1,9 +1,11 @@
 // /power: details of each power circuit (the #statut message only shows the total).
 
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { batteryText, hasProblem, isActive, powerLines } from "../circuits.ts";
-import { mw, plural } from "../format.ts";
-import { frm, type PowerCircuit } from "../frm.ts";
+import { mw, plural } from "@lulusia/lib/format";
+import type { PowerCircuit } from "@lulusia/lib/frm";
+import { hasProblem, isActive } from "@lulusia/lib/power";
+import { batteryText, powerLines } from "../circuits.ts";
+import { frm } from "../frm.ts";
 import type { Command } from "./shared.ts";
 
 const COLORS = { ok: 0x2ecc71, problem: 0xe67e22, idle: 0x95a5a6 };

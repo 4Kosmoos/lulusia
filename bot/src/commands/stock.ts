@@ -1,18 +1,15 @@
 // /stock <item>: amount of an item in storage, and its production rate.
 
 import { EmbedBuilder, SlashCommandBuilder, escapeMarkdown } from "discord.js";
+import { BALANCED, findItem, reportFor, type ItemReport } from "@lulusia/lib/inventory";
 import {
-  BALANCED,
   amountText,
   emptyInText,
-  findItem,
   itemCandidates,
   knownItems,
   loadInventory,
   perMinuteText,
   ratesText,
-  reportFor,
-  type ItemReport,
 } from "./inventory.ts";
 import { forAutocomplete, suggestions, type Command, type CommandResult } from "./shared.ts";
 

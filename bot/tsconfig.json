@@ -1,15 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "es2022",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "strict": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "erasableSyntaxOnly": true,
-    "skipLibCheck": true,
-    "types": ["node"]
-  },
+  "extends": "../tsconfig.base.json",
   "include": ["src"]
 }

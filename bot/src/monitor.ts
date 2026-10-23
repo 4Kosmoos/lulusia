@@ -7,8 +7,8 @@
 
 import { readFile, statfs } from "node:fs/promises";
 import { ChannelType, type Client } from "discord.js";
+import { formatDuration, formatNumber, percent } from "@lulusia/lib/format";
 import { config } from "./config.ts";
-import { formatDuration, formatNumber, percent } from "./format.ts";
 import { frm } from "./frm.ts";
 
 const CHECK_INTERVAL_MS = 60_000;

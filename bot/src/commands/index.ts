@@ -7,9 +7,9 @@ import {
   type EmbedBuilder,
   type Interaction,
 } from "discord.js";
+import { FrmError } from "@lulusia/lib/frm";
+import { normalize } from "@lulusia/lib/search";
 import { config } from "../config.ts";
-import { normalize } from "../format.ts";
-import { FrmError } from "../frm.ts";
 import { botSays } from "../game-chat.ts";
 import { alert } from "./alert.ts";
 import { machines } from "./machines.ts";

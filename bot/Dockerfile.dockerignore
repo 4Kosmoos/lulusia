@@ -1,0 +1,9 @@
+# The image is built from the root of the repo: only what it needs is sent to Docker
+# (never .env, node_modules or the rest of the repo).
+*
+!package.json
+!package-lock.json
+!lib/package.json
+!lib/src/
+!bot/package.json
+!bot/src/

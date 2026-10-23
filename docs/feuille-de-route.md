@@ -26,6 +26,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Bot en anglais** (octobre 2026) : commandes, réponses et logs, comme le jeu et les noms d'objets renvoyés par le serveur. La doc reste en français.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
 - [x] **Déploiement automatique du bot** à chaque push : vérification puis déploiement par GitHub Actions, connexion au VPS par Tailscale ([détail](exploitation.md#déploiement-automatique-du-bot)).
+- [x] **Code partagé** (octobre 2026) : le client FRM et les calculs (stocks, bilan, énergie, recherche d'un nom) sortent du bot dans [`lib/`](../lib/), avec des tests lancés par GitHub Actions. Le repo devient un ensemble de workspaces npm.
 
 ## Sauvegardes et surveillance
 
@@ -60,7 +61,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [ ] **RAM** : passer au VPS-4 au-delà de 80 % d'utilisation régulière (procédure dans [Architecture](architecture.md#passer-au-vps-4)).
 - [ ] **Processeur** : OVH ne communique pas le modèle exact.
 - [ ] **Effet de la stack Grafana** sur les performances du jeu : certains endpoints FRM passent par le thread principal du jeu.
-- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `bot/src/frm.ts`. La 1.5.4 ne corrige ni l'un ni l'autre : #313 vérifié le 15/10/2026 dans les logs du jeu après le rechargement de 04:00 (« Websocket Thread is already running »). Le contournement des accents reste compatible avec la future correction : on pourra le retirer sans urgence.
+- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `lib/src/frm.ts`. La 1.5.4 ne corrige ni l'un ni l'autre : #313 vérifié le 15/10/2026 dans les logs du jeu après le rechargement de 04:00 (« Websocket Thread is already running »). Le contournement des accents reste compatible avec la future correction : on pourra le retirer sans urgence.
 - [ ] **Digital Storage et FRM** : vérifier que FRM voit le contenu du Digital Storage quand on s'en servira (stocks du bot et de Grafana).
 - [ ] **Nouvelle version de ficsit-cli** où `profile mod add` fonctionne : on pourra alors abandonner le script Python.
 - [ ] **SMM gère les clés SSH** (issue #304) : on pourra alors gérer les mods du serveur depuis SMM.
@@ -68,7 +69,6 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## Idées pour plus tard
 
-- **Un seul code TypeScript** pour tout ce qui parle à FRM : le client typé du bot (`bot/src/frm.ts`) servira aussi aux alertes perso et à une éventuelle carte.
 - **Serveur MCP par-dessus FRM**, pour interroger l'usine en direct depuis Claude.
 - **FicsIt-Networks** (quand il sera compatible 1.2) : du Lua 5.4 dans le jeu, avec des ordinateurs, des écrans, des panneaux de contrôle, des splitters programmables et une carte Internet (HTTP sortant uniquement). Sur un serveur dédié, le code tourne a priori côté serveur. Workflow visé : push sur GitHub, puis une GitHub Action fait un `git pull` dans le dossier du disque FIN sur le VPS.
 - **Carte ferroviaire web** (optionnelle) : page alimentée par les trains, gares et rails de FRM. Le dashboard Trains de Grafana couvre déjà les positions, horaires, allers-retours et temps de trajet. Une carte perso apporterait le dessin des voies et des signaux, le vrai direct par le WebSocket de FRM et le clic sur un train ou une gare. À réévaluer quand le réseau ferré sera grand.

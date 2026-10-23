@@ -5,9 +5,10 @@
 
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { ChannelType, escapeMarkdown, type Client } from "discord.js";
-import { BALANCED, amountText, loadInventory, ratesText, reportFor, type Item, type ItemReport } from "./commands/inventory.ts";
+import { capitalize, formatDuration, formatInteger } from "@lulusia/lib/format";
+import { BALANCED, reportFor, type Item, type ItemReport } from "@lulusia/lib/inventory";
+import { amountText, loadInventory, ratesText } from "./commands/inventory.ts";
 import { config } from "./config.ts";
-import { capitalize, formatDuration, formatInteger } from "./format.ts";
 import { botSays } from "./game-chat.ts";
 import { Incident, type IncidentEvent } from "./monitor.ts";
 

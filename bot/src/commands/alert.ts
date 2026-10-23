@@ -2,9 +2,11 @@
 // In game: !alert stock iron plate 1000, !alert deficit iron ingot, !alerts, !alert remove 2.
 
 import { EmbedBuilder, SlashCommandBuilder, escapeMarkdown } from "discord.js";
+import { formatInteger } from "@lulusia/lib/format";
+import { findItem, reportFor, type Inventory } from "@lulusia/lib/inventory";
+import { normalize } from "@lulusia/lib/search";
 import { currentText, listRules, removeRule, ruleText, upsertRule, type AlertKind, type AlertRule } from "../alerts.ts";
-import { formatInteger, normalize } from "../format.ts";
-import { findItem, itemCandidates, knownItems, loadInventory, reportFor, type Inventory } from "./inventory.ts";
+import { itemCandidates, knownItems, loadInventory } from "./inventory.ts";
 import { forAutocomplete, suggestions, type Command, type CommandArgs, type CommandResult } from "./shared.ts";
 import { itemNotFound } from "./stock.ts";
 

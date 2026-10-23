@@ -1,4 +1,4 @@
-// Shared formatting for the bot's messages.
+// Number and duration formatting, in the game's language (English): 1,234.5, 50.4%, 2h 05m.
 
 const decimal = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const whole = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
@@ -19,11 +19,6 @@ export function plural(count: number, singular: string, pluralForm = `${singular
 
 /** First letter in upper case. */
 export const capitalize = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
-
-/** Text without accents or capitals, to compare what a player types with the game's names. */
-export function normalize(text: string): string {
-  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().trim();
-}
 
 /** Duration in minutes → "45 min", "2h 05m", "3d 4h". */
 export function formatDuration(minutes: number): string {

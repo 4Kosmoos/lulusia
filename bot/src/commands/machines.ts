@@ -3,10 +3,14 @@
 // In game: !machines pause iron plate, !machines resume iron plate, !machines iron plate.
 
 import { SlashCommandBuilder, escapeMarkdown } from "discord.js";
-import { normalize, plural } from "../format.ts";
-import { frm, type Machine } from "../frm.ts";
-import { findItem, itemCandidates, type Item } from "./inventory.ts";
-import { cached, forAutocomplete, suggestions, type Command, type CommandArgs, type CommandResult } from "./shared.ts";
+import { cached } from "@lulusia/lib/cache";
+import { plural } from "@lulusia/lib/format";
+import type { Machine } from "@lulusia/lib/frm";
+import { findItem, type Item } from "@lulusia/lib/inventory";
+import { normalize } from "@lulusia/lib/search";
+import { frm } from "../frm.ts";
+import { itemCandidates } from "./inventory.ts";
+import { forAutocomplete, suggestions, type Command, type CommandArgs, type CommandResult } from "./shared.ts";
 
 type Action = "status" | "pause" | "resume";
 const ACTIONS: Action[] = ["status", "pause", "resume"];

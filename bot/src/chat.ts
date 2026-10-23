@@ -5,9 +5,10 @@
 //  - Commands ("!stock", "!power"…) typed on either side: answered in the game and in the bridge channel.
 
 import { ChannelType, Events, escapeMarkdown, type Client, type Message, type TextChannel } from "discord.js";
+import type { ChatMessage } from "@lulusia/lib/frm";
 import { discordPayload, runGameCommand } from "./commands/index.ts";
 import { config } from "./config.ts";
-import { frm, type ChatMessage } from "./frm.ts";
+import { frm } from "./frm.ts";
 import { MAX_GAME_MESSAGE_LENGTH, discordSender, isFromBot } from "./game-chat.ts";
 
 const MAX_REMEMBERED = 1000;

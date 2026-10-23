@@ -1,10 +1,11 @@
 // #statut message: a single bot message, edited at every update.
 
 import { ChannelType, EmbedBuilder, type Client, type Message } from "discord.js";
+import { plural } from "@lulusia/lib/format";
+import type { Player, PowerCircuit, SessionInfo } from "@lulusia/lib/frm";
 import { batteryText, powerLines } from "./circuits.ts";
 import { config } from "./config.ts";
-import { plural } from "./format.ts";
-import { frm, type Player, type PowerCircuit, type SessionInfo } from "./frm.ts";
+import { frm } from "./frm.ts";
 
 const COLORS = {
   running: 0x2ecc71,

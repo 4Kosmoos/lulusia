@@ -3,10 +3,13 @@
 // In game: !switch iron factory off, !switches.
 
 import { EmbedBuilder, SlashCommandBuilder, escapeMarkdown } from "discord.js";
-import { normalize, plural } from "../format.ts";
-import { frm, type PowerSwitch } from "../frm.ts";
+import { cached } from "@lulusia/lib/cache";
+import { plural } from "@lulusia/lib/format";
+import type { PowerSwitch } from "@lulusia/lib/frm";
+import { normalize } from "@lulusia/lib/search";
+import { frm } from "../frm.ts";
 import { cachedNamedPlaces, whereIs, type Place } from "./places.ts";
-import { cached, forAutocomplete, suggestions, type Command, type CommandArgs, type CommandResult } from "./shared.ts";
+import { forAutocomplete, suggestions, type Command, type CommandArgs, type CommandResult } from "./shared.ts";
 
 const COLORS = { on: 0x2ecc71, off: 0xe74c3c, mixed: 0xf1c40f };
 const MAX_LISTED_IN_GAME = 10;

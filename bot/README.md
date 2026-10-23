@@ -38,16 +38,15 @@ Le bot parle anglais (commandes, réponses, messages et logs), comme le jeu et l
 |---|---|
 | `src/index.ts` | Démarrage : connexion à Discord, `#statut`, pont du chat, commandes, surveillance |
 | `src/config.ts` | Lecture et vérification du `.env` |
-| `src/frm.ts` | Client typé de l'API FRM (lecture, et écriture avec le jeton : chat, marqueurs, interrupteurs, machines) |
+| `src/frm.ts` | Client FRM du bot, avec le jeton du `.env` (lecture, et écriture : chat, marqueurs, interrupteurs, machines). Le client lui-même est dans [`lib/`](../lib/) |
 | `src/status.ts` | Message de `#statut` |
 | `src/chat.ts` | Pont avec le chat du jeu, et commandes `!` |
 | `src/game-chat.ts` | Écriture dans le chat du jeu : expéditeurs, texte sans emoji, file d'attente |
 | `src/monitor.ts` | Surveillance du serveur, de la RAM et du disque |
 | `src/alerts.ts` | Alertes perso : enregistrement des règles (`data/alerts.json`) et vérification chaque minute |
 | `src/heartbeat.ts` | Signal de vie pour Healthchecks.io |
-| `src/circuits.ts` | Lecture des réseaux électriques, commune à `#statut` et à `/power` |
-| `src/format.ts` | Mise en forme commune (nombres et durées, au format anglais : `1,000`, `50.4%`, `2h 05m`) |
-| `src/commands/` | Une commande par fichier (`stock.ts`, `power.ts`, `players.ts`, `ping.ts`, `alert.ts`, `switch.ts`, `machines.ts`), qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (cache, autocomplétion), `inventory.ts` (stocks et rythmes par objet) et `places.ts` (lieux nommés et positions) |
+| `src/circuits.ts` | Texte des réseaux électriques, commun à `#statut` et à `/power` |
+| `src/commands/` | Une commande par fichier (`stock.ts`, `power.ts`, `players.ts`, `ping.ts`, `alert.ts`, `switch.ts`, `machines.ts`), qui renvoie sa réponse pour Discord et pour le jeu, plus `index.ts` (enregistrement, commandes `/` et `!`), `shared.ts` (forme d'une commande, autocomplétion), `inventory.ts` (stocks et rythmes par objet, en texte) et `places.ts` (lieux nommés et positions) |
 
 Les commandes slash sont enregistrées sur le serveur Discord du salon `#statut` à chaque démarrage. Les commandes `!` passent par le pont du chat : elles demandent `CHAT_CHANNEL_ID` et `FRM_TOKEN`. Les commandes slash qui agissent sur la partie (`/ping`, `/switch on` et `off`, `/machines pause` et `resume`) demandent `FRM_TOKEN`.
 
@@ -57,25 +56,27 @@ Les noms des objets sont ceux renvoyés par le serveur de jeu, en anglais (`!sto
 
 Prérequis : Node.js 24 ou plus. Le TypeScript est exécuté directement par Node (suppression des types), sans étape de build.
 
+Le bot est un des workspaces npm du repo : les dépendances s'installent depuis la racine, pour le bot et pour le code partagé de [`lib/`](../lib/) (client FRM, calculs de stocks et d'énergie, mise en forme des nombres).
+
 ```bash
+npm install            # à la racine du repo
 cd bot
-npm install
 cp .env.example .env   # puis remplir .env (jamais commité)
 npm run typecheck
-npm run dev            # relance automatique à chaque modification
+npm run dev            # relance automatique à chaque modification, y compris de lib/
 ```
 
 En local, `FRM_URL` pointe vers le serveur via Tailscale. Un seul bot à la fois doit tourner avec le même jeton, sinon ils se disputent le message de `#statut`.
 
 ## Production
 
-Le bot tourne sur le VPS dans un conteneur Docker (`Dockerfile`, `docker-compose.yml`), sans aucun port ouvert. Le `.env` de production n'existe que sur le serveur, avec `FRM_URL=http://host.docker.internal:8080`.
+Le bot tourne sur le VPS dans un conteneur Docker (`Dockerfile`, `docker-compose.yml`), sans aucun port ouvert. L'image est construite depuis la racine du repo, pour y inclure `lib/` ; `Dockerfile.dockerignore` limite ce qui est envoyé à Docker (jamais le `.env`). Le `.env` de production n'existe que sur le serveur, avec `FRM_URL=http://host.docker.internal:8080`.
 
 ```bash
 sudo docker compose up -d --build     # construire et (re)lancer
 sudo docker compose logs -f --tail 20 # suivre les logs
 ```
 
-**Déploiement** : automatique à chaque push sur `main` qui touche `bot/`. GitHub Actions vérifie le code, puis le déploie sur le VPS à travers Tailscale (voir [Exploitation](../docs/exploitation.md#déploiement-automatique-du-bot)). À la main, sur le serveur : `lulusia-deploy-bot`.
+**Déploiement** : automatique à chaque push sur `main` qui touche `bot/` ou `lib/`. GitHub Actions vérifie le code, puis le déploie sur le VPS à travers Tailscale (voir [Exploitation](../docs/exploitation.md#déploiement-automatique-du-bot)). À la main, sur le serveur : `lulusia-deploy-bot`.
 
-Un seul bot à la fois avec le même jeton : arrêter le bot de production (`sudo docker compose stop`) avant de lancer `npm run dev` en local, puis le relancer après. Pendant ce temps, ne pas pousser de changement dans `bot/` : le déploiement automatique relancerait le bot du serveur.
+Un seul bot à la fois avec le même jeton : arrêter le bot de production (`sudo docker compose stop`) avant de lancer `npm run dev` en local, puis le relancer après. Pendant ce temps, ne pas pousser de changement dans `bot/` ou `lib/` : le déploiement automatique relancerait le bot du serveur.
