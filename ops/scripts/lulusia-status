@@ -33,7 +33,7 @@ tailscale serve status 2>/dev/null | sed 's/^/  /'
 
 title "Serveur MCP public (Funnel, machine Tailscale lulusia-mcp)"
 if funnel=$(docker exec lulusia-mcp-tailscale-1 tailscale funnel status 2>/dev/null); then
-  printf '%s\n' "$funnel" | sed 's/^/  /'
+  printf '%s\n' "$funnel" | sed '/./,$!d; s/^/  /'
 else
   ko "machine lulusia-mcp injoignable (conteneur arrêté ou serveur MCP pas encore installé)"
 fi

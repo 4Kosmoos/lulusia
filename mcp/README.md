@@ -86,8 +86,9 @@ La connexion d'un compte, étape par étape :
 2. La fiche désigne le serveur d'autorisation : WorkOS AuthKit.
 3. Claude s'enregistre tout seul auprès d'AuthKit (Client ID Metadata Document ou enregistrement dynamique) : aucun client OAuth à créer à la main.
 4. Le navigateur ouvre la page de connexion d'AuthKit : connexion avec GitHub, qui ne partage que l'adresse e-mail.
-5. AuthKit remet à Claude un jeton d'accès : un JWT signé, à durée limitée, valable pour ce serveur seulement (son audience est l'URL publique de `/mcp`).
-6. Claude rappelle `/mcp` avec le jeton. Le serveur le vérifie avec les clés publiques d'AuthKit, contrôle que le compte est autorisé, puis répond.
+5. AuthKit demande d'autoriser Claude (« Claude would like access to your account ») : l'e-mail et le profil du compte, la confirmation d'identité, et un accès durable. Ce compte est celui de Lulusia chez WorkOS, pas GitHub ni Claude, et l'accès durable est un jeton de renouvellement : Claude obtient un nouveau jeton d'accès quand le sien expire, sans repasser par GitHub.
+6. AuthKit remet à Claude un jeton d'accès : un JWT signé, à durée limitée, valable pour ce serveur seulement (son audience est l'URL publique de `/mcp`).
+7. Claude rappelle `/mcp` avec le jeton. Le serveur le vérifie avec les clés publiques d'AuthKit, contrôle que le compte est autorisé, puis répond. Un compte absent de la liste reçoit un 403, et Claude affiche que la connexion a réussi mais que le serveur a refusé la requête.
 
 Le serveur ne voit jamais de mot de passe ni de jeton GitHub. C'est un « serveur de ressources » OAuth : il ne fait que vérifier des jetons. Les comptes, la connexion et l'enregistrement de Claude sont chez WorkOS.
 
