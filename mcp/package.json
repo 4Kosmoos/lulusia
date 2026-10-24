@@ -6,16 +6,19 @@
   "type": "module",
   "scripts": {
     "start": "node --disable-warning=ExperimentalWarning src/index.ts",
+    "start:http": "node --disable-warning=ExperimentalWarning src/http.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --disable-warning=ExperimentalWarning --test \"test/**/*.test.ts\"",
     "fixtures": "node --disable-warning=ExperimentalWarning scripts/make-fixtures.ts"
   },
   "dependencies": {
     "@lulusia/lib": "*",
-    "@modelcontextprotocol/server": "^2.3.1",
+    "@modelcontextprotocol/node": "^2.1.1",
+    "@modelcontextprotocol/server": "^2.4.0",
+    "jose": "^6.2.0",
     "zod": "^4.2.0"
   },
   "devDependencies": {
-    "@modelcontextprotocol/client": "^2.3.1"
+    "@modelcontextprotocol/client": "^2.4.0"
   }
 }
