@@ -18,7 +18,7 @@ import { createServer } from "./server.ts";
 
 export interface RemoteOptions {
   data: FactoryData;
-  /** Public URL of the MCP endpoint, exactly as entered in Claude ("https://host:8443/mcp"). */
+  /** Public URL of the MCP endpoint, exactly as entered in Claude ("https://host/mcp"). */
   publicUrl: URL;
   /** Metadata of the authorization server (RFC 8414), also served here for clients that look for it. */
   authorizationServer: OAuthMetadata;

@@ -16,6 +16,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 | 7 | Discord : serveur et salons, alertes FRM, bot (`#statut`, pont avec le chat, commandes) | ✅ |
 | 8 | Sauvegardes et surveillance | ✅ |
 | 9 | Repo git publié, le VPS se met à jour par `git pull`, fichiers du serveur identiques à `ops/` | ✅ |
+| 10 | Serveur MCP : Claude lit l'usine en direct | ✅ |
 
 ## Bot Discord
 
@@ -27,6 +28,14 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
 - [x] **Déploiement automatique du bot** à chaque push : vérification puis déploiement par GitHub Actions, connexion au VPS par Tailscale ([détail](exploitation.md#déploiement-automatique)).
 - [x] **Code partagé** (octobre 2026) : le client FRM et les calculs (stocks, bilan, énergie, recherche d'un nom) sortent du bot dans [`lib/`](../lib/), avec des tests lancés par GitHub Actions. Le repo devient un ensemble de workspaces npm.
+
+## Serveur MCP (Claude)
+
+- [x] **Serveur MCP en lecture seule** (octobre 2026) : six outils (vue d'ensemble, rapport par objet, bilan de production, machines, énergie, stocks) et deux prompts (bilan de santé, prévoir une ligne de production), avec des tests sous Linux et Windows ([README](../mcp/README.md)).
+- [x] **Claude partout** (octobre 2026) : le serveur tourne dans Docker sur le VPS, publié par Tailscale Funnel depuis sa propre machine Tailscale (un conteneur), avec une connexion GitHub via WorkOS AuthKit et une liste des comptes autorisés. Il marche sur claude.ai, l'application de bureau et l'application mobile, sans dépendre d'un PC allumé ([exploitation](exploitation.md#serveur-mcp-claude)).
+- Décidé : **Tailscale Funnel plutôt qu'un nom de domaine** : ni domaine à acheter, ni certificat à gérer, ni port à ouvrir sur le VPS, et le plus simple à reproduire pour une version communautaire. Claude ne contacte un serveur MCP que sur le port 443, déjà pris en privé par Grafana sur le VPS : le serveur MCP a donc sa propre machine Tailscale, dans un conteneur, avec son propre 443 et sans accès au reste du tailnet. Alternative si on veut se passer de Tailscale : un nom de domaine et Caddy installé sur le VPS (hors Docker, pour que les règles ufw s'appliquent), avec le port 443 ouvert seulement à la plage d'adresses des connecteurs Claude (`160.79.104.0/21`) et le port 80 pour le certificat Let's Encrypt.
+- [ ] **Filtrer par adresse** : n'accepter sur `/mcp` que la plage d'adresses des connecteurs Claude (`160.79.104.0/21`), lue dans l'en-tête `X-Forwarded-For` que Funnel ajoute. Une couche de plus devant OAuth.
+- [ ] **Outil recettes** : quand FRM ne plantera plus sur `getRecipes` et `getSchematics`, un outil qui liste les recettes débloquées, pour prévoir une ligne avec une recette que l'usine n'utilise pas encore. Aujourd'hui, Claude ne voit que les recettes des machines déjà construites.
 
 ## Sauvegardes et surveillance
 
@@ -47,6 +56,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 - [x] Logs limités : systemd à 2 Go, Docker à 3 × 10 Mo par conteneur (`ops/journald/`, `ops/docker/`).
 - [x] `#dev` branché sur le repo GitHub (webhook, événement *push*).
+- [ ] **Bug FRM à signaler** : `getRecipes` et `getSchematics` font planter le serveur de jeu avec nos mods (FRM 1.5.4 lit une recette listée par un mod mais absente du jeu, sans vérifier qu'elle existe). Écartés du client FRM en attendant.
 - [x] **Bugs FRM signalés** (octobre 2026), avec la cause dans le code et une correction proposée :
   - [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) : serveur web inutilisable après un rechargement de la partie dans le même processus (contourné par le redémarrage complet de 04:10) ;
   - [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) : corps des requêtes POST lu en Latin-1 au lieu d'UTF-8, accents cassés dans le chat du jeu (contourné dans le bot avec des `\uXXXX`). Corrigé par les développeurs le 15/10/2026 ([PR #317](https://github.com/porisius/FicsitRemoteMonitoring/pull/317)), en attente d'une nouvelle version.
@@ -69,7 +79,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 ## Idées pour plus tard
 
-- **Serveur MCP par-dessus FRM**, pour interroger l'usine en direct depuis Claude.
+- **Version communautaire** : un repo que d'autres serveurs Satisfactory déploient tel quel (bot Discord, Grafana, serveur MCP), avec la configuration propre à chaque serveur dans les `.env`.
 - **FicsIt-Networks** (quand il sera compatible 1.2) : du Lua 5.4 dans le jeu, avec des ordinateurs, des écrans, des panneaux de contrôle, des splitters programmables et une carte Internet (HTTP sortant uniquement). Sur un serveur dédié, le code tourne a priori côté serveur. Workflow visé : push sur GitHub, puis une GitHub Action fait un `git pull` dans le dossier du disque FIN sur le VPS.
 - **Carte ferroviaire web** (optionnelle) : page alimentée par les trains, gares et rails de FRM. Le dashboard Trains de Grafana couvre déjà les positions, horaires, allers-retours et temps de trajet. Une carte perso apporterait le dessin des voies et des signaux, le vrai direct par le WebSocket de FRM et le clic sur un train ou une gare. À réévaluer quand le réseau ferré sera grand.
 - **Vitrine publique** des dashboards : Caddy avec HTTPS et un nom de domaine, ou Cloudflare Tunnel.

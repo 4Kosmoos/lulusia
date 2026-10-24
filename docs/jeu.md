@@ -24,7 +24,7 @@ Tous vérifiés sur ficsit.app : compatibles 1.2 (« Works » en Stable), avec u
 | Smart! | Construction de masse |
 | Efficiency Checker | Diagnostic machine par machine en jeu |
 | Digital Storage | Stockage numérique. Cohabitation avec SF+ et visibilité par FRM à vérifier |
-| **Ficsit Remote Monitoring (FRM)** | API JSON (port 8080), WebSocket et webhooks : la source de données de Grafana et du bot. Dépend de SML 3.12 ou plus |
+| **Ficsit Remote Monitoring (FRM)** | API JSON (port 8080), WebSocket et webhooks : la source de données de Grafana, du bot et du serveur MCP. Dépend de SML 3.12 ou plus |
 
 SF+ installe aussi une dizaine de bibliothèques (KLib, KAPI, RefinedRDLib, ModularUI…). Sur les PC, SMM s'en occupe tout seul. Sur le serveur, elles sont listées une par une dans le profil ficsit-cli.
 

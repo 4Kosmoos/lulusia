@@ -10,20 +10,22 @@ Ce qui tourne où, comment ça communique, et comment c'est protégé.
 │   └─ FRM : API JSON sur le port 8080 (bloqué par ufw)                  │
 │  Docker                                                                │
 │   ├─ Stack Grafana : Grafana, Prometheus, Postgres, collecteurs FRM    │
-│   └─ Bot Discord (TypeScript)                                          │
+│   ├─ Bot Discord (TypeScript)                                          │
+│   └─ Serveur MCP (TypeScript) : l'usine en lecture seule pour Claude,  │
+│      avec sa machine Tailscale « lulusia-mcp » (Funnel sur son 443)    │
 │  Entretien (systemd) : sauvegardes toutes les 6 h,                     │
 │                        redémarrage complet quotidien                   │
 │  Tailscale : accès privé, Grafana publié en HTTPS (tailscale serve)    │
 └────────────────────────────────────────────────────────────────────────┘
-      ▲ jeu (7777, 8888)             ▲ réseau privé Tailscale    │
-  Les deux joueurs (Steam)       Grafana dans le navigateur      ▼
-                                                     Discord (bot, webhooks FRM)
+      ▲ jeu (7777, 8888)      ▲ Tailscale (privé)     ▲ Funnel (443)     │
+  Les deux joueurs (Steam)    Grafana (navigateur)    Claude (cloud)     ▼
+                                                                Discord (bot, webhooks FRM)
 ```
 
 Sur le serveur, tout se range en trois familles :
 
 1. **Le jeu** : le serveur dédié, ses mods et ses parties, sous l'utilisateur `steam`.
-2. **Nos outils Docker** : la stack Grafana et le bot Discord, sous l'utilisateur `ubuntu`.
+2. **Nos outils Docker** : la stack Grafana, le bot Discord et le serveur MCP, sous l'utilisateur `ubuntu`.
 3. **L'entretien automatique** : les timers systemd (sauvegardes, redémarrage complet, watchdog de FRM).
 
 La commande `lulusia-status` affiche l'état des trois d'un coup (voir [Exploitation](exploitation.md)). Le VPS est réglé en UTC.
@@ -38,14 +40,15 @@ La commande `lulusia-status` affiche l'état des trois d'un coup (voir [Exploita
 | Profil des mods (ficsit-cli) | `/home/steam/.local/share/ficsit` | privé |
 | Réglages du serveur et de FRM | `/home/steam/SatisfactoryDedicatedServer/FactoryGame/Saved/Config/LinuxServer/GameUserSettings.ini` | privé |
 | Stack Grafana (Docker) | `/home/ubuntu/satisfactory-monitoring` | `ubuntu` |
-| Ce repo, dont le bot Discord | `/home/ubuntu/lulusia` (bot : `/home/ubuntu/lulusia/bot`) | `ubuntu` |
+| Ce repo, dont le bot Discord et le serveur MCP | `/home/ubuntu/lulusia` (bot : `…/bot`, serveur MCP : `…/mcp`) | `ubuntu` |
+| Identité de la machine Tailscale `lulusia-mcp` | volume Docker `lulusia-mcp_tailscale-state` | root (Docker) |
 | Archives des parties | `/var/backups/lulusia` | root : `sudo ls …` |
 | Scripts maison | `/usr/local/bin/lulusia-backup`, `/usr/local/bin/lulusia-status`, `/usr/local/bin/lulusia-watchdog`, `/usr/local/bin/lulusia-deploy` | |
 | Services et timers systemd | `/etc/systemd/system/satisfactory.service`, `satisfactory-full-restart.{service,timer}`, `lulusia-backup.{service,timer}`, `lulusia-watchdog.{service,timer}` | |
 
 Les originaux des scripts, services et configs installés à la main sont versionnés dans [`ops/`](../ops/).
 
-**Pourquoi plusieurs `docker-compose.yml`** : la stack Grafana (projet communautaire, mis à jour par `git pull` de son propre repo) et le bot (notre code) sont deux applications indépendantes. Chacune a son dossier et son compose, pour être mise à jour ou redémarrée sans toucher à l'autre.
+**Pourquoi plusieurs `docker-compose.yml`** : la stack Grafana (projet communautaire, mis à jour par `git pull` de son propre repo), le bot et le serveur MCP (notre code) sont trois applications indépendantes. Chacune a son dossier et son compose, pour être mise à jour ou redémarrée sans toucher aux autres.
 
 ## Réseau
 
@@ -57,7 +60,7 @@ Les originaux des scripts, services et configs installés à la main sont versio
 | 7777 | TCP + UDP | Jeu |
 | 8888 | TCP | Messagerie fiable du jeu, obligatoire depuis la 1.1 |
 
-Rien d'autre : FRM, Grafana et les outils **ne sont pas exposés publiquement**.
+Rien d'autre : FRM et Grafana **ne sont pas exposés publiquement**. Seul le serveur MCP est public, publié par [Tailscale Funnel](#accès-public-du-serveur-mcp--tailscale-funnel) sans ouvrir de port sur le VPS.
 
 Règles ufw en plus des ports publics :
 
@@ -66,7 +69,7 @@ Règles ufw en plus des ports publics :
 | `allow in on tailscale0` | Tout ce qui arrive par Tailscale est autorisé : nos appareils, et GitHub Actions, que la politique Tailscale limite au port 22 |
 | `allow from 172.16.0.0/12 to any port 8080 proto tcp` | Les conteneurs Docker lisent FRM sur la machine hôte |
 
-**Principe pour Docker** : les règles de Docker passent avant celles d'ufw, donc aucun port de conteneur n'est publié autrement que sur `127.0.0.1`. L'accès à Grafana passe par Tailscale. Les conteneurs joignent FRM sur l'hôte par `host.docker.internal` (option `extra_hosts: host-gateway`).
+**Principe pour Docker** : les règles de Docker passent avant celles d'ufw, donc aucun port de conteneur n'est publié autrement que sur `127.0.0.1`. L'accès à Grafana passe par Tailscale, celui du serveur MCP par Tailscale Funnel. Les conteneurs joignent FRM sur l'hôte par `host.docker.internal` (option `extra_hosts: host-gateway`).
 
 Aucune règle **sortante** n'est nécessaire : le serveur peut toujours télécharger le jeu et les mods, appeler Discord et GitHub. Partager un dashboard est donc une question de règles **entrantes**.
 
@@ -80,6 +83,16 @@ Aucune règle **sortante** n'est nécessaire : le serveur peut toujours téléch
 - En développement, le PC joint FRM directement : `http://lulusia.<nom-du-tailnet>.ts.net:8080`.
 - Plus tard, pour une vitrine publique : Caddy avec HTTPS et un nom de domaine (ports 80 et 443), ou Cloudflare Tunnel (aucun port à ouvrir).
 
+### Accès public du serveur MCP : Tailscale Funnel
+
+- Claude appelle les connecteurs depuis les serveurs d'Anthropic, pas depuis l'appareil de l'utilisateur : le serveur MCP doit avoir une adresse HTTPS publique, le réseau privé ne suffit pas. Et Claude ne contacte un serveur MCP que sur le port HTTPS standard, 443 (essayé en 8443 : aucune requête n'arrive).
+- **Une machine Tailscale dédiée** : `lulusia-mcp`, un conteneur `tailscale/tailscale` à côté du serveur MCP, dans le même compose. C'est une machine de plus dans notre tailnet, comme un nouvel appareil, avec son nom, son adresse et son certificat HTTPS.
+- **Funnel** publie son port 443 sur Internet, `https://lulusia-mcp.<nom-du-tailnet>.ts.net/`, vers le conteneur du serveur MCP. Les relais de Tailscale reçoivent les connexions et les transmettent à la machine par le tunnel qu'elle ouvre elle-même : aucun port ouvert dans ufw ni chez OVH. Le certificat HTTPS est géré par Tailscale.
+- **Pourquoi pas le VPS lui-même** : son 443 sert à Grafana, en privé, et Funnel s'active port par port. Avec une machine dédiée, Grafana reste privé et le VPS ne publie rien sur Internet.
+- **Politique Tailscale** : `tag:mcp` est le seul à avoir l'attribut `funnel`, et aucune règle ne part de `tag:mcp` : la machine ne peut joindre aucune autre machine du tailnet. Nos appareils, eux, peuvent la joindre.
+- **Ce qui protège le serveur** : connexion OAuth par GitHub via WorkOS AuthKit, jetons vérifiés, liste des comptes autorisés, lecture seule (détail dans le [README du serveur MCP](../mcp/README.md#sécurité)).
+- Alternative sans Tailscale, pour la version communautaire : un nom de domaine et Caddy, avec le port 443 ouvert seulement aux adresses des connecteurs Claude (voir la [feuille de route](feuille-de-route.md)).
+
 ## Sécurité
 
 | Sujet | Mise en place |
@@ -91,8 +104,9 @@ Aucune règle **sortante** n'est nécessaire : le serveur peut toujours téléch
 | Mémoire | swap de 4 Go (`/swapfile`, `vm.swappiness=10`) comme filet de sécurité |
 | Utilisateurs | le jeu tourne sous `steam`, sans droits d'administration. Son dossier personnel est privé |
 | FRM | les endpoints d'écriture demandent le jeton FRM (en-tête `X-FRM-Authorization`). Le port 8080 n'est pas exposé |
+| Serveur MCP | Lecture seule (client FRM sans écriture ni jeton). Connexion par GitHub via WorkOS AuthKit (OAuth), jetons vérifiés (signature, émetteur, audience, expiration), liste des comptes autorisés. Publié par sa propre machine Tailscale, sans accès au reste du tailnet. Conteneurs durcis ([détail](../mcp/README.md#sécurité)) |
 | Déploiement | GitHub Actions passe par Tailscale, authentifié par fédération d'identité (aucun secret Tailscale stocké chez GitHub), avec une clé SSH dédiée qui ne peut lancer que `lulusia-deploy`, et seulement depuis une adresse Tailscale. Actions épinglées sur un commit précis |
-| Secrets | jetons (Discord, FRM), webhooks et IP uniquement dans des `.env` hors du repo et dans le gestionnaire de mots de passe. La clé SSH personnelle ne quitte jamais le PC ; seule la clé de déploiement, bridée, est dans les secrets GitHub |
+| Secrets | jetons (Discord, FRM), webhooks et IP uniquement dans des `.env` hors du repo et dans le gestionnaire de mots de passe. La clé SSH personnelle ne quitte jamais le PC ; seule la clé de déploiement, bridée, est dans les secrets GitHub. Le secret de l'app OAuth GitHub n'existe que chez WorkOS |
 
 
 ## Hébergement : OVH VPS-3
@@ -148,3 +162,17 @@ Serveur Discord « Lulusia », pour les deux joueurs.
 
 - **Bot** : application Discord « Lulusia » **privée** (lien d'installation : Aucun), ajoutée au serveur avec le minimum de permissions : voir les salons, envoyer des messages, intégrer des liens, voir les anciens messages, ajouter des réactions. L'intent privilégié *Message Content* est activé (lecture de `#general`). Le bot enregistre ses commandes slash (`/stock`, `/power`, `/players`, `/ping`, `/alert`, `/switch`, `/machines`) sur le serveur à chaque démarrage (la portée `applications.commands` est incluse avec la portée `bot`). Elles marchent dans tous les salons : à deux joueurs, pas besoin d'un salon dédié.
 - **Webhooks** : leurs URL sont des secrets (quiconque les a peut écrire dans le salon). Si une URL fuite, supprimer le webhook et en recréer un.
+
+## Claude (serveur MCP)
+
+Le [serveur MCP](../mcp/) permet à Claude de lire l'usine en direct, pour les deux joueurs.
+
+| Élément | Mise en place |
+|---|---|
+| Serveur d'autorisation | WorkOS AuthKit, projet « lulusia », environnement Production. Connexion par GitHub uniquement, inscriptions fermées une fois nos comptes créés |
+| App OAuth GitHub | « Lulusia », scope `user:email` (l'adresse e-mail, rien d'autre). Son secret n'existe que chez WorkOS |
+| Machine Tailscale | `lulusia-mcp`, taguée `tag:mcp`, dans un conteneur à côté du serveur MCP. Seule machine autorisée à utiliser Funnel, sans accès au reste du tailnet |
+| Connecteur Claude | Ajouté par chaque joueur sur son propre compte Claude, avec l'adresse `https://lulusia-mcp.<nom-du-tailnet>.ts.net/mcp`. Il marche sur le web, l'application de bureau et l'application mobile |
+| Comptes autorisés | Les deux joueurs, par leur identifiant WorkOS (`ALLOWED_USERS` dans le `.env` du serveur MCP) |
+
+Mise en place et ajout d'un compte : voir [Exploitation](exploitation.md#serveur-mcp-claude).

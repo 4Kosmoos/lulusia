@@ -27,9 +27,16 @@ printf '  Dernier message du watchdog de FRM : %s\n' "${watchdog:-aucun, FRM est
 title "Conteneurs Docker (Grafana, bot, serveur MCP)"
 docker ps -a --format '{{.Names}}\t{{.Status}}' | sort | sed 's/^/  /'
 
-title "Tailscale : accès privé (serve) et public (Funnel)"
+title "Tailscale : accès privé (serve, Grafana)"
 tailscale status --peers=false 2>/dev/null | sed 's/^/  /'
 tailscale serve status 2>/dev/null | sed 's/^/  /'
+
+title "Serveur MCP public (Funnel, machine Tailscale lulusia-mcp)"
+if funnel=$(docker exec lulusia-mcp-tailscale-1 tailscale funnel status 2>/dev/null); then
+  printf '%s\n' "$funnel" | sed 's/^/  /'
+else
+  ko "machine lulusia-mcp injoignable (conteneur arrêté ou serveur MCP pas encore installé)"
+fi
 
 title "Sauvegardes"
 last=$(ls -1t /var/backups/lulusia/lulusia-*.tar.gz 2>/dev/null | head -n 1)

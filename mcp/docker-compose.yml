@@ -1,5 +1,7 @@
 # Lulusia remote MCP server in production on the VPS (see mcp/README.md and docs/exploitation.md).
-# The .env (never committed) is created directly on the server, from .env.example.
+# Two containers: the MCP server, and its own Tailscale machine that publishes it on the Internet.
+# The .env files (never committed) are created directly on the server: .env from .env.example, and
+# .env.tailscale with the Tailscale auth key, needed only for the very first start.
 name: lulusia-mcp
 services:
   mcp:
@@ -10,8 +12,8 @@ services:
     image: lulusia-mcp
     restart: unless-stopped
     env_file: .env
-    # Only on the VPS's loopback: Tailscale Funnel publishes it on the Internet (port 8443), nothing else
-    # reaches it.
+    # Reached by the tailscale container over this project's Docker network. Also published on the
+    # VPS's loopback, for checks from the server (curl localhost:3100/health); nothing else reaches it.
     ports:
       - "127.0.0.1:3100:3100"
     # FRM listens on the host machine (port 8080, allowed by ufw for the Docker networks).
@@ -32,3 +34,56 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+  # A Tailscale machine of its own, "lulusia-mcp" (tag:mcp), in the same tailnet as the VPS. Funnel
+  # publishes the MCP server on its port 443: Claude only connects to servers on the standard HTTPS
+  # port, and the VPS's own 443 stays private for Grafana. The Tailscale policy gives tag:mcp no access
+  # to the tailnet, and only tag:mcp may use Funnel.
+  tailscale:
+    image: tailscale/tailscale:v1.102.5
+    restart: unless-stopped
+    depends_on:
+      - mcp
+    # The auth key, only read while the machine is not registered yet (TS_AUTH_ONCE). Once it is, the
+    # file can be deleted: the machine's identity is kept in the tailscale-state volume.
+    env_file:
+      - path: .env.tailscale
+        required: false
+    environment:
+      TS_HOSTNAME: lulusia-mcp
+      TS_EXTRA_ARGS: --advertise-tags=tag:mcp
+      TS_AUTH_ONCE: "true"
+      TS_STATE_DIR: /var/lib/tailscale
+      # Funnel on port 443 to the MCP server (tailscale/serve.json). The folder is mounted rather than
+      # the file, so that a change to the file is picked up without a restart.
+      TS_SERVE_CONFIG: /config/serve.json
+      TS_ENABLE_HEALTH_CHECK: "true"
+      TS_LOCAL_ADDR_PORT: 127.0.0.1:9002
+    volumes:
+      - tailscale-state:/var/lib/tailscale
+      - ./tailscale:/config:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9002/healthz"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+    # Hardening, as for the MCP server. Userspace networking (the image's default) needs no capability
+    # and no /dev/net/tun.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/tailscale
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 192m
+    pids_limit: 100
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  tailscale-state:

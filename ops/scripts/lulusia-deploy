@@ -39,7 +39,8 @@ for app in "${APPS[@]}"; do
 done
 sleep 10
 
-# Chaque application déployée doit tourner, sinon le déploiement est en échec (visible dans GitHub Actions).
+# Chaque service de chaque application déployée doit tourner, sinon le déploiement est en échec (visible
+# dans GitHub Actions). Le serveur MCP en a deux : le serveur lui-même et sa machine Tailscale.
 failed=0
 for app in "${deployed[@]}"; do
   cd "$REPO/$app"
@@ -47,8 +48,10 @@ for app in "${deployed[@]}"; do
   sudo docker compose ps --format '{{.Name}} : {{.Status}}'
   echo "== $app : derniers logs"
   sudo docker compose logs --tail 15 --no-color
-  if [ -z "$(sudo docker compose ps --status running --quiet)" ]; then
-    echo "ERREUR : $app ne tourne pas après le déploiement." >&2
+  expected=$(sudo docker compose config --services | sort)
+  running=$(sudo docker compose ps --services --status running | sort)
+  if [ "$expected" != "$running" ]; then
+    echo "ERREUR : $app : service(s) arrêté(s) après le déploiement :" $(comm -23 <(echo "$expected") <(echo "$running")) >&2
     failed=1
   fi
 done
