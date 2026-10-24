@@ -1,0 +1,34 @@
+# Lulusia remote MCP server in production on the VPS (see mcp/README.md and docs/exploitation.md).
+# The .env (never committed) is created directly on the server, from .env.example.
+name: lulusia-mcp
+services:
+  mcp:
+    # Built from the root of the repo: the image also needs the shared lib/ workspace.
+    build:
+      context: ..
+      dockerfile: mcp/Dockerfile
+    image: lulusia-mcp
+    restart: unless-stopped
+    env_file: .env
+    # Only on the VPS's loopback: Tailscale Funnel publishes it on the Internet (port 8443), nothing else
+    # reaches it.
+    ports:
+      - "127.0.0.1:3100:3100"
+    # FRM listens on the host machine (port 8080, allowed by ufw for the Docker networks).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Hardening: nothing writable but /tmp, no Linux capability, no privilege escalation, bounded memory.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 192m
+    pids_limit: 100
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

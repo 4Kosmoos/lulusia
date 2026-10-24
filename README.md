@@ -1,6 +1,6 @@
 # Lulusia
 
-[![Bot](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy-bot.yml/badge.svg)](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy-bot.yml)
+[![Deploy](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy.yml/badge.svg)](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy.yml)
 
 ![Lulusia](images/lulusia.jpg)
 

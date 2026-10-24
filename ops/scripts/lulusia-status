@@ -24,10 +24,10 @@ systemctl list-timers satisfactory-full-restart.timer lulusia-backup.timer lulus
 watchdog=$(journalctl -t lulusia-watchdog -n 1 -q --no-pager -o short-iso | sed -E 's/ [^ ]+ lulusia-watchdog\[[0-9]+\]:/ :/')
 printf '  Dernier message du watchdog de FRM : %s\n' "${watchdog:-aucun, FRM est toujours resté joignable}"
 
-title "Conteneurs Docker (Grafana et bot)"
+title "Conteneurs Docker (Grafana, bot, serveur MCP)"
 docker ps -a --format '{{.Names}}\t{{.Status}}' | sort | sed 's/^/  /'
 
-title "Accès privé (Tailscale)"
+title "Tailscale : accès privé (serve) et public (Funnel)"
 tailscale status --peers=false 2>/dev/null | sed 's/^/  /'
 tailscale serve status 2>/dev/null | sed 's/^/  /'
 
@@ -50,8 +50,9 @@ cat <<'MAP'
   Profil des mods ... /home/steam/.local/share/ficsit
   Stack Grafana ..... /home/ubuntu/satisfactory-monitoring
   Bot Discord ....... /home/ubuntu/lulusia/bot
+  Serveur MCP ....... /home/ubuntu/lulusia/mcp
   Sauvegardes ....... /var/backups/lulusia                       (root : sudo ls …)
-  Scripts ........... /usr/local/bin/lulusia-backup, lulusia-status, lulusia-watchdog
+  Scripts ........... /usr/local/bin/lulusia-backup, lulusia-status, lulusia-watchdog, lulusia-deploy
   Services systemd .. /etc/systemd/system/satisfactory.service
                       /etc/systemd/system/satisfactory-full-restart.{service,timer}
                       /etc/systemd/system/lulusia-backup.{service,timer}

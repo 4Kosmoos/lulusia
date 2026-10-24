@@ -1,18 +1,19 @@
-# Bot Discord : vérification à chaque push qui le touche (bot/, lib/ partagé, dépendances npm),
-# puis déploiement sur le VPS par Tailscale.
+# Bot Discord et serveur MCP distant : vérification à chaque push qui les touche (bot/, mcp/, lib/ partagé,
+# dépendances npm), puis déploiement des deux sur le VPS par Tailscale.
 # Mise en place, secrets et dépannage : docs/exploitation.md, section « Déploiement automatique ».
-name: Bot
+name: Deploy
 
 on:
   push:
     branches: [main]
     paths:
       - "bot/**"
+      - "mcp/**"
       - "lib/**"
       - "package.json"
       - "package-lock.json"
       - "tsconfig.base.json"
-      - ".github/workflows/deploy-bot.yml"
+      - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +21,7 @@ permissions:
 
 # Un seul déploiement à la fois ; un push arrivé pendant un déploiement attend son tour.
 concurrency:
-  group: deploy-bot
+  group: deploy
   cancel-in-progress: false
 
 jobs:
@@ -35,7 +36,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      # Tout le repo (workspaces npm) : le bot et le code partagé de lib/, avec ses tests.
+      # Tout le repo (workspaces npm) : le bot, le serveur MCP et le code partagé de lib/, avec leurs tests.
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
@@ -68,7 +69,7 @@ jobs:
           printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy
           chmod 600 ~/.ssh/deploy
           printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          # La clé n'autorise qu'une commande sur le VPS (lulusia-deploy-bot) : on lui passe
+          # La clé n'autorise qu'une commande sur le VPS (lulusia-deploy) : on lui passe
           # seulement le commit à déployer.
           ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 \
             "ubuntu@$VPS_HOST" "$GITHUB_SHA"

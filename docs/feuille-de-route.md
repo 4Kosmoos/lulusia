@@ -25,7 +25,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Alertes perso** dans `#alertes` et dans le chat du jeu : stock bas et bilan négatif, gérées par `/alert` ou `!alert` (détail dans le [README du bot](../bot/README.md)).
 - [x] **Bot en anglais** (octobre 2026) : commandes, réponses et logs, comme le jeu et les noms d'objets renvoyés par le serveur. La doc reste en français.
 - [ ] Si les alertes FRM deviennent trop bruyantes : les faire passer par le bot pour les trier par salon.
-- [x] **Déploiement automatique du bot** à chaque push : vérification puis déploiement par GitHub Actions, connexion au VPS par Tailscale ([détail](exploitation.md#déploiement-automatique-du-bot)).
+- [x] **Déploiement automatique du bot** à chaque push : vérification puis déploiement par GitHub Actions, connexion au VPS par Tailscale ([détail](exploitation.md#déploiement-automatique)).
 - [x] **Code partagé** (octobre 2026) : le client FRM et les calculs (stocks, bilan, énergie, recherche d'un nom) sortent du bot dans [`lib/`](../lib/), avec des tests lancés par GitHub Actions. Le repo devient un ensemble de workspaces npm.
 
 ## Sauvegardes et surveillance

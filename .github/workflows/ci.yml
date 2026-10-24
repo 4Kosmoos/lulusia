@@ -1,5 +1,5 @@
 # Vérification de tout le repo (lib, bot, serveur MCP) à chaque push et pull request : typecheck et tests.
-# Sous Linux, et sous Windows où tourne le serveur MCP. Le déploiement du bot a son workflow : deploy-bot.yml.
+# Sous Linux, et sous Windows pour le mode local du serveur MCP. Le déploiement a son workflow : deploy.yml.
 name: CI
 
 on:

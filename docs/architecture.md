@@ -40,7 +40,7 @@ La commande `lulusia-status` affiche l'état des trois d'un coup (voir [Exploita
 | Stack Grafana (Docker) | `/home/ubuntu/satisfactory-monitoring` | `ubuntu` |
 | Ce repo, dont le bot Discord | `/home/ubuntu/lulusia` (bot : `/home/ubuntu/lulusia/bot`) | `ubuntu` |
 | Archives des parties | `/var/backups/lulusia` | root : `sudo ls …` |
-| Scripts maison | `/usr/local/bin/lulusia-backup`, `/usr/local/bin/lulusia-status`, `/usr/local/bin/lulusia-watchdog`, `/usr/local/bin/lulusia-deploy-bot` | |
+| Scripts maison | `/usr/local/bin/lulusia-backup`, `/usr/local/bin/lulusia-status`, `/usr/local/bin/lulusia-watchdog`, `/usr/local/bin/lulusia-deploy` | |
 | Services et timers systemd | `/etc/systemd/system/satisfactory.service`, `satisfactory-full-restart.{service,timer}`, `lulusia-backup.{service,timer}`, `lulusia-watchdog.{service,timer}` | |
 
 Les originaux des scripts, services et configs installés à la main sont versionnés dans [`ops/`](../ops/).
@@ -75,7 +75,7 @@ Aucune règle **sortante** n'est nécessaire : le serveur peut toujours téléch
 - Réseau privé chiffré entre le VPS (nom `lulusia` sur le réseau Tailscale) et nos PC. Gratuit pour un usage perso.
 - L'**expiration de clé est désactivée** pour le VPS (console Tailscale, Machines), sinon il sortirait du réseau au bout de 180 jours.
 - **Grafana** écoute sur `127.0.0.1:3000` et `tailscale serve` le publie en HTTPS sur `https://lulusia.<nom-du-tailnet>.ts.net/`, uniquement pour les appareils du réseau Tailscale (pas Funnel, donc rien de public).
-- **GitHub Actions** rejoint le réseau le temps d'un déploiement du bot (machine temporaire `tag:ci`). La politique Tailscale ne lui ouvre que le port 22 du VPS (voir [Exploitation](exploitation.md#déploiement-automatique-du-bot)).
+- **GitHub Actions** rejoint le réseau le temps d'un déploiement (machine temporaire `tag:ci`). La politique Tailscale ne lui ouvre que le port 22 du VPS (voir [Exploitation](exploitation.md#déploiement-automatique)).
 - **Le deuxième joueur** a son propre compte Tailscale : la machine `lulusia` lui est **partagée** (console Tailscale, Machines, `…`, Share). Il ne voit que cette machine, et elle ne peut pas se connecter à ses appareils. Il a son propre compte Grafana, jamais le compte admin.
 - En développement, le PC joint FRM directement : `http://lulusia.<nom-du-tailnet>.ts.net:8080`.
 - Plus tard, pour une vitrine publique : Caddy avec HTTPS et un nom de domaine (ports 80 et 443), ou Cloudflare Tunnel (aucun port à ouvrir).
@@ -91,7 +91,7 @@ Aucune règle **sortante** n'est nécessaire : le serveur peut toujours téléch
 | Mémoire | swap de 4 Go (`/swapfile`, `vm.swappiness=10`) comme filet de sécurité |
 | Utilisateurs | le jeu tourne sous `steam`, sans droits d'administration. Son dossier personnel est privé |
 | FRM | les endpoints d'écriture demandent le jeton FRM (en-tête `X-FRM-Authorization`). Le port 8080 n'est pas exposé |
-| Déploiement | GitHub Actions passe par Tailscale, authentifié par fédération d'identité (aucun secret Tailscale stocké chez GitHub), avec une clé SSH dédiée qui ne peut lancer que `lulusia-deploy-bot`, et seulement depuis une adresse Tailscale. Actions épinglées sur un commit précis |
+| Déploiement | GitHub Actions passe par Tailscale, authentifié par fédération d'identité (aucun secret Tailscale stocké chez GitHub), avec une clé SSH dédiée qui ne peut lancer que `lulusia-deploy`, et seulement depuis une adresse Tailscale. Actions épinglées sur un commit précis |
 | Secrets | jetons (Discord, FRM), webhooks et IP uniquement dans des `.env` hors du repo et dans le gestionnaire de mots de passe. La clé SSH personnelle ne quitte jamais le PC ; seule la clé de déploiement, bridée, est dans les secrets GitHub |
 
 
