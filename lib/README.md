@@ -14,7 +14,7 @@ Le code TypeScript commun aux outils du repo qui lisent la partie via [Ficsit Re
 
 Le texte des réponses (Markdown de Discord, emoji) reste dans chaque outil : ici, seulement les données et les calculs.
 
-**Endpoints FRM écartés** : `getRecipes` et `getSchematics` font planter le serveur de jeu avec nos mods (FRM 1.5.4 lit une recette que liste un mod mais qui n'existe pas). Le client ne les propose pas.
+**Endpoints FRM écartés** : `getSchematics` fait planter le serveur de jeu avec nos mods, et `getRecipes` a le même défaut : FRM 1.5.4 utilise sans la vérifier une recette vide, probablement listée par un mod mais absente du jeu ([#321](https://github.com/porisius/FicsitRemoteMonitoring/issues/321)). Le client ne les propose pas.
 
 ## Utilisation
 

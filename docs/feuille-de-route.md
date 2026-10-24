@@ -35,7 +35,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [x] **Claude partout** (octobre 2026) : le serveur tourne dans Docker sur le VPS, publié par Tailscale Funnel depuis sa propre machine Tailscale (un conteneur), avec une connexion GitHub via WorkOS AuthKit et une liste des comptes autorisés. Il marche sur claude.ai, l'application de bureau et l'application mobile, sans dépendre d'un PC allumé ([exploitation](exploitation.md#serveur-mcp-claude)). En service pour les deux joueurs depuis le 24/10/2026.
 - Décidé : **Tailscale Funnel plutôt qu'un nom de domaine** : ni domaine à acheter, ni certificat à gérer, ni port à ouvrir sur le VPS, et le plus simple à reproduire pour une version communautaire. Claude ne contacte un serveur MCP que sur le port 443, déjà pris en privé par Grafana sur le VPS : le serveur MCP a donc sa propre machine Tailscale, dans un conteneur, avec son propre 443 et sans accès au reste du tailnet. Alternative si on veut se passer de Tailscale : un nom de domaine et Caddy installé sur le VPS (hors Docker, pour que les règles ufw s'appliquent), avec le port 443 ouvert seulement à la plage d'adresses des connecteurs Claude (`160.79.104.0/21`) et le port 80 pour le certificat Let's Encrypt.
 - [ ] **Filtrer par adresse** : n'accepter sur `/mcp` que la plage d'adresses des connecteurs Claude (`160.79.104.0/21`), lue dans l'en-tête `X-Forwarded-For` que Funnel ajoute. Une couche de plus devant OAuth.
-- [ ] **Outil recettes** : quand FRM ne plantera plus sur `getRecipes` et `getSchematics`, un outil qui liste les recettes débloquées, pour prévoir une ligne avec une recette que l'usine n'utilise pas encore. Aujourd'hui, Claude ne voit que les recettes des machines déjà construites.
+- [ ] **Outil recettes** : quand FRM ne plantera plus sur `getSchematics` et `getRecipes` ([#321](https://github.com/porisius/FicsitRemoteMonitoring/issues/321)), un outil qui liste les recettes débloquées, pour prévoir une ligne avec une recette que l'usine n'utilise pas encore. Aujourd'hui, Claude ne voit que les recettes des machines déjà construites.
 
 ## Sauvegardes et surveillance
 
@@ -56,10 +56,10 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 
 - [x] Logs limités : systemd à 2 Go, Docker à 3 × 10 Mo par conteneur (`ops/journald/`, `ops/docker/`).
 - [x] `#dev` branché sur le repo GitHub (webhook, événement *push*).
-- [ ] **Bug FRM à signaler** : `getRecipes` et `getSchematics` font planter le serveur de jeu avec nos mods (FRM 1.5.4 lit une recette listée par un mod mais absente du jeu, sans vérifier qu'elle existe). Écartés du client FRM en attendant.
-- [x] **Bugs FRM signalés** (octobre 2026), avec la cause dans le code et une correction proposée :
+- [x] **Bugs FRM signalés** (octobre 2026), avec la cause dans le code, une correction proposée et, pour #321, le log du plantage :
   - [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) : serveur web inutilisable après un rechargement de la partie dans le même processus (contourné par le redémarrage complet de 04:10) ;
-  - [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) : corps des requêtes POST lu en Latin-1 au lieu d'UTF-8, accents cassés dans le chat du jeu (contourné dans le bot avec des `\uXXXX`). Corrigé par les développeurs le 15/10/2026 ([PR #317](https://github.com/porisius/FicsitRemoteMonitoring/pull/317)), en attente d'une nouvelle version.
+  - [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) : corps des requêtes POST lu en Latin-1 au lieu d'UTF-8, accents cassés dans le chat du jeu (contourné dans le bot avec des `\uXXXX`). Corrigé par les développeurs le 15/10/2026 ([PR #317](https://github.com/porisius/FicsitRemoteMonitoring/pull/317)), en attente d'une nouvelle version ;
+  - [#321](https://github.com/porisius/FicsitRemoteMonitoring/issues/321) : `getSchematics` fait planter le serveur de jeu avec nos mods, et `getRecipes` a le même défaut. FRM 1.5.4 utilise sans la vérifier une recette vide, probablement listée par un mod mais absente du jeu. Les deux endpoints sont écartés du client FRM en attendant.
 
 ## À vérifier en jeu
 
@@ -71,7 +71,7 @@ Ce qui est fait, ce qui reste, et les idées pour plus tard.
 - [ ] **RAM** : passer au VPS-4 au-delà de 80 % d'utilisation régulière (procédure dans [Architecture](architecture.md#passer-au-vps-4)).
 - [ ] **Processeur** : OVH ne communique pas le modèle exact.
 - [ ] **Effet de la stack Grafana** sur les performances du jeu : certains endpoints FRM passent par le thread principal du jeu.
-- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `lib/src/frm.ts`. La 1.5.4 ne corrige ni l'un ni l'autre : #313 vérifié le 15/10/2026 dans les logs du jeu après le rechargement de 04:00 (« Websocket Thread is already running »). Le contournement des accents reste compatible avec la future correction : on pourra le retirer sans urgence.
+- [ ] **Correctifs FRM** dans une nouvelle version : [#313](https://github.com/porisius/FicsitRemoteMonitoring/issues/313) permettra de retirer le redémarrage complet de 04:10, [#314](https://github.com/porisius/FicsitRemoteMonitoring/issues/314) le contournement des accents dans `lib/src/frm.ts`, [#321](https://github.com/porisius/FicsitRemoteMonitoring/issues/321) l'outil recettes du serveur MCP. La 1.5.4 ne corrige ni l'un ni l'autre : #313 vérifié le 15/10/2026 dans les logs du jeu après le rechargement de 04:00 (« Websocket Thread is already running »). Le contournement des accents reste compatible avec la future correction : on pourra le retirer sans urgence.
 - [ ] **Digital Storage et FRM** : vérifier que FRM voit le contenu du Digital Storage quand on s'en servira (stocks du bot et de Grafana).
 - [ ] **Nouvelle version de ficsit-cli** où `profile mod add` fonctionne : on pourra alors abandonner le script Python.
 - [ ] **SMM gère les clés SSH** (issue #304) : on pourra alors gérer les mods du serveur depuis SMM.
