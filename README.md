@@ -3,8 +3,6 @@
 [![CI](https://github.com/4Kosmoos/lulusia/actions/workflows/ci.yml/badge.svg)](https://github.com/4Kosmoos/lulusia/actions/workflows/ci.yml)
 [![Deploy](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy.yml/badge.svg)](https://github.com/4Kosmoos/lulusia/actions/workflows/deploy.yml)
 
-![Lulusia](images/lulusia.jpg)
-
 A modded **Satisfactory 1.2** dedicated server (Satisfactory Plus and about twenty other mods) that runs 24/7 for two players, operated like a small production service: live dashboards, a Discord bot that can drive the factory, an **MCP server that lets Claude read the factory live**, automated deployment, backups, monitoring and a hardened, minimal attack surface.
 
 Every piece of factory data comes from the [Ficsit Remote Monitoring](https://docs.ficsit.app/ficsitremotemonitoring/latest/) mod (FRM), which exposes a JSON API from inside the game.
