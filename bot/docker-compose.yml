@@ -16,6 +16,17 @@ services:
     # Custom alerts (data/alerts.json): kept from one rebuild to the next.
     volumes:
       - bot-data:/app/bot/data
+    # Hardening, as for the MCP server: nothing writable but /tmp and the alerts volume, no Linux
+    # capability, no privilege escalation, bounded memory. The disk check still sees the VPS's disk.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 384m
+    pids_limit: 100
     logging:
       driver: json-file
       options:
